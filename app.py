@@ -163,7 +163,6 @@ def delete_item_from_prompt():
 def update_item_tags(item_id):
     tags = request.json['tags']  # Expecting a list of tags
     tags_str = ','.join(tags)  # Convert list of tags to a comma-separated string
-
     conn = get_db_connection()
     conn.execute('UPDATE items SET tags = ? WHERE id = ?', (tags_str, item_id))
     conn.commit()
