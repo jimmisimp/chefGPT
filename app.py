@@ -152,9 +152,7 @@ def delete_item_from_prompt():
         updated_items = [item for item in current_items['items'].split(',') if item.strip() != item_name]
         conn.execute('UPDATE prompts SET items = ? WHERE id = ?', (', '.join(updated_items), prompt_id))
 
-    # Delete the item from the main list
     conn.execute('DELETE FROM items WHERE name = ?', (item_name,))
-    
     conn.commit()
     conn.close()
     return jsonify({"status": "success"})
