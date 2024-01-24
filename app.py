@@ -105,7 +105,7 @@ def ask_gpt4():
         {"role":"system", "content": system_message},
         {"role": "user", "content": combined_prompt}
        ],
-      max_tokens=80,
+      max_tokens=800,
       temperature=0.8,
     )
     gpt_response = response.choices[0].message.content
