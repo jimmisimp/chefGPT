@@ -626,7 +626,7 @@
     function deletePrompt(promptId) {
         executeAjaxRequest(`/delete-prompt/${promptId}`, 'POST', {}, (response) => {
             console.log('Prompt deleted successfully');
-            loadSavedPrompts();
+            location.reload(true)
         });
     }
 

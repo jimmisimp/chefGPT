@@ -1,6 +1,8 @@
 import sqlite3
 
 conn = sqlite3.connect('items.db')
-conn.execute('ALTER TABLE items ADD COLUMN tags TEXT')
+conn.execute('UPDATE items SET user_id = 1 WHERE user_id IS NULL')
+conn.commit()
 conn.close()
-print("Completed")
+print('Update successful')
+
