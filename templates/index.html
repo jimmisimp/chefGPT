@@ -42,22 +42,20 @@
                     <ul class="list-group sortable-list mt-2" data-category="Ungrouped" id="Ungrouped">
                       {% for item in items_by_category['Ungrouped'] %}
                         <li class="list-group-item d-flex" data-id="item-{{ item.id }}">
-                                <input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-                                <label class="form-check-label flex-fill" for="item-{{ item.id }}">{{ item.name }}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
-                                <div class="dropdown float-end mb-auto" >
-                                    <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="bi bi-three-dots-vertical"></i>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton-{{ item.id }}">
-                                        <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')">Fresh</a></li>
-                                        <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')">Old</a></li>
-                                        <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')">Low</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></a></li>
-                                    </ul>
-                                </div>
-                               
-                            </li>
+                            <input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
+                            <label class="form-check-label flex-fill" for="item-{{ item.id }}">{{ item.name }}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+                            <div class="dropdown float-end me-2 mb-auto" >
+                                <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton-{{ item.id }}">
+                                    <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')">Fresh</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')">Old</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')">Low</a></li>
+                                </ul>
+                            </div>
+                            <a class="btn btn-outline-danger mb-auto btn-sm pull-right" onclick="deleteItem('{{ item.id }}', event)" style="float:right; z-index: 9" href="{{ url_for('delete', item_id=item.id) }}"><i class="bi bi-x-lg"></i></a>
+                        </li>
                       {% endfor %}
                     </ul>
                 </div>
@@ -81,7 +79,7 @@
                             <li class="list-group-item d-flex" data-id="item-{{ item.id }}">
                                 <input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
                                 <label class="form-check-label flex-fill" for="item-{{ item.id }}">{{ item.name }}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
-                                <div class="dropdown float-end mb-auto" >
+                                <div class="dropdown float-end me-2 mb-auto" >
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
                                     </button>
@@ -89,11 +87,9 @@
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')">Fresh</a></li>
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')">Old</a></li>
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')">Low</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></a></li>
                                     </ul>
                                 </div>
-                               
+                                <a class="btn btn-outline-danger mb-auto btn-sm pull-right" onclick="deleteItem('{{ item.id }}', event)" style="float:right; z-index: 9" href="{{ url_for('delete', item_id=item.id) }}"><i class="bi bi-x-lg"></i></a>
                             </li>
                         {% endfor %}
                     </ul>
@@ -118,7 +114,7 @@
                             <li class="list-group-item d-flex" data-id="item-{{ item.id }}">
                                 <input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
                                 <label class="form-check-label flex-fill" for="item-{{ item.id }}">{{ item.name }}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
-                                <div class="dropdown float-end mb-auto" >
+                                <div class="dropdown float-end me-2 mb-auto" >
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
                                     </button>
@@ -126,11 +122,9 @@
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')">Fresh</a></li>
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')">Old</a></li>
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')">Low</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></a></li>
                                     </ul>
                                 </div>
-                               
+                                <a class="btn btn-outline-danger mb-auto btn-sm pull-right" onclick="deleteItem('{{ item.id }}', event)" style="float:right; z-index: 9" href="{{ url_for('delete', item_id=item.id) }}"><i class="bi bi-x-lg"></i></a>
                             </li>
                         {% endfor %}
                     </ul>
@@ -155,7 +149,7 @@
                             <li class="list-group-item d-flex" data-id="item-{{ item.id }}">
                                 <input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
                                 <label class="form-check-label flex-fill" for="item-{{ item.id }}">{{ item.name }}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
-                                <div class="dropdown float-end mb-auto" >
+                                <div class="dropdown float-end me-2 mb-auto" >
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
                                     </button>
@@ -163,11 +157,9 @@
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')">Fresh</a></li>
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')">Old</a></li>
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')">Low</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></a></li>
                                     </ul>
                                 </div>
-                               
+                                <a class="btn btn-outline-danger mb-auto btn-sm pull-right" onclick="deleteItem('{{ item.id }}', event)" style="float:right; z-index: 9" href="{{ url_for('delete', item_id=item.id) }}"><i class="bi bi-x-lg"></i></a>
                             </li>
                         {% endfor %}
                     </ul>
@@ -192,7 +184,7 @@
                             <li class="list-group-item d-flex" data-id="item-{{ item.id }}">
                                 <input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
                                 <label class="form-check-label flex-fill" for="item-{{ item.id }}">{{ item.name }}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
-                                <div class="dropdown float-end mb-auto" >
+                                <div class="dropdown float-end me-2 mb-auto" >
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
                                     </button>
@@ -200,11 +192,9 @@
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')">Fresh</a></li>
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')">Old</a></li>
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')">Low</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></a></li>
                                     </ul>
                                 </div>
-                               
+                                <a class="btn btn-outline-danger mb-auto btn-sm pull-right" onclick="deleteItem('{{ item.id }}', event)" style="float:right; z-index: 9" href="{{ url_for('delete', item_id=item.id) }}"><i class="bi bi-x-lg"></i></a>
                             </li>
                         {% endfor %}
                     </ul>
@@ -229,7 +219,7 @@
                             <li class="list-group-item d-flex" data-id="item-{{ item.id }}">
                                 <input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
                                 <label class="form-check-label flex-fill" for="item-{{ item.id }}">{{ item.name }}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
-                                <div class="dropdown float-end mb-auto" >
+                                <div class="dropdown float-end me-2 mb-auto" >
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
                                     </button>
@@ -237,11 +227,9 @@
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')">Fresh</a></li>
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')">Old</a></li>
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')">Low</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></a></li>
                                     </ul>
                                 </div>
-                               
+                                <a class="btn btn-outline-danger mb-auto btn-sm pull-right" onclick="deleteItem('{{ item.id }}', event)" style="float:right; z-index: 9" href="{{ url_for('delete', item_id=item.id) }}"><i class="bi bi-x-lg"></i></a>
                             </li>
                         {% endfor %}
                     </ul>
@@ -266,7 +254,7 @@
                             <li class="list-group-item d-flex" data-id="item-{{ item.id }}">
                                 <input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
                                 <label class="form-check-label flex-fill" for="item-{{ item.id }}">{{ item.name }}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
-                                <div class="dropdown float-end mb-auto" >
+                                <div class="dropdown float-end me-2 mb-auto" >
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
                                     </button>
@@ -274,11 +262,9 @@
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')">Fresh</a></li>
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')">Old</a></li>
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')">Low</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></a></li>
                                     </ul>
                                 </div>
-                               
+                                <a class="btn btn-outline-danger mb-auto btn-sm pull-right" onclick="deleteItem('{{ item.id }}', event)" style="float:right; z-index: 9" href="{{ url_for('delete', item_id=item.id) }}"><i class="bi bi-x-lg"></i></a>
                             </li>
                         {% endfor %}
                     </ul>
@@ -303,7 +289,7 @@
                             <li class="list-group-item d-flex" data-id="item-{{ item.id }}">
                                 <input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
                                 <label class="form-check-label flex-fill" for="item-{{ item.id }}">{{ item.name }}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
-                                <div class="dropdown float-end mb-auto" >
+                                <div class="dropdown float-end me-2 mb-auto" >
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
                                     </button>
@@ -311,11 +297,9 @@
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')">Fresh</a></li>
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')">Old</a></li>
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')">Low</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></a></li>
                                     </ul>
                                 </div>
-                               
+                                <a class="btn btn-outline-danger mb-auto btn-sm pull-right" onclick="deleteItem('{{ item.id }}', event)" style="float:right; z-index: 9" href="{{ url_for('delete', item_id=item.id) }}"><i class="bi bi-x-lg"></i></a>
                             </li>
                         {% endfor %}
                     </ul>
@@ -340,7 +324,7 @@
                             <li class="list-group-item d-flex" data-id="item-{{ item.id }}">
                                 <input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
                                 <label class="form-check-label flex-fill" for="item-{{ item.id }}">{{ item.name }}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
-                                <div class="dropdown float-end mb-auto" >
+                                <div class="dropdown float-end me-2 mb-auto" >
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
                                     </button>
@@ -348,11 +332,9 @@
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')">Fresh</a></li>
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')">Old</a></li>
                                         <li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')">Low</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></a></li>
                                     </ul>
                                 </div>
-                               
+                                <a class="btn btn-outline-danger mb-auto btn-sm pull-right" onclick="deleteItem('{{ item.id }}', event)" style="float:right; z-index: 9" href="{{ url_for('delete', item_id=item.id) }}"><i class="bi bi-x-lg"></i></a>
                             </li>
                         {% endfor %}
                     </ul>
@@ -505,7 +487,6 @@
             type,
             contentType: 'application/json',
             data: JSON.stringify(data),
-            cache: false,
             success: onSuccess,
             error: (xhr, status, error) => console.error(`Error: ${error}`)
         });
@@ -526,7 +507,6 @@
         receivedPrompts.forEach((prompt) => {
             const listItem = document.createElement('li');
             listItem.className = 'list-group-item list-group-item-action';
-            listItem.id = 'saved-'+prompt.id
             listItem.setAttribute('data-bs-toggle', 'modal');
             listItem.setAttribute('data-bs-target', '#promptModal');
 
