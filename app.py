@@ -119,7 +119,7 @@ def index():
         raw_item = request.form['item_name'].strip()
         if not raw_item:
             return redirect(url_for('index'))
-        item = re.sub(r'[^a-zA-Z0-9]+', ' ', raw_item.lower())
+        item = re.sub(r'[^a-zA-Z0-9 ]+', '', raw_item.lower())
         item_singular = p.singular_noun(item) if p.singular_noun(item) else item
 
         if item_singular:

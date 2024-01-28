@@ -1,0 +1,8 @@
+items.db
+Fridge Thing/
+templates/.vs
+.vs/
+requirements.txt
+node_modules/
+/compilerconfig.json
+/compilerconfig.json.defaults

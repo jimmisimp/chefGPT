@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.13.0/Sortable.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link href="static/custom.min.css" rel="stylesheet">
 	<title>ChefGPT</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script>
@@ -19,71 +20,71 @@
 			const setStoredTheme = theme => localStorage.setItem('theme', theme)
 
 			const getPreferredTheme = () => {
-			const storedTheme = getStoredTheme()
-			if (storedTheme) {
-				return storedTheme
-			}
+				const storedTheme = getStoredTheme()
+				if (storedTheme) {
+					return storedTheme
+				}
 
-			return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+				return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 			}
 
 			const setTheme = theme => {
-			if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-				document.documentElement.setAttribute('data-bs-theme', 'dark')
-			} else {
-				document.documentElement.setAttribute('data-bs-theme', theme)
-			}
+				if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+					document.documentElement.setAttribute('data-bs-theme', 'dark')
+				} else {
+					document.documentElement.setAttribute('data-bs-theme', theme)
+				}
 			}
 
 			setTheme(getPreferredTheme())
 
 			const showActiveTheme = (theme, focus = false) => {
-			const themeSwitcher = document.querySelector('#bd-theme')
+				const themeSwitcher = document.querySelector('#bd-theme')
 
-			if (!themeSwitcher) {
-				return
-			}
+				if (!themeSwitcher) {
+					return
+				}
 
-			const themeSwitcherText = document.querySelector('#bd-theme-text')
-			const activeThemeIcon = document.querySelector('.theme-icon-active use')
-			const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
-			const svgOfActiveBtn = btnToActive.querySelector('svg use').getAttribute('href')
+				const themeSwitcherText = document.querySelector('#bd-theme-text')
+				const activeThemeIcon = document.querySelector('.theme-icon-active use')
+				const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+				const svgOfActiveBtn = btnToActive.querySelector('svg use').getAttribute('href')
 
-			document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
-				element.classList.remove('active')
-				element.setAttribute('aria-pressed', 'false')
-			})
+				document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+					element.classList.remove('active')
+					element.setAttribute('aria-pressed', 'false')
+				})
 
-			btnToActive.classList.add('active')
-			btnToActive.setAttribute('aria-pressed', 'true')
-			activeThemeIcon.setAttribute('href', svgOfActiveBtn)
-			const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`
-			themeSwitcher.setAttribute('aria-label', themeSwitcherLabel)
+				btnToActive.classList.add('active')
+				btnToActive.setAttribute('aria-pressed', 'true')
+				activeThemeIcon.setAttribute('href', svgOfActiveBtn)
+				const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`
+				themeSwitcher.setAttribute('aria-label', themeSwitcherLabel)
 
-			if (focus) {
-				themeSwitcher.focus()
-			}
+				if (focus) {
+					themeSwitcher.focus()
+				}
 			}
 
 			window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-			const storedTheme = getStoredTheme()
-			if (storedTheme !== 'light' && storedTheme !== 'dark') {
-				setTheme(getPreferredTheme())
-			}
+				const storedTheme = getStoredTheme()
+				if (storedTheme !== 'light' && storedTheme !== 'dark') {
+					setTheme(getPreferredTheme())
+				}
 			})
 
 			window.addEventListener('DOMContentLoaded', () => {
-			showActiveTheme(getPreferredTheme())
+				showActiveTheme(getPreferredTheme())
 
-			document.querySelectorAll('[data-bs-theme-value]')
-				.forEach(toggle => {
-				toggle.addEventListener('click', () => {
-					const theme = toggle.getAttribute('data-bs-theme-value')
-					setStoredTheme(theme)
-					setTheme(theme)
-					showActiveTheme(theme, true)
-				})
-				})
+				document.querySelectorAll('[data-bs-theme-value]')
+					.forEach(toggle => {
+						toggle.addEventListener('click', () => {
+							const theme = toggle.getAttribute('data-bs-theme-value')
+							setStoredTheme(theme)
+							setTheme(theme)
+							showActiveTheme(theme, true)
+						})
+					})
 			})
 		})()
 	</script>
@@ -92,12 +93,12 @@
 <body>
 	<header class="navbar bd-gutter navbar-expand-md bg-primary-subtle">
 		<nav class="container-lg bd-gutter flex-wrap flex-lg-nowrap">
-			<h4 class="row my-1"><img style="max-width: 56px;" src="static/chef_gpt.png"></img><div class="m-auto col-auto">ChefGPT 2.0</div></h4>
+			<div class="row my-1"><img style="max-width: 56px;" src="static/chef_gpt.png"><h4 class="m-auto col-auto">ChefGPT</h4></div>
 			<div class="dropdown">
 				<button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="user-menu"><i class="bi bi-person-circle"></i> {{ username }}</button>
 				<ul class="dropdown-menu align-items-center dropdown-menu-end" aria-labelledby="user-menu">
-					<li><a class="dropdown-item align-items-center" data-bs-theme-value="light"><i class="bi me-2 opacity-50 bi-sun-fill"></i>Light mode</a></li>
-					<li><a class="dropdown-item align-items-center" data-bs-theme-value="dark"><i class="bi me-2 opacity-50 bi-moon-stars-fill"></i>Dark mode</a></li>
+					<li><button class="dropdown-item align-items-center" data-bs-theme-value="light"><i class="bi me-2 opacity-50 bi-sun-fill"></i>Light mode</button></li>
+					<li><button class="dropdown-item align-items-center" data-bs-theme-value="dark"><i class="bi me-2 opacity-50 bi-moon-stars-fill"></i>Dark mode</button></li>
 					<li><hr class="dropdown-divider"></li>
 					<li><a class="dropdown-item " href="/logout">Log out</a></li>
 				</ul>
@@ -107,73 +108,34 @@
 
 	<div class="container-lg row my-1 px-3 mx-auto">
 
-	<form method="POST" class="row mb-3 g-3 align-items-center hstack" id="itemForm">
-		<div class="col-sm-12 col-lg-6">
-			<input placeholder="Enter an item here" type="text" name="item_name" autocomplete="off" class="form-control col-sm-8" id="itemInput" maxlength="64" required>
-		</div>
-		<div class="col-lg-auto d-grid">
-			<button type="submit" class="btn btn-outline-primary "><i class="bi bi-plus-lg"></i> Add Item</button>
-		</div>
-	</form>
-
-	<div class="accordion mt-3" id="bucketsAccordion">
-		<div class="accordion-item">
-			<h2 class="accordion-header" id="headingUngrouped">
-				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUngrouped" aria-expanded="true" aria-controls="collapseUngrouped">
-					Not grouped <span class="badge bg-secondary ms-2">{{ items_by_category['Ungrouped'] | length }}</span>
-				</button>
-			</h2>
-			<div id="collapseUngrouped" class="accordion-collapse collapse show" aria-labelledby="headingUngrouped">
-				<div class="accordion-body p-2">
-					<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-						<button class="btn btn-outline-secondary" onclick="selectAll('Ungrouped')"><i class="bi bi-check-square"></i> Select All</button>
-						<button class="btn btn-outline-secondary" onclick="selectNone('Ungrouped')"><i class="bi bi-square"></i> Select None</button>
-					</div>
-					<ul class="list-group sortable-list mt-2" data-category="Ungrouped" id="Ungrouped">
-					  {% for item in items_by_category['Ungrouped'] %}
-						<li class="list-group-item d-flex" data-id="item-{{ item.id }}">
-								<input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-								<label class="form-check-label flex-fill" for="item-{{ item.id }}">{% if item.name|length > 32 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
-								<div class="dropdown float-end mb-auto" >
-									<button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
-										<i class="bi bi-three-dots-vertical"></i>
-									</button>
-									<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton-{{ item.id }}">
-										<li><h6 class="dropdown-header">Tags</h6></li>
-										<li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')">Fresh</a></li>
-										<li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')">Old</a></li>
-										<li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')">Low</a></li>
-										<li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Frozen')">Frozen</a></li>
-										<li><hr class="dropdown-divider"></li>
-										<li><a class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></a></li>
-									</ul>
-								</div>
-							   
-							</li>
-					  {% endfor %}
-					</ul>
-				</div>
+		<form method="POST" class="row mb-3 g-3 align-items-center hstack" id="itemForm">
+			<div class="col-sm-12 col-lg-6">
+				<input placeholder="Enter an item here" type="text" name="item_name" autocomplete="off" class="form-control" id="itemInput" maxlength="64" required>
 			</div>
-		</div>
+			<div class="col-lg-auto d-grid">
+				<button type="submit" class="btn btn-secondary "><i class="bi bi-plus-lg"></i> Add Item</button>
+			</div>
+		</form>
 
-		<div class="accordion-item">
-			<h2 class="accordion-header" id="headingStaples">
-				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseStaples" aria-expanded="true" aria-controls="collapseStaples">
-					🧀 Dairy and Stock <span class="badge bg-secondary ms-2">{{ items_by_category['Staples'] | length }}</span>
-				</button>
-			</h2>
-			<div id="collapseStaples" class="accordion-collapse collapse show" aria-labelledby="headingStaples">
-				<div class="accordion-body p-2">
-					<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-						<button class="btn btn-outline-secondary" onclick="selectAll('Staples')"><i class="bi bi-check-square"></i> Select All</button>
-						<button class="btn btn-outline-secondary" onclick="selectNone('Staples')"><i class="bi bi-square"></i> Select None</button>
-					</div>
-					<ul class="list-group sortable-list mt-2" data-category="Staples" id="Staples">
-						{% for item in items_by_category['Staples'] %}
+		<div class="accordion mt-3" id="bucketsAccordion">
+			<div class="accordion-item">
+				<h2 class="accordion-header" id="headingUngrouped">
+					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUngrouped" aria-expanded="true" aria-controls="collapseUngrouped">
+						Not grouped <span class="badge bg-secondary ms-2">{{ items_by_category['Ungrouped'] | length }}</span>
+					</button>
+				</h2>
+				<div id="collapseUngrouped" class="accordion-collapse collapse show" aria-labelledby="headingUngrouped">
+					<div class="accordion-body p-2">
+						<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+							<button class="btn btn-outline-secondary" onclick="selectAll('Ungrouped')"><i class="bi bi-check-square"></i> Select All</button>
+							<button class="btn btn-outline-secondary" onclick="selectNone('Ungrouped')"><i class="bi bi-square"></i> Select None</button>
+						</div>
+						<ul class="list-group sortable-list mt-2" data-category="Ungrouped" id="Ungrouped">
+							{% for item in items_by_category['Ungrouped'] %}
 							<li class="list-group-item d-flex" data-id="item-{{ item.id }}">
 								<input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-								<label class="form-check-label flex-fill" for="item-{{ item.id }}">{% if item.name|length > 32 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
-								<div class="dropdown float-end mb-auto" >
+								<label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 48 %}{{ item.name[:24] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+								<div class="dropdown float-end mb-auto">
 									<button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
 										<i class="bi bi-three-dots-vertical"></i>
 									</button>
@@ -187,32 +149,31 @@
 										<li><a class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></a></li>
 									</ul>
 								</div>
-							   
 							</li>
-						{% endfor %}
-					</ul>
+							{% endfor %}
+						</ul>
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="accordion-item">
-			<h2 class="accordion-header" id="headingOils">
-				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOils" aria-expanded="true" aria-controls="collapseOils">
-					🧂 Oils and Seasoning <span class="badge bg-secondary ms-2">{{ items_by_category['Oils'] | length }}</span>
-				</button>
-			</h2>
-			<div id="collapseOils" class="accordion-collapse collapse show" aria-labelledby="headingOils">
-				<div class="accordion-body p-2">
-					<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-						<button class="btn btn-outline-secondary" onclick="selectAll('Oils')"><i class="bi bi-check-square"></i> Select All</button>
-						<button class="btn btn-outline-secondary" onclick="selectNone('Oils')"><i class="bi bi-square"></i> Select None</button>
-					</div>
-					<ul class="list-group sortable-list mt-2" data-category="Oils" id="Oils">
-						{% for item in items_by_category['Oils'] %}
+			<div class="accordion-item">
+				<h2 class="accordion-header" id="headingStaples">
+					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseStaples" aria-expanded="true" aria-controls="collapseStaples">
+						🧀 Dairy and Stock <span class="badge bg-secondary ms-2">{{ items_by_category['Staples'] | length }}</span>
+					</button>
+				</h2>
+				<div id="collapseStaples" class="accordion-collapse collapse show" aria-labelledby="headingStaples">
+					<div class="accordion-body p-2">
+						<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+							<button class="btn btn-outline-secondary" onclick="selectAll('Staples')"><i class="bi bi-check-square"></i> Select All</button>
+							<button class="btn btn-outline-secondary" onclick="selectNone('Staples')"><i class="bi bi-square"></i> Select None</button>
+						</div>
+						<ul class="list-group sortable-list mt-2" data-category="Staples" id="Staples">
+							{% for item in items_by_category['Staples'] %}
 							<li class="list-group-item d-flex" data-id="item-{{ item.id }}">
 								<input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-								<label class="form-check-label flex-fill" for="item-{{ item.id }}">{% if item.name|length > 32 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
-								<div class="dropdown float-end mb-auto" >
+								<label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+								<div class="dropdown float-end mb-auto">
 									<button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
 										<i class="bi bi-three-dots-vertical"></i>
 									</button>
@@ -226,32 +187,31 @@
 										<li><a class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></a></li>
 									</ul>
 								</div>
-							   
 							</li>
-						{% endfor %}
-					</ul>
+							{% endfor %}
+						</ul>
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="accordion-item">
-			<h2 class="accordion-header" id="headingPantry">
-				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePantry" aria-expanded="true" aria-controls="collapsePantry">
-					🥫 Canned and Bagged <span class="badge bg-secondary ms-2">{{ items_by_category['Pantry'] | length }}</span>
-				</button>
-			</h2>
-			<div id="collapsePantry" class="accordion-collapse collapse show" aria-labelledby="headingPantry">
-				<div class="accordion-body p-2">
-					<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-						<button class="btn btn-outline-secondary" onclick="selectAll('Pantry')"><i class="bi bi-check-square"></i> Select All</button>
-						<button class="btn btn-outline-secondary" onclick="selectNone('Pantry')"><i class="bi bi-square"></i> Select None</button>
-					</div>
-					<ul class="list-group sortable-list mt-2" data-category="Pantry" id="Pantry">
-						{% for item in items_by_category['Pantry'] %}
+			<div class="accordion-item">
+				<h2 class="accordion-header" id="headingOils">
+					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOils" aria-expanded="true" aria-controls="collapseOils">
+						🧂 Oils and Seasoning <span class="badge bg-secondary ms-2">{{ items_by_category['Oils'] | length }}</span>
+					</button>
+				</h2>
+				<div id="collapseOils" class="accordion-collapse collapse show" aria-labelledby="headingOils">
+					<div class="accordion-body p-2">
+						<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+							<button class="btn btn-outline-secondary" onclick="selectAll('Oils')"><i class="bi bi-check-square"></i> Select All</button>
+							<button class="btn btn-outline-secondary" onclick="selectNone('Oils')"><i class="bi bi-square"></i> Select None</button>
+						</div>
+						<ul class="list-group sortable-list mt-2" data-category="Oils" id="Oils">
+							{% for item in items_by_category['Oils'] %}
 							<li class="list-group-item d-flex" data-id="item-{{ item.id }}">
 								<input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-								<label class="form-check-label flex-fill" for="item-{{ item.id }}">{% if item.name|length > 32 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
-								<div class="dropdown float-end mb-auto" >
+								<label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+								<div class="dropdown float-end mb-auto">
 									<button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
 										<i class="bi bi-three-dots-vertical"></i>
 									</button>
@@ -265,32 +225,31 @@
 										<li><a class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></a></li>
 									</ul>
 								</div>
-							   
 							</li>
-						{% endfor %}
-					</ul>
+							{% endfor %}
+						</ul>
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="accordion-item">
-			<h2 class="accordion-header" id="headingVegetables">
-				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVegetables" aria-expanded="true" aria-controls="collapseVegetables">
-					🥕 Vegetables <span class="badge bg-secondary ms-2">{{ items_by_category['Vegetables'] | length }}</span>
-				</button>
-			</h2>
-			<div id="collapseVegetables" class="accordion-collapse collapse show" aria-labelledby="headingVegetables">
-				<div class="accordion-body p-2">
-					<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-						<button class="btn btn-outline-secondary" onclick="selectAll('Vegetables')"><i class="bi bi-check-square"></i> Select All</button>
-						<button class="btn btn-outline-secondary" onclick="selectNone('Vegetables')"><i class="bi bi-square"></i> Select None</button>
-					</div>
-					<ul class="list-group sortable-list mt-2" data-category="Vegetables" id="Vegetables">
-						{% for item in items_by_category['Vegetables'] %}
+			<div class="accordion-item">
+				<h2 class="accordion-header" id="headingPantry">
+					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePantry" aria-expanded="true" aria-controls="collapsePantry">
+						🥫 Canned and Bagged <span class="badge bg-secondary ms-2">{{ items_by_category['Pantry'] | length }}</span>
+					</button>
+				</h2>
+				<div id="collapsePantry" class="accordion-collapse collapse show" aria-labelledby="headingPantry">
+					<div class="accordion-body p-2">
+						<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+							<button class="btn btn-outline-secondary" onclick="selectAll('Pantry')"><i class="bi bi-check-square"></i> Select All</button>
+							<button class="btn btn-outline-secondary" onclick="selectNone('Pantry')"><i class="bi bi-square"></i> Select None</button>
+						</div>
+						<ul class="list-group sortable-list mt-2" data-category="Pantry" id="Pantry">
+							{% for item in items_by_category['Pantry'] %}
 							<li class="list-group-item d-flex" data-id="item-{{ item.id }}">
 								<input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-								<label class="form-check-label flex-fill" for="item-{{ item.id }}">{% if item.name|length > 32 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
-								<div class="dropdown float-end mb-auto" >
+								<label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+								<div class="dropdown float-end mb-auto">
 									<button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
 										<i class="bi bi-three-dots-vertical"></i>
 									</button>
@@ -304,32 +263,31 @@
 										<li><a class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></a></li>
 									</ul>
 								</div>
-							   
 							</li>
-						{% endfor %}
-					</ul>
+							{% endfor %}
+						</ul>
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="accordion-item">
-			<h2 class="accordion-header" id="headingFruits">
-				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFruits" aria-expanded="true" aria-controls="collapseFruits">
-					🍒 Fruits <span class="badge bg-secondary ms-2">{{ items_by_category['Fruits'] | length }}</span>
-				</button>
-			</h2>
-			<div id="collapseFruits" class="accordion-collapse collapse show" aria-labelledby="headingFruits">
-				<div class="accordion-body p-2">
-					<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-						<button class="btn btn-outline-secondary" onclick="selectAll('Fruits')"><i class="bi bi-check-square"></i> Select All</button>
-						<button class="btn btn-outline-secondary" onclick="selectNone('Fruits')"><i class="bi bi-square"></i> Select None</button>
-					</div>
-					<ul class="list-group sortable-list mt-2" data-category="Fruits" id="Fruits">
-						{% for item in items_by_category['Fruits'] %}
+			<div class="accordion-item">
+				<h2 class="accordion-header" id="headingVegetables">
+					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVegetables" aria-expanded="true" aria-controls="collapseVegetables">
+						🥕 Vegetables <span class="badge bg-secondary ms-2">{{ items_by_category['Vegetables'] | length }}</span>
+					</button>
+				</h2>
+				<div id="collapseVegetables" class="accordion-collapse collapse show" aria-labelledby="headingVegetables">
+					<div class="accordion-body p-2">
+						<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+							<button class="btn btn-outline-secondary" onclick="selectAll('Vegetables')"><i class="bi bi-check-square"></i> Select All</button>
+							<button class="btn btn-outline-secondary" onclick="selectNone('Vegetables')"><i class="bi bi-square"></i> Select None</button>
+						</div>
+						<ul class="list-group sortable-list mt-2" data-category="Vegetables" id="Vegetables">
+							{% for item in items_by_category['Vegetables'] %}
 							<li class="list-group-item d-flex" data-id="item-{{ item.id }}">
 								<input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-								<label class="form-check-label flex-fill" for="item-{{ item.id }}">{% if item.name|length > 32 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
-								<div class="dropdown float-end mb-auto" >
+								<label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+								<div class="dropdown float-end mb-auto">
 									<button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
 										<i class="bi bi-three-dots-vertical"></i>
 									</button>
@@ -343,32 +301,31 @@
 										<li><a class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></a></li>
 									</ul>
 								</div>
-							   
 							</li>
-						{% endfor %}
-					</ul>
+							{% endfor %}
+						</ul>
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="accordion-item">
-			<h2 class="accordion-header" id="headingMeats">
-				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMeats" aria-expanded="true" aria-controls="collapseMeats">
-					🍖 Meats <span class="badge bg-secondary ms-2">{{ items_by_category['Meats'] | length }}</span>
-				</button>
-			</h2>
-			<div id="collapseMeats" class="accordion-collapse collapse show" aria-labelledby="headingMeats">
-				<div class="accordion-body p-2">
-					<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-						<button class="btn btn-outline-secondary" onclick="selectAll('Meats')"><i class="bi bi-check-square"></i> Select All</button>
-						<button class="btn btn-outline-secondary" onclick="selectNone('Meats')"><i class="bi bi-square"></i> Select None</button>
-					</div>
-					<ul class="list-group sortable-list mt-2" data-category="Meats" id="Meats">
-						{% for item in items_by_category['Meats'] %}
+			<div class="accordion-item">
+				<h2 class="accordion-header" id="headingFruits">
+					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFruits" aria-expanded="true" aria-controls="collapseFruits">
+						🍒 Fruits <span class="badge bg-secondary ms-2">{{ items_by_category['Fruits'] | length }}</span>
+					</button>
+				</h2>
+				<div id="collapseFruits" class="accordion-collapse collapse show" aria-labelledby="headingFruits">
+					<div class="accordion-body p-2">
+						<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+							<button class="btn btn-outline-secondary" onclick="selectAll('Fruits')"><i class="bi bi-check-square"></i> Select All</button>
+							<button class="btn btn-outline-secondary" onclick="selectNone('Fruits')"><i class="bi bi-square"></i> Select None</button>
+						</div>
+						<ul class="list-group sortable-list mt-2" data-category="Fruits" id="Fruits">
+							{% for item in items_by_category['Fruits'] %}
 							<li class="list-group-item d-flex" data-id="item-{{ item.id }}">
 								<input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-								<label class="form-check-label flex-fill" for="item-{{ item.id }}">{% if item.name|length > 32 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
-								<div class="dropdown float-end mb-auto" >
+								<label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+								<div class="dropdown float-end mb-auto">
 									<button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
 										<i class="bi bi-three-dots-vertical"></i>
 									</button>
@@ -382,32 +339,31 @@
 										<li><a class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></a></li>
 									</ul>
 								</div>
-							   
 							</li>
-						{% endfor %}
-					</ul>
+							{% endfor %}
+						</ul>
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="accordion-item">
-			<h2 class="accordion-header" id="headingBaking">
-				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBaking" aria-expanded="true" aria-controls="collapseBaking">
-					🍞 Flours and Baking <span class="badge bg-secondary ms-2">{{ items_by_category['Baking'] | length }}</span>
-				</button>
-			</h2>
-			<div id="collapseBaking" class="accordion-collapse collapse show" aria-labelledby="headingBaking">
-				<div class="accordion-body p-2">
-					<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-						<button class="btn btn-outline-secondary" onclick="selectAll('Baking')"><i class="bi bi-check-square"></i> Select All</button>
-						<button class="btn btn-outline-secondary" onclick="selectNone('Baking')"><i class="bi bi-square"></i> Select None</button>
-					</div>
-					<ul class="list-group sortable-list mt-2" data-category="Baking" id="Baking">
-						{% for item in items_by_category['Baking'] %}
+			<div class="accordion-item">
+				<h2 class="accordion-header" id="headingMeats">
+					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMeats" aria-expanded="true" aria-controls="collapseMeats">
+						🍖 Meats <span class="badge bg-secondary ms-2">{{ items_by_category['Meats'] | length }}</span>
+					</button>
+				</h2>
+				<div id="collapseMeats" class="accordion-collapse collapse show" aria-labelledby="headingMeats">
+					<div class="accordion-body p-2">
+						<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+							<button class="btn btn-outline-secondary" onclick="selectAll('Meats')"><i class="bi bi-check-square"></i> Select All</button>
+							<button class="btn btn-outline-secondary" onclick="selectNone('Meats')"><i class="bi bi-square"></i> Select None</button>
+						</div>
+						<ul class="list-group sortable-list mt-2" data-category="Meats" id="Meats">
+							{% for item in items_by_category['Meats'] %}
 							<li class="list-group-item d-flex" data-id="item-{{ item.id }}">
 								<input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-								<label class="form-check-label flex-fill" for="item-{{ item.id }}">{% if item.name|length > 32 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
-								<div class="dropdown float-end mb-auto" >
+								<label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+								<div class="dropdown float-end mb-auto">
 									<button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
 										<i class="bi bi-three-dots-vertical"></i>
 									</button>
@@ -421,32 +377,31 @@
 										<li><a class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></a></li>
 									</ul>
 								</div>
-							   
 							</li>
-						{% endfor %}
-					</ul>
+							{% endfor %}
+						</ul>
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="accordion-item">
-			<h2 class="accordion-header" id="headingAlcohol">
-				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAlcohol" aria-expanded="true" aria-controls="collapseAlcohol">
-					🍷 Alcohol <span class="badge bg-secondary ms-2">{{ items_by_category['Alcohol'] | length }}</span>
-				</button>
-			</h2>
-			<div id="collapseAlcohol" class="accordion-collapse collapse show" aria-labelledby="headingAlcohol">
-				<div class="accordion-body p-2">
-					<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-						<button class="btn btn-outline-secondary" onclick="selectAll('Alcohol')"><i class="bi bi-check-square"></i> Select All</button>
-						<button class="btn btn-outline-secondary" onclick="selectNone('Alcohol')"><i class="bi bi-square"></i> Select None</button>
-					</div>
-					<ul class="list-group sortable-list mt-2" data-category="Alcohol" id="Alcohol">
-						{% for item in items_by_category['Alcohol'] %}
+			<div class="accordion-item">
+				<h2 class="accordion-header" id="headingBaking">
+					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBaking" aria-expanded="true" aria-controls="collapseBaking">
+						🍞 Flours and Baking <span class="badge bg-secondary ms-2">{{ items_by_category['Baking'] | length }}</span>
+					</button>
+				</h2>
+				<div id="collapseBaking" class="accordion-collapse collapse show" aria-labelledby="headingBaking">
+					<div class="accordion-body p-2">
+						<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+							<button class="btn btn-outline-secondary" onclick="selectAll('Baking')"><i class="bi bi-check-square"></i> Select All</button>
+							<button class="btn btn-outline-secondary" onclick="selectNone('Baking')"><i class="bi bi-square"></i> Select None</button>
+						</div>
+						<ul class="list-group sortable-list mt-2" data-category="Baking" id="Baking">
+							{% for item in items_by_category['Baking'] %}
 							<li class="list-group-item d-flex" data-id="item-{{ item.id }}">
 								<input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-								<label class="form-check-label flex-fill" for="item-{{ item.id }}">{% if item.name|length > 32 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
-								<div class="dropdown float-end mb-auto" >
+								<label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+								<div class="dropdown float-end mb-auto">
 									<button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
 										<i class="bi bi-three-dots-vertical"></i>
 									</button>
@@ -460,154 +415,193 @@
 										<li><a class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></a></li>
 									</ul>
 								</div>
-							   
 							</li>
-						{% endfor %}
-					</ul>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="accordion-item">
+				<h2 class="accordion-header" id="headingAlcohol">
+					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAlcohol" aria-expanded="true" aria-controls="collapseAlcohol">
+						🍷 Alcohol <span class="badge bg-secondary ms-2">{{ items_by_category['Alcohol'] | length }}</span>
+					</button>
+				</h2>
+				<div id="collapseAlcohol" class="accordion-collapse collapse show" aria-labelledby="headingAlcohol">
+					<div class="accordion-body p-2">
+						<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+							<button class="btn btn-outline-secondary" onclick="selectAll('Alcohol')"><i class="bi bi-check-square"></i> Select All</button>
+							<button class="btn btn-outline-secondary" onclick="selectNone('Alcohol')"><i class="bi bi-square"></i> Select None</button>
+						</div>
+						<ul class="list-group sortable-list mt-2" data-category="Alcohol" id="Alcohol">
+							{% for item in items_by_category['Alcohol'] %}
+							<li class="list-group-item d-flex" data-id="item-{{ item.id }}">
+								<input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
+								<label class="form-check-label flex-fill text-break text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+								<div class="dropdown float-end mb-auto">
+									<button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
+										<i class="bi bi-three-dots-vertical"></i>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton-{{ item.id }}">
+										<li><h6 class="dropdown-header">Tags</h6></li>
+										<li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')">Fresh</a></li>
+										<li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')">Old</a></li>
+										<li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')">Low</a></li>
+										<li><a class="dropdown-item" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Frozen')">Frozen</a></li>
+										<li><hr class="dropdown-divider"></li>
+										<li><a class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></a></li>
+									</ul>
+								</div>
+							</li>
+							{% endfor %}
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
-		
-	</div>
-	<div class="container mt-4 py-3 border border-secondary bg-secondary-subtle rounded">
-		<h4>Generate</h4>
-		<p class="my-2">Select items above (or select nothing to use full list). Then, select a prompt.</p>
-		<form action="{{ url_for('ask_gpt4') }}" method="POST" class="mx-3 mt-3" id="askGptForm">
-			<div name="selected_prompt" class="mb-3 mx-auto row gap-2" id="promptSelect" onchange="updatePromptAccordion()">
-				{% for key, prompt in prompts.items() %}
-				<input type="radio" class="btn-check" name="options" value="{{ key }}" id="option-{{ key }}" autocomplete="off" style="display: none;" {{ 'checked' if loop.first }}>
-				<label value="{{ key }}" class="col-sm btn btn-outline-secondary" for="option-{{ key }}">{{ key }}</label>
-				{% endfor %}
+		<div class="container mt-4 py-3 border border-secondary bg-secondary-subtle rounded">
+			<div class="row m-auto">
+				<h4>Generate</h4>
+				<p>Select items above (or select nothing to use full list). Then, select a prompt.</p>
 			</div>
-			<div class="accordion my-3" id="currentPromptAccordion">
-				<div class="accordion-item">
-					<h2 class="accordion-header" id="headingCurrentPrompt">
-						<button class="accordion-button bg-body collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCurrentPrompt" aria-expanded="true" aria-controls="collapseCurrentPrompt">
-							View full prompt
-						</button>
-					</h2>
-					<div id="collapseCurrentPrompt" class="accordion-collapse collapse" aria-labelledby="headingCurrentPrompt">
-						<div class="accordion-body" id="promptDetails">
-						{% if gpt_response %}
-							<p>{{ prompts[selected_prompt] }}</p>
-							{% else %}
-							<p>Select a prompt and ask ChefGPT to see details here.</p>
-						{% endif %}
+			<form action="{{ url_for('ask_gpt4') }}" method="POST" class="mx-3 mt-1" id="askGptForm">
+				<div name="selected_prompt" class="mb-3 mx-auto row gap-2" id="promptSelect" onchange="updatePromptAccordion()">
+					{% for key, prompt in prompts.items() %}
+					<input type="radio" class="btn-check" name="options" value="{{ key }}" id="option-{{ key }}" autocomplete="off" style="display: none;" {{ 'checked' if loop.first }}>
+					<label value="{{ key }}" class="col-sm btn btn-outline-secondary" for="option-{{ key }}">{{ key }}</label>
+					{% endfor %}
+				</div>
+				<div class="accordion my-3" id="currentPromptAccordion">
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="headingCurrentPrompt">
+							<button class="accordion-button bg-body collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCurrentPrompt" aria-expanded="true" aria-controls="collapseCurrentPrompt">
+								View full prompt
+							</button>
+						</h2>
+						<div id="collapseCurrentPrompt" class="accordion-collapse collapse" aria-labelledby="headingCurrentPrompt">
+							<div class="accordion-body" id="promptDetails">
+								{% if gpt_response %}
+								<p>{{ prompts[selected_prompt] }}</p>
+								{% else %}
+								<p>Select a prompt and ask ChefGPT to see details here.</p>
+								{% endif %}
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<input type="hidden" name="selected_items" id="selectedItems">
-			<button id="askGptButton" type="submit" class="btn btn-primary btn-lg col-lg-auto col-sm-12">
-				<div id="buttonLoadingIndicator" class="spinner-border spinner-border-sm" role="status" style="display: none"></div>
-				<i id="buttonStars" class="bi bi-stars"></i> Ask ChefGPT
-			</button>
-		</form>
+				<input type="hidden" name="selected_items" id="selectedItems">
+				<button id="askGptButton" type="submit" class="btn btn-primary btn-lg col-lg-auto col-sm-12">
+					<div id="buttonLoadingIndicator" class="spinner-border spinner-border-sm" role="status" style="display: none"></div>
+					<i id="buttonStars" class="bi bi-stars"></i> Ask ChefGPT
+				</button>
+			</form>
 
-		<div id="gptLoader" class="card mt-3 bg-secondary-subtle" style="display: none;">
-			<div class="gpt-response-container card-body">
-				<div id="loadingIndicator">
-					<svg-animate trigger="loop" role="status" style="display: inline-block; width: 130px;">
-					  <svg viewBox="0 0 140 130" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:anim="http://www.w3.org/2000/anim" anim="" anim:transform-origin="50% 50%" anim:duration="7" anim:ease="ease-in-out">
-						<g id="chefGPT">
-						  <g id="karrot" anim:opacity="0[0.1:0.3:1:ease-in-out][0.3:0.6:1:ease-in-out][0.6:1.1:0:ease-in-out]" anim:y="0[0.3:0.6:40:ease-in-out][0.6:1.1:50:ease-in-out]" anim:rotation="0[0.2:0.5:38:ease-in-out]">
-							<path id="Vector 3" d="M36.8214 13.757L39.1045 14.7058C40.1912 15.1574 41.351 14.2388 41.1603 13.0776L40.7597 10.6378C40.5743 9.50918 39.2448 8.99488 38.3482 9.70499L36.4657 11.196C35.5691 11.9061 35.7652 13.3181 36.8214 13.757Z" fill="#27AE60"></path>
-							<path id="Vector 2" d="M46.6671 8.85667L33.7346 19.0995C32.2272 20.2934 32.2164 22.5772 33.7125 23.7853L62.905 47.3579C65.3938 49.3675 68.8797 46.6067 67.4934 43.7237L51.2334 9.90835C50.4001 8.17538 48.1745 7.66279 46.6671 8.85667Z" fill="#DA743B"></path>
-						  </g>
-						  <rect id="salt04" x="61.182" y="1" width="4.5" height="4.5" transform="rotate(45 61.182 1)" fill="#E0E0E0" anim:opacity="0[4.2:4.4:1:ease-in-out]" anim:y="-40[4.3:4.7:40:ease-in-out]"></rect>
-						  <rect id="salt03" x="67.182" y="1" width="2.63604" height="2.63604" transform="rotate(45 67.182 1)" fill="#E0E0E0" anim:opacity="0[4:4.2:1:ease-in-out]" anim:y="-40[4.1:4.5:40:ease-in-out]"></rect>
-						  <rect id="salt02" x="68.682" y="1" width="2.63604" height="2.63604" transform="rotate(45 68.682 1)" fill="#E0E0E0" anim:opacity="0[3.8:4:1:ease-in-out]" anim:y="-40[3.9:4.3:40:ease-in-out]"></rect>
-						  <rect id="salt01" x="58.182" y="1" width="4.5" height="4.5" transform="rotate(45 58.182 1)" fill="#E0E0E0" anim:opacity="0[3.6:3.8:1:ease-in-out]" anim:y="-40[3.7:4.1:40:ease-in-out]"></rect>
-						  <g id="tomato" anim:opacity="0[0.7:0.9:1:ease-in-out][0.9:1.4:1:ease-in-out][1.4:1.8:0:ease-in-out]" anim:y="0[0.9:1.3:50:ease-in-out][1.3:1.6:60:ease-in-out]" anim:rotation="0[0.9:1.3:-90:ease-in-out][1.3:1.6:-120:ease-in-out]">
-							<path id="Ellipse 20" d="M88.4307 26.6227C85.5793 34.8405 77.0976 37.7738 68.8798 34.9224C60.6619 32.071 55.8198 24.5147 58.6712 16.2969C61.5226 8.07901 70.0043 5.14575 78.2222 7.99714C86.44 10.8485 91.2821 18.4048 88.4307 26.6227Z" fill="#EB5757"></path>
-							<path id="Vector 4" d="M76.1019 6.4448L76.5278 8.8803C76.7305 10.0395 78.1282 10.5245 79.0053 9.73995L80.8482 8.09167C81.7007 7.32919 81.4205 5.93142 80.3399 5.5565L78.0712 4.7693C76.9906 4.39438 75.9049 5.31817 76.1019 6.4448Z" fill="#27AE60"></path>
-						  </g>
-						  <path id="Subtract" fill-rule="evenodd" clip-rule="evenodd" d="M74.9123 49.9502C72.0883 51.8739 68.6741 53 65 53C61.3259 53 57.9117 51.8739 55.0877 49.9502C51.9044 54.5114 46.6153 57.5 40.625 57.5C40.2471 57.5 39.872 57.4881 39.5 57.4647V63.875H90.5L90.5 57.4647C90.128 57.4881 89.7529 57.5 89.375 57.5C83.3847 57.5 78.0956 54.5114 74.9123 49.9502ZM90.5 66.125H39.5V71.375H90.5L90.5 66.125ZM40.625 55.25C40.2466 55.25 39.8715 55.2363 39.5 55.2095C32.5761 54.7087 26.923 49.623 25.5624 42.9736C25.3576 41.9727 25.25 40.9364 25.25 39.875C25.25 35.6293 26.9709 31.7856 29.7532 29.0032C30.6431 28.1134 31.6415 27.3321 32.7269 26.681C34.8232 25.4234 37.244 24.6513 39.8338 24.52C40.0959 24.5067 40.3596 24.5 40.625 24.5C43.8731 24.5 46.886 25.5072 49.3683 27.2263C49.9218 27.6097 50.449 28.0285 50.9465 28.4794C51.0176 28.5438 51.0881 28.6089 51.1579 28.6746C51.4945 27.9805 51.8818 27.3155 52.315 26.6844C55.0859 22.6477 59.7338 20 65 20C70.2662 20 74.9141 22.6477 77.685 26.6844C78.0911 27.276 78.4569 27.8975 78.7784 28.5448C78.7998 28.5879 78.821 28.6312 78.8421 28.6746C79.4009 28.1488 79.9991 27.6645 80.6317 27.2263C82.9589 25.6147 85.7524 24.6287 88.7688 24.5117C88.9699 24.5039 89.172 24.5 89.375 24.5C97.8664 24.5 104.75 31.3836 104.75 39.875C104.75 47.8357 98.6999 54.3833 90.947 55.1706C90.7986 55.1857 90.6496 55.1987 90.5 55.2095C90.1285 55.2363 89.7533 55.25 89.375 55.25C84.1088 55.25 79.4609 52.6023 76.69 48.5656C76.2568 47.9345 75.8695 47.2695 75.5329 46.5754C74.9741 47.1011 74.3759 47.5855 73.7433 48.0237C71.261 49.7428 68.2481 50.75 65 50.75C61.7519 50.75 58.739 49.7428 56.2567 48.0237C55.6241 47.5855 55.0259 47.1011 54.4671 46.5754C54.1305 47.2695 53.7432 47.9345 53.31 48.5656C50.5391 52.6023 45.8912 55.25 40.625 55.25Z" fill="#4168C4" anim:x="0[0:0.2:48:ease-in-out][4.9:5.1:0:ease-in-out]" anim:y="0[5.2:5.5:4:ease-in-out][5.5:5.8:0:ease-in-out][5.8:6.1:-8:ease-in-out][6.1:6.3:0:ease-in-out]" anim:rotation="0[0:0.2:90:ease-in-out][4.9:5.1:0:ease-in-out]"></path>
-						  <g id="oilstreaming" anim:opacity="0[2.2:2.5:1:ease-in-out]">
-							<mask id="mask0_1_16" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="57" y="29" width="6" height="43">
-							  <rect id="mask" x="57" y="29" width="6" height="43" rx="3" fill="#D9D9D9"></rect>
-							</mask>
-							<g mask="url(#mask0_1_16)">
-							  <path id="oilstreaming_2" d="M58 -53C58 -54.1046 58.8954 -55 60 -55V-55C61.1046 -55 62 -54.1046 62 -53V33C62 34.1046 61.1046 35 60 35V35C58.8954 35 58 34.1046 58 33V-53Z" fill="#96CB6C" anim:y="0[2.3:4.2:140:ease-in-out]"></path>
-							</g>
-						  </g>
-						  <path id="oilpool" d="M20.5 29L57.5 29L57 34L55.8127 32.8127C55.3027 32.3027 54.5777 32.0704 53.8663 32.189C52.7893 32.3684 52 33.3002 52 34.392V37H20.5V29Z" fill="#96CB6C" anim:opacity="0[2.1:2.3:1:ease-in-out][3:3.6:0:ease-in-out]"></path>
-						  <g id="oil" anim:opacity="0[1.4:1.7:1:ease-in-out][3:3.6:0:ease-in-out]" anim:rotation="0[1.9:2.1:90:ease-in-out]">
-							<path id="Rectangle 10" d="M31.3636 20.5L46.3636 20.5L46.3636 47.5L31.3636 47.5L31.3636 20.5Z" fill="#96CB6C" anim:opacity="1[2.1:2.5:0:ease-in-out]"></path>
-							<g id="Union">
-							  <mask id="path-14-inside-1_1_16" fill="white">
-								<path fill-rule="evenodd" clip-rule="evenodd" d="M35.3182 10C34.3391 10 33.5455 10.7937 33.5455 11.7727C33.5455 12.7518 34.3391 13.5455 35.3182 13.5455L35.3182 15.3182L33 15.3182C31.3432 15.3182 30 16.6613 30 18.3182L30 46C30 47.6569 31.3432 49 33 49L44.7273 49C46.3841 49 47.7273 47.6569 47.7273 46L47.7273 18.3182C47.7273 16.6613 46.3841 15.3182 44.7273 15.3182L42.4091 15.3182L42.4091 13.5455C43.3882 13.5455 44.1818 12.7518 44.1818 11.7727C44.1818 10.7937 43.3882 10 42.4091 10L35.3182 10Z"></path>
-							  </mask>
-							  <path d="M35.3182 13.5455L36.8182 13.5455L36.8182 12.0455L35.3182 12.0455L35.3182 13.5455ZM35.3182 15.3182L35.3182 16.8182L36.8182 16.8182L36.8182 15.3182L35.3182 15.3182ZM42.4091 15.3182L40.9091 15.3182L40.9091 16.8182L42.4091 16.8182L42.4091 15.3182ZM42.4091 13.5455L42.4091 12.0455L40.9091 12.0455L40.9091 13.5455L42.4091 13.5455ZM35.0455 11.7727C35.0455 11.6221 35.1676 11.5 35.3182 11.5L35.3182 8.5C33.5107 8.5 32.0455 9.96525 32.0455 11.7727L35.0455 11.7727ZM35.3182 12.0455C35.1676 12.0455 35.0455 11.9233 35.0455 11.7727L32.0455 11.7727C32.0455 13.5802 33.5107 15.0455 35.3182 15.0455L35.3182 12.0455ZM33.8182 13.5455L33.8182 15.3182L36.8182 15.3182L36.8182 13.5455L33.8182 13.5455ZM35.3182 13.8182L33 13.8182L33 16.8182L35.3182 16.8182L35.3182 13.8182ZM33 13.8182C30.5147 13.8182 28.5 15.8329 28.5 18.3182L31.5 18.3182C31.5 17.4898 32.1716 16.8182 33 16.8182L33 13.8182ZM28.5 18.3182L28.5 46L31.5 46L31.5 18.3182L28.5 18.3182ZM28.5 46C28.5 48.4853 30.5147 50.5 33 50.5L33 47.5C32.1716 47.5 31.5 46.8284 31.5 46L28.5 46ZM33 50.5L44.7273 50.5L44.7273 47.5L33 47.5L33 50.5ZM44.7273 50.5C47.2126 50.5 49.2273 48.4853 49.2273 46L46.2273 46C46.2273 46.8284 45.5557 47.5 44.7273 47.5L44.7273 50.5ZM49.2273 46L49.2273 18.3182L46.2273 18.3182L46.2273 46L49.2273 46ZM49.2273 18.3182C49.2273 15.8329 47.2126 13.8182 44.7273 13.8182L44.7273 16.8182C45.5557 16.8182 46.2273 17.4898 46.2273 18.3182L49.2273 18.3182ZM44.7273 13.8182L42.4091 13.8182L42.4091 16.8182L44.7273 16.8182L44.7273 13.8182ZM43.9091 15.3182L43.9091 13.5455L40.9091 13.5455L40.9091 15.3182L43.9091 15.3182ZM42.6818 11.7727C42.6818 11.9234 42.5597 12.0455 42.4091 12.0455L42.4091 15.0455C44.2166 15.0455 45.6818 13.5802 45.6818 11.7727L42.6818 11.7727ZM42.4091 11.5C42.5597 11.5 42.6818 11.6221 42.6818 11.7727L45.6818 11.7727C45.6818 9.96525 44.2166 8.5 42.4091 8.5L42.4091 11.5ZM35.3182 11.5L42.4091 11.5L42.4091 8.5L35.3182 8.5L35.3182 11.5Z" fill="#DDDDDD" mask="url(#path-14-inside-1_1_16)"></path>
-							</g>
-						  </g>
-						  <g id="chef_head" anim:y="0[0.5:0.6:2:ease-in-out][0.6:0.7:0:ease-in-out][1.2:1.3:4:ease-in-out][1.3:1.4:0:ease-in-out][5.2:5.5:4:ease-in-out][5.5:5.8:0:ease-in-out][5.8:6:-4:ease-in-out][6:6.2:0:ease-in-out]">
-							<rect id="Rectangle 5" x="25" y="71" width="80" height="39" rx="8" fill="#B8C0D6"></rect>
-							<circle id="Ellipse 18" cx="41" cy="91" r="9" fill="#4168C4" anim:y="0[5.2:5.6:4:ease-in-out][5.6:6:-2:ease-in-out][6:6.3:0:ease-in-out]"></circle>
-							<ellipse id="Ellipse 19" cx="91" cy="90.5" rx="7" ry="7.5" fill="#4168C4" anim:y="0[5.2:5.6:-4:ease-in-out][5.6:6:2:ease-in-out][6:6.3:0:ease-in-out]"></ellipse>
-							<path id="Vector 1" d="M55 91H57.6667L60.0303 88L62.3939 91L64.7576 94L67.1212 91L69.4848 88L71.8485 91L74.2121 94L76.5758 91H79" stroke="#4168C4" stroke-width="4" anim:x="0[5.2:5.6:-10:ease-in-out][5.6:6:10:ease-in-out][6:6.4:0:ease-in-out]"></path>
-						  </g>
-						  <g id="oileyes" anim:opacity="0[2.4:2.8:1:ease-in-out][3.9:4.2:0:ease-in-out]">
-							<mask id="mask1_1_16" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="32" y="82" width="66" height="18">
-							  <path id="Union_2" fill-rule="evenodd" clip-rule="evenodd" d="M41 100C45.9706 100 50 95.9706 50 91C50 86.0294 45.9706 82 41 82C36.0294 82 32 86.0294 32 91C32 95.9706 36.0294 100 41 100ZM91 98C94.866 98 98 94.6421 98 90.5C98 86.3579 94.866 83 91 83C87.134 83 84 86.3579 84 90.5C84 94.6421 87.134 98 91 98Z" fill="#4168C4"></path>
-							</mask>
-							<g mask="url(#mask1_1_16)">
-							  <rect id="oillevel" x="23" y="99" width="80" height="23" fill="#96CB6C" anim:y="0[2.8:3.8:-20:ease-in-out]"></rect>
-							</g>
-						  </g>
-						</g>
-					  </svg>
-					</svg-animate>
-					<p>Cooking something up...</p>
-					 <script src="https://cdn.jsdelivr.net/npm/@figmania/loader/build/index.umd.js"></script>
+			<div id="gptLoader" class="card mt-3 bg-secondary-subtle" style="display: none;">
+				<div class="gpt-response-container card-body">
+					<div id="loadingIndicator">
+						<svg-animate trigger="loop" role="status" style="display: inline-block; width: 130px;">
+							<svg viewBox="0 0 140 130" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:anim="http://www.w3.org/2000/anim" anim="" anim:transform-origin="50% 50%" anim:duration="7" anim:ease="ease-in-out">
+								<g id="chefGPT">
+									<g id="karrot" anim:opacity="0[0.1:0.3:1:ease-in-out][0.3:0.6:1:ease-in-out][0.6:1.1:0:ease-in-out]" anim:y="0[0.3:0.6:40:ease-in-out][0.6:1.1:50:ease-in-out]" anim:rotation="0[0.2:0.5:38:ease-in-out]">
+										<path id="Vector 3" d="M36.8214 13.757L39.1045 14.7058C40.1912 15.1574 41.351 14.2388 41.1603 13.0776L40.7597 10.6378C40.5743 9.50918 39.2448 8.99488 38.3482 9.70499L36.4657 11.196C35.5691 11.9061 35.7652 13.3181 36.8214 13.757Z" fill="#27AE60"></path>
+										<path id="Vector 2" d="M46.6671 8.85667L33.7346 19.0995C32.2272 20.2934 32.2164 22.5772 33.7125 23.7853L62.905 47.3579C65.3938 49.3675 68.8797 46.6067 67.4934 43.7237L51.2334 9.90835C50.4001 8.17538 48.1745 7.66279 46.6671 8.85667Z" fill="#DA743B"></path>
+									</g>
+									<rect id="salt04" x="61.182" y="1" width="4.5" height="4.5" transform="rotate(45 61.182 1)" fill="#E0E0E0" anim:opacity="0[4.2:4.4:1:ease-in-out]" anim:y="-40[4.3:4.7:40:ease-in-out]"></rect>
+									<rect id="salt03" x="67.182" y="1" width="2.63604" height="2.63604" transform="rotate(45 67.182 1)" fill="#E0E0E0" anim:opacity="0[4:4.2:1:ease-in-out]" anim:y="-40[4.1:4.5:40:ease-in-out]"></rect>
+									<rect id="salt02" x="68.682" y="1" width="2.63604" height="2.63604" transform="rotate(45 68.682 1)" fill="#E0E0E0" anim:opacity="0[3.8:4:1:ease-in-out]" anim:y="-40[3.9:4.3:40:ease-in-out]"></rect>
+									<rect id="salt01" x="58.182" y="1" width="4.5" height="4.5" transform="rotate(45 58.182 1)" fill="#E0E0E0" anim:opacity="0[3.6:3.8:1:ease-in-out]" anim:y="-40[3.7:4.1:40:ease-in-out]"></rect>
+									<g id="tomato" anim:opacity="0[0.7:0.9:1:ease-in-out][0.9:1.4:1:ease-in-out][1.4:1.8:0:ease-in-out]" anim:y="0[0.9:1.3:50:ease-in-out][1.3:1.6:60:ease-in-out]" anim:rotation="0[0.9:1.3:-90:ease-in-out][1.3:1.6:-120:ease-in-out]">
+										<path id="Ellipse 20" d="M88.4307 26.6227C85.5793 34.8405 77.0976 37.7738 68.8798 34.9224C60.6619 32.071 55.8198 24.5147 58.6712 16.2969C61.5226 8.07901 70.0043 5.14575 78.2222 7.99714C86.44 10.8485 91.2821 18.4048 88.4307 26.6227Z" fill="#EB5757"></path>
+										<path id="Vector 4" d="M76.1019 6.4448L76.5278 8.8803C76.7305 10.0395 78.1282 10.5245 79.0053 9.73995L80.8482 8.09167C81.7007 7.32919 81.4205 5.93142 80.3399 5.5565L78.0712 4.7693C76.9906 4.39438 75.9049 5.31817 76.1019 6.4448Z" fill="#27AE60"></path>
+									</g>
+									<path id="Subtract" fill-rule="evenodd" clip-rule="evenodd" d="M74.9123 49.9502C72.0883 51.8739 68.6741 53 65 53C61.3259 53 57.9117 51.8739 55.0877 49.9502C51.9044 54.5114 46.6153 57.5 40.625 57.5C40.2471 57.5 39.872 57.4881 39.5 57.4647V63.875H90.5L90.5 57.4647C90.128 57.4881 89.7529 57.5 89.375 57.5C83.3847 57.5 78.0956 54.5114 74.9123 49.9502ZM90.5 66.125H39.5V71.375H90.5L90.5 66.125ZM40.625 55.25C40.2466 55.25 39.8715 55.2363 39.5 55.2095C32.5761 54.7087 26.923 49.623 25.5624 42.9736C25.3576 41.9727 25.25 40.9364 25.25 39.875C25.25 35.6293 26.9709 31.7856 29.7532 29.0032C30.6431 28.1134 31.6415 27.3321 32.7269 26.681C34.8232 25.4234 37.244 24.6513 39.8338 24.52C40.0959 24.5067 40.3596 24.5 40.625 24.5C43.8731 24.5 46.886 25.5072 49.3683 27.2263C49.9218 27.6097 50.449 28.0285 50.9465 28.4794C51.0176 28.5438 51.0881 28.6089 51.1579 28.6746C51.4945 27.9805 51.8818 27.3155 52.315 26.6844C55.0859 22.6477 59.7338 20 65 20C70.2662 20 74.9141 22.6477 77.685 26.6844C78.0911 27.276 78.4569 27.8975 78.7784 28.5448C78.7998 28.5879 78.821 28.6312 78.8421 28.6746C79.4009 28.1488 79.9991 27.6645 80.6317 27.2263C82.9589 25.6147 85.7524 24.6287 88.7688 24.5117C88.9699 24.5039 89.172 24.5 89.375 24.5C97.8664 24.5 104.75 31.3836 104.75 39.875C104.75 47.8357 98.6999 54.3833 90.947 55.1706C90.7986 55.1857 90.6496 55.1987 90.5 55.2095C90.1285 55.2363 89.7533 55.25 89.375 55.25C84.1088 55.25 79.4609 52.6023 76.69 48.5656C76.2568 47.9345 75.8695 47.2695 75.5329 46.5754C74.9741 47.1011 74.3759 47.5855 73.7433 48.0237C71.261 49.7428 68.2481 50.75 65 50.75C61.7519 50.75 58.739 49.7428 56.2567 48.0237C55.6241 47.5855 55.0259 47.1011 54.4671 46.5754C54.1305 47.2695 53.7432 47.9345 53.31 48.5656C50.5391 52.6023 45.8912 55.25 40.625 55.25Z" fill="#4168C4" anim:x="0[0:0.2:48:ease-in-out][4.9:5.1:0:ease-in-out]" anim:y="0[5.2:5.5:4:ease-in-out][5.5:5.8:0:ease-in-out][5.8:6.1:-8:ease-in-out][6.1:6.3:0:ease-in-out]" anim:rotation="0[0:0.2:90:ease-in-out][4.9:5.1:0:ease-in-out]"></path>
+									<g id="oilstreaming" anim:opacity="0[2.2:2.5:1:ease-in-out]">
+										<mask id="mask0_1_16" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="57" y="29" width="6" height="43">
+											<rect id="mask" x="57" y="29" width="6" height="43" rx="3" fill="#D9D9D9"></rect>
+										</mask>
+										<g mask="url(#mask0_1_16)">
+											<path id="oilstreaming_2" d="M58 -53C58 -54.1046 58.8954 -55 60 -55V-55C61.1046 -55 62 -54.1046 62 -53V33C62 34.1046 61.1046 35 60 35V35C58.8954 35 58 34.1046 58 33V-53Z" fill="#96CB6C" anim:y="0[2.3:4.2:140:ease-in-out]"></path>
+										</g>
+									</g>
+									<path id="oilpool" d="M20.5 29L57.5 29L57 34L55.8127 32.8127C55.3027 32.3027 54.5777 32.0704 53.8663 32.189C52.7893 32.3684 52 33.3002 52 34.392V37H20.5V29Z" fill="#96CB6C" anim:opacity="0[2.1:2.3:1:ease-in-out][3:3.6:0:ease-in-out]"></path>
+									<g id="oil" anim:opacity="0[1.4:1.7:1:ease-in-out][3:3.6:0:ease-in-out]" anim:rotation="0[1.9:2.1:90:ease-in-out]">
+										<path id="Rectangle 10" d="M31.3636 20.5L46.3636 20.5L46.3636 47.5L31.3636 47.5L31.3636 20.5Z" fill="#96CB6C" anim:opacity="1[2.1:2.5:0:ease-in-out]"></path>
+										<g id="Union">
+											<mask id="path-14-inside-1_1_16" fill="white">
+												<path fill-rule="evenodd" clip-rule="evenodd" d="M35.3182 10C34.3391 10 33.5455 10.7937 33.5455 11.7727C33.5455 12.7518 34.3391 13.5455 35.3182 13.5455L35.3182 15.3182L33 15.3182C31.3432 15.3182 30 16.6613 30 18.3182L30 46C30 47.6569 31.3432 49 33 49L44.7273 49C46.3841 49 47.7273 47.6569 47.7273 46L47.7273 18.3182C47.7273 16.6613 46.3841 15.3182 44.7273 15.3182L42.4091 15.3182L42.4091 13.5455C43.3882 13.5455 44.1818 12.7518 44.1818 11.7727C44.1818 10.7937 43.3882 10 42.4091 10L35.3182 10Z"></path>
+											</mask>
+											<path d="M35.3182 13.5455L36.8182 13.5455L36.8182 12.0455L35.3182 12.0455L35.3182 13.5455ZM35.3182 15.3182L35.3182 16.8182L36.8182 16.8182L36.8182 15.3182L35.3182 15.3182ZM42.4091 15.3182L40.9091 15.3182L40.9091 16.8182L42.4091 16.8182L42.4091 15.3182ZM42.4091 13.5455L42.4091 12.0455L40.9091 12.0455L40.9091 13.5455L42.4091 13.5455ZM35.0455 11.7727C35.0455 11.6221 35.1676 11.5 35.3182 11.5L35.3182 8.5C33.5107 8.5 32.0455 9.96525 32.0455 11.7727L35.0455 11.7727ZM35.3182 12.0455C35.1676 12.0455 35.0455 11.9233 35.0455 11.7727L32.0455 11.7727C32.0455 13.5802 33.5107 15.0455 35.3182 15.0455L35.3182 12.0455ZM33.8182 13.5455L33.8182 15.3182L36.8182 15.3182L36.8182 13.5455L33.8182 13.5455ZM35.3182 13.8182L33 13.8182L33 16.8182L35.3182 16.8182L35.3182 13.8182ZM33 13.8182C30.5147 13.8182 28.5 15.8329 28.5 18.3182L31.5 18.3182C31.5 17.4898 32.1716 16.8182 33 16.8182L33 13.8182ZM28.5 18.3182L28.5 46L31.5 46L31.5 18.3182L28.5 18.3182ZM28.5 46C28.5 48.4853 30.5147 50.5 33 50.5L33 47.5C32.1716 47.5 31.5 46.8284 31.5 46L28.5 46ZM33 50.5L44.7273 50.5L44.7273 47.5L33 47.5L33 50.5ZM44.7273 50.5C47.2126 50.5 49.2273 48.4853 49.2273 46L46.2273 46C46.2273 46.8284 45.5557 47.5 44.7273 47.5L44.7273 50.5ZM49.2273 46L49.2273 18.3182L46.2273 18.3182L46.2273 46L49.2273 46ZM49.2273 18.3182C49.2273 15.8329 47.2126 13.8182 44.7273 13.8182L44.7273 16.8182C45.5557 16.8182 46.2273 17.4898 46.2273 18.3182L49.2273 18.3182ZM44.7273 13.8182L42.4091 13.8182L42.4091 16.8182L44.7273 16.8182L44.7273 13.8182ZM43.9091 15.3182L43.9091 13.5455L40.9091 13.5455L40.9091 15.3182L43.9091 15.3182ZM42.6818 11.7727C42.6818 11.9234 42.5597 12.0455 42.4091 12.0455L42.4091 15.0455C44.2166 15.0455 45.6818 13.5802 45.6818 11.7727L42.6818 11.7727ZM42.4091 11.5C42.5597 11.5 42.6818 11.6221 42.6818 11.7727L45.6818 11.7727C45.6818 9.96525 44.2166 8.5 42.4091 8.5L42.4091 11.5ZM35.3182 11.5L42.4091 11.5L42.4091 8.5L35.3182 8.5L35.3182 11.5Z" fill="#DDDDDD" mask="url(#path-14-inside-1_1_16)"></path>
+										</g>
+									</g>
+									<g id="chef_head" anim:y="0[0.5:0.6:2:ease-in-out][0.6:0.7:0:ease-in-out][1.2:1.3:4:ease-in-out][1.3:1.4:0:ease-in-out][5.2:5.5:4:ease-in-out][5.5:5.8:0:ease-in-out][5.8:6:-4:ease-in-out][6:6.2:0:ease-in-out]">
+										<rect id="Rectangle 5" x="25" y="71" width="80" height="39" rx="8" fill="#B8C0D6"></rect>
+										<circle id="Ellipse 18" cx="41" cy="91" r="9" fill="#4168C4" anim:y="0[5.2:5.6:4:ease-in-out][5.6:6:-2:ease-in-out][6:6.3:0:ease-in-out]"></circle>
+										<ellipse id="Ellipse 19" cx="91" cy="90.5" rx="7" ry="7.5" fill="#4168C4" anim:y="0[5.2:5.6:-4:ease-in-out][5.6:6:2:ease-in-out][6:6.3:0:ease-in-out]"></ellipse>
+										<path id="Vector 1" d="M55 91H57.6667L60.0303 88L62.3939 91L64.7576 94L67.1212 91L69.4848 88L71.8485 91L74.2121 94L76.5758 91H79" stroke="#4168C4" stroke-width="4" anim:x="0[5.2:5.6:-10:ease-in-out][5.6:6:10:ease-in-out][6:6.4:0:ease-in-out]"></path>
+									</g>
+									<g id="oileyes" anim:opacity="0[2.4:2.8:1:ease-in-out][3.9:4.2:0:ease-in-out]">
+										<mask id="mask1_1_16" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="32" y="82" width="66" height="18">
+											<path id="Union_2" fill-rule="evenodd" clip-rule="evenodd" d="M41 100C45.9706 100 50 95.9706 50 91C50 86.0294 45.9706 82 41 82C36.0294 82 32 86.0294 32 91C32 95.9706 36.0294 100 41 100ZM91 98C94.866 98 98 94.6421 98 90.5C98 86.3579 94.866 83 91 83C87.134 83 84 86.3579 84 90.5C84 94.6421 87.134 98 91 98Z" fill="#4168C4"></path>
+										</mask>
+										<g mask="url(#mask1_1_16)">
+											<rect id="oillevel" x="23" y="99" width="80" height="23" fill="#96CB6C" anim:y="0[2.8:3.8:-20:ease-in-out]"></rect>
+										</g>
+									</g>
+								</g>
+							</svg>
+						</svg-animate>
+						<p>Cooking something up...</p>
+						<script src="https://cdn.jsdelivr.net/npm/@figmania/loader/build/index.umd.js"></script>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container mt-4">
+			<h4><i class="bi bi-clock-history"></i> Results history</h4>
+			<ul id="savedResults" class="list-group my-3">
+				<!-- Saved prompts will be populated here -->
+			</ul>
+		</div>
+
+		<!-- Modal for viewing the full prompt or the newly generated GPT-4 response -->
+		<div class="modal fade" id="promptModal" tabindex="-1" aria-labelledby="promptModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="promptModalLabel">Full result</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="promptModalContent">
+						<!-- Full prompt content will go here -->
+					</div>
+					<div class="modal-body" id="promptModalItems">
+						<!-- Associated items will go here -->
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deletePromptBtn">Delete</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div aria-live="polite" aria-atomic="true" class="position-relative">
+			<div class="toast-container position-fixed bottom-0 end-0 p-3">
+				<div id="itemMovedToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+					<div class="d-flex">
+						<div class="toast-body">
+							<!-- Text will be set dynamically -->
+						</div>
+						<button type="button" class="btn me-2 m-auto btn-link" data-bs-dismiss="toast" onclick="undoLastMove()">Undo</button>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="container mt-4">
-		<h4><i class="bi bi-clock-history"></i> Results history</h4>
-		<ul id="savedResults" class="list-group my-3">
-			<!-- Saved prompts will be populated here -->
-		</ul>
-	</div>
-
-	<!-- Modal for viewing the full prompt or the newly generated GPT-4 response -->
-	<div class="modal fade" id="promptModal" tabindex="-1" aria-labelledby="promptModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg modal-dialog-scrollable">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="promptModalLabel">Full result</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body" id="promptModalContent">
-					<!-- Full prompt content will go here -->
-				</div>
-				<div class="modal-body" id="promptModalItems">
-					<!-- Associated items will go here -->
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deletePromptBtn">Delete</button>
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
- <div aria-live="polite" aria-atomic="true" class="position-relative">
-	<div class="toast-container position-fixed bottom-0 end-0 p-3">
-		<div id="itemMovedToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
-			<div class="d-flex">
-				<div class="toast-body">
-					<!-- Text will be set dynamically -->
-				</div>
-				<button type="button" class="btn me-2 m-auto btn-link" data-bs-dismiss="toast" onclick="undoLastMove()">Undo</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-<script>
+	<script>
 	function executeAjaxRequest(url, type, data, onSuccess, onError) {
 		$.ajax({
 			url,
@@ -777,13 +771,13 @@
 	function initializeSortable(element) {
 		new Sortable(element, {
 			group: 'shared',
-			delay: 100,
-			delayOnTouchOnly: true,
+			delay: 96,
+			delayOnTouchOnly: false,
 			animation: 150,
 			filter: ".btn",
 			ghostClass: "list-group-item-dark",
-			dragClass: "list-group-item-light",
-			chosenClass: "list-group-item-light",
+			dragClass: "list-group-item-primary",
+			chosenClass: "list-group-item-primary",
 			emptyInsertThreshold: 32,
 			onStart: (evt) => {
 				lastMovedItem = {
@@ -957,7 +951,7 @@
 		} else {
 			console.error('Tags container not found for:', itemId);
 		}
-		
+
 	}
 
 	window.onload = function() {
@@ -973,7 +967,6 @@
 	document.addEventListener('DOMContentLoaded', function() {
 		loadSavedPrompts();
 	});
-</script>
-
+	</script>
 </body>
 </html>
