@@ -595,7 +595,7 @@
                     const myModal = new bootstrap.Modal(document.getElementById('promptModal'));
                     myModal.show();
                     loadSavedPrompts();
-                    ['gptLoader', 'buttonLoadingIndicator', 'askGptButton', 'buttonStars'].forEach(id => {
+                    ['gptLoader', 'buttonLoadingIndicator', 'buttonStars'].forEach(id => {
                         document.getElementById(id).style.display = (id === 'buttonStars') ? 'inline-block' : 'none';
                     });
                     document.getElementById('askGptButton').disabled = false;
@@ -710,7 +710,7 @@
 
     document.getElementById('askGptForm').onsubmit = function() {
         setSelectedItems();
-        ['gptLoader', 'buttonLoadingIndicator', 'askGptButton', 'buttonStars'].forEach(id => {
+        ['gptLoader', 'buttonLoadingIndicator', 'buttonStars'].forEach(id => {
             document.getElementById(id).style.display = id === 'buttonStars' ? 'none' : 'inline-block';
         });
         document.getElementById('askGptButton').disabled = true;

@@ -7,10 +7,11 @@ import json
 import inflect
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+from cryptography.fernet import Fernet
 
 app = Flask(__name__)
 app.secret_key = 'implet93'
-openai.api_key = os.environ.get('OPENAI_API_KEY')
+encryption_key = os.environ.get('ENCRYPTION_KEY')
 
 p = inflect.engine()
 
@@ -26,6 +27,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+
 class User(UserMixin):
     def __init__(self, id, username):
         self.id = id
@@ -33,7 +35,6 @@ class User(UserMixin):
 
 @login_manager.user_loader
 def load_user(user_id):
-    # Function to reload the user object from the user ID stored in the session
     conn = get_db_connection()
     user_data = conn.execute('SELECT * FROM users WHERE id = ?', (user_id,)).fetchone()
     conn.close()
@@ -41,6 +42,20 @@ def load_user(user_id):
         return None
     user = User(user_data['id'], user_data['username'])
     return user
+
+def get_openai_api_key():
+    conn = get_db_connection()
+    encrypted_key_row = conn.execute('SELECT openai_api_key FROM users WHERE id = ?', (current_user.id,)).fetchone()
+    encrypted_key = encrypted_key_row['openai_api_key'] if encrypted_key_row else None
+    conn.close()
+    
+    if encrypted_key:
+        cipher_suite = Fernet(encryption_key)
+        decrypted_key = cipher_suite.decrypt(encrypted_key).decode('utf-8')
+    else:
+        print("ERROR FETCHING KEY")
+    
+    return decrypted_key
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -90,7 +105,7 @@ def get_db_connection():
 
 def get_items_as_string():
     conn = get_db_connection()
-    items = conn.execute('SELECT * FROM items').fetchall()
+    items = conn.execute('SELECT * FROM items WHERE user_id = ?', (current_user.id,)).fetchall()
     conn.close()
     return ', '.join(item['name'] for item in items)
 
@@ -158,6 +173,7 @@ def ask_gpt4():
     selected_items = data['selected_items']
     selected_prompt = data['selected_prompt']
     system_message = prompts.get(selected_prompt, prompts["Detailed recipe"])
+    openai.api_key = get_openai_api_key()
 
     if not selected_items:
          items_string = get_items_as_string()
