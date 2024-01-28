@@ -3,6 +3,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 import sqlite3
 import openai
 import os
+import re
 import json
 import inflect
 from datetime import datetime
@@ -116,7 +117,9 @@ def index():
     gpt_response = request.args.get('gpt_response')
     if request.method == 'POST':
         raw_item = request.form['item_name'].strip()
-        item = raw_item.lower()
+        if not raw_item:
+            return redirect(url_for('index'))
+        item = re.sub(r'\W+', ' ', raw_item.lower())
         item_singular = p.singular_noun(item) if p.singular_noun(item) else item
 
         if item_singular:

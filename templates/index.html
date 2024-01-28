@@ -19,7 +19,7 @@
 
     <form method="POST" class="row mb-3 g-3 align-items-center hstack" id="itemForm">
         <div class="col-sm-12 col-lg-6">
-            <input placeholder="Enter an item here" type="text" name="item_name" autocomplete="off" class="form-control col-sm-8" id="itemInput">
+            <input placeholder="Enter an item here" type="text" name="item_name" autocomplete="off" class="form-control col-sm-8" id="itemInput" maxlength="64" required>
         </div>
         <div class="col-lg-auto d-grid">
             <button type="submit" class="btn btn-light "><i class="bi bi-plus-lg"></i> Add Item</button>
@@ -43,7 +43,7 @@
                       {% for item in items_by_category['Ungrouped'] %}
                         <li class="list-group-item d-flex" data-id="item-{{ item.id }}">
                                 <input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-                                <label class="form-check-label flex-fill" for="item-{{ item.id }}">{{ item.name }}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+                                <label class="form-check-label flex-fill" for="item-{{ item.id }}">{% if item.name|length > 32 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto" >
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
@@ -80,7 +80,7 @@
                         {% for item in items_by_category['Staples'] %}
                             <li class="list-group-item d-flex" data-id="item-{{ item.id }}">
                                 <input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-                                <label class="form-check-label flex-fill" for="item-{{ item.id }}">{{ item.name }}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+                                <label class="form-check-label flex-fill" for="item-{{ item.id }}">{% if item.name|length > 32 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto" >
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
@@ -117,7 +117,7 @@
                         {% for item in items_by_category['Oils'] %}
                             <li class="list-group-item d-flex" data-id="item-{{ item.id }}">
                                 <input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-                                <label class="form-check-label flex-fill" for="item-{{ item.id }}">{{ item.name }}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+                                <label class="form-check-label flex-fill" for="item-{{ item.id }}">{% if item.name|length > 32 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto" >
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
@@ -154,7 +154,7 @@
                         {% for item in items_by_category['Pantry'] %}
                             <li class="list-group-item d-flex" data-id="item-{{ item.id }}">
                                 <input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-                                <label class="form-check-label flex-fill" for="item-{{ item.id }}">{{ item.name }}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+                                <label class="form-check-label flex-fill" for="item-{{ item.id }}">{% if item.name|length > 32 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto" >
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
@@ -191,7 +191,7 @@
                         {% for item in items_by_category['Vegetables'] %}
                             <li class="list-group-item d-flex" data-id="item-{{ item.id }}">
                                 <input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-                                <label class="form-check-label flex-fill" for="item-{{ item.id }}">{{ item.name }}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+                                <label class="form-check-label flex-fill" for="item-{{ item.id }}">{% if item.name|length > 32 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto" >
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
@@ -228,7 +228,7 @@
                         {% for item in items_by_category['Fruits'] %}
                             <li class="list-group-item d-flex" data-id="item-{{ item.id }}">
                                 <input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-                                <label class="form-check-label flex-fill" for="item-{{ item.id }}">{{ item.name }}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+                                <label class="form-check-label flex-fill" for="item-{{ item.id }}">{% if item.name|length > 32 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto" >
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
@@ -265,7 +265,7 @@
                         {% for item in items_by_category['Meats'] %}
                             <li class="list-group-item d-flex" data-id="item-{{ item.id }}">
                                 <input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-                                <label class="form-check-label flex-fill" for="item-{{ item.id }}">{{ item.name }}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+                                <label class="form-check-label flex-fill" for="item-{{ item.id }}">{% if item.name|length > 32 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto" >
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
@@ -302,7 +302,7 @@
                         {% for item in items_by_category['Baking'] %}
                             <li class="list-group-item d-flex" data-id="item-{{ item.id }}">
                                 <input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-                                <label class="form-check-label flex-fill" for="item-{{ item.id }}">{{ item.name }}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+                                <label class="form-check-label flex-fill" for="item-{{ item.id }}">{% if item.name|length > 32 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto" >
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
@@ -339,7 +339,7 @@
                         {% for item in items_by_category['Alcohol'] %}
                             <li class="list-group-item d-flex" data-id="item-{{ item.id }}">
                                 <input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-                                <label class="form-check-label flex-fill" for="item-{{ item.id }}">{{ item.name }}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+                                <label class="form-check-label flex-fill" for="item-{{ item.id }}">{% if item.name|length > 32 %}{{ item.name[:32] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto" >
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
@@ -364,12 +364,13 @@
     <div class="container mt-4 py-3 border border-secondary bg-secondary-subtle rounded">
         <h4>Generate</h4>
         <p class="my-2">Select items above (or select nothing to use full list). Then, select a prompt.</p>
-        <form action="{{ url_for('ask_gpt4') }}" method="POST" class="mt-3" id="askGptForm">
-            <select name="selected_prompt" class="form-select mb-3 form-select-lg" id="promptSelect" onchange="updatePromptAccordion()">
+        <form action="{{ url_for('ask_gpt4') }}" method="POST" class="mx-3 mt-3" id="askGptForm">
+            <div name="selected_prompt" class="mb-3 row gap-2" id="promptSelect" onchange="updatePromptAccordion()">
                 {% for key, prompt in prompts.items() %}
-                <option value="{{ key }}">{{ key }}</option>
+                <input type="radio" class="btn-check" name="options" value="{{ key }}" id="option-{{ key }}" autocomplete="off" {{ 'checked' if loop.first }}>
+                <label value="{{ key }}" class="col-sm btn btn-outline-secondary" for="option-{{ key }}">{{ key }}</label>
                 {% endfor %}
-            </select>
+            </div>
             <div class="accordion my-3" id="currentPromptAccordion">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingCurrentPrompt">
@@ -585,7 +586,7 @@
         $('#askGptForm').submit((event) => {
             event.preventDefault();
             const selectedItems = document.getElementById('selectedItems').value;
-            const selectedPrompt = document.getElementById('promptSelect').value;
+            const selectedPrompt = document.querySelector('input[name="options"]:checked').value;
 
             executeAjaxRequest('/ask-gpt4', 'POST', { selected_items: selectedItems, selected_prompt: selectedPrompt }, (response) => {
                 savePrompt(response.gpt_response, selectedItems, (promptId) => {
@@ -724,7 +725,7 @@
     }
 
     function updatePromptAccordion() {
-        const selectedPromptKey = document.getElementById('promptSelect').value;
+        const selectedPromptKey = document.querySelector('input[name="options"]:checked').value;
         const promptDetails = {
         {% for key, prompt in prompts.items() %}
         "{{ key }}":"{{ prompt }}",
