@@ -25,7 +25,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 # print("chefSteph",generate_password_hash,encrypted_key)
 conn = sqlite3.connect('items.db')
-conn.execute("UPDATE users SET username = 'chefStef' WHERE username = chefSteph")
+conn.execute("UPDATE users SET username = 'chefStef' WHERE username = 'chefSteph'")
 conn.commit()
 
 # Close the connection
