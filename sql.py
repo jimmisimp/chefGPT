@@ -17,7 +17,7 @@ password_hash = generate_password_hash(password)
 
 conn = sqlite3.connect('items.db')
 # Execute the update with parameter substitution
-conn.execute("INSERT INTO users (username,password,openai_api_key) VALUES (?, ?, ?)", ("chefSteph",generate_password_hash,encrypted_key))
+conn.execute("INSERT INTO users (username,password_hash,openai_api_key) VALUES (?, ?, ?)", ("chefSteph",generate_password_hash,encrypted_key))
 conn.commit()
 
 # Close the connection
