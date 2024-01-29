@@ -175,6 +175,7 @@ def ask_gpt4():
     data = request.get_json()
     selected_items = data['selected_items']
     selected_prompt = data['selected_prompt']
+
     system_message = prompts.get(selected_prompt, prompts["Detailed recipe"])
     openai.api_key = get_openai_api_key()
 
@@ -182,6 +183,24 @@ def ask_gpt4():
          items_string = get_items_as_string()
     else:
          items_string = selected_items
+         
+    additional_instructions = []
+    region = data['region']
+    modifier = data['modifier']
+    specifications = data['specifications']
+    
+    if region and region.strip():
+        additional_instructions.append(f"Create something appropriate to {region}")
+    if modifier and modifier.strip():
+        additional_instructions.append(f"Create something that is {modifier}")
+    if specifications and specifications.strip():
+        additional_instructions.append(f"I very specifically want you to create {specifications}")
+
+    additional_instructions_str = ", ".join(additional_instructions)
+
+    if additional_instructions_str:
+        system_message += f"\n\n{additional_instructions_str}"
+
     prompt_instruct = "Please refrain from including an opening or closing paragraph, just get right in to the recipes. The list of items I'd like you to use is: "
     combined_prompt = prompt_instruct + items_string
     print(system_message, combined_prompt)

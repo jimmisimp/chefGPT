@@ -1,8 +1,13 @@
 items.db
 Fridge Thing/
 templates/.vs
+templates/scss
 .vs/
 requirements.txt
 node_modules/
+venv/
 /compilerconfig.json
 /compilerconfig.json.defaults
+*.pyproj
+*.scss
+static/custom.css

@@ -466,12 +466,49 @@
 				<p>Select items above (or select nothing to use full list). Then, select a prompt.</p>
 			</div>
 			<form action="{{ url_for('ask_gpt4') }}" method="POST" class="mx-3 mt-1" id="askGptForm">
+				<!-- Prompt selection -->
 				<div name="selected_prompt" class="mb-3 mx-auto row gap-2" id="promptSelect" onchange="updatePromptAccordion()">
 					{% for key, prompt in prompts.items() %}
 					<input type="radio" class="btn-check" name="options" value="{{ key }}" id="option-{{ key }}" autocomplete="off" style="display: none;" {{ 'checked' if loop.first }}>
 					<label value="{{ key }}" class="col-sm btn btn-outline-secondary" for="option-{{ key }}">{{ key }}</label>
 					{% endfor %}
 				</div>
+				<!-- Advanced settings -->
+				<a class="mb-2 btn btn-link align-items-center col-12" onclick="toggleAdvancedSettings()"><i class="bi bi-gear me-2"></i>Advanced settings</a>
+				<div class="row g-3 mb-3" style="display: none" id="advancedSettings">
+					<div class="col-md-6">
+						<select class="form-select" id="regionSelect" name="region">
+							<option selected>Select a region</option>
+							<option value="North America">North America</option>
+							<option value="Latin America">Latin America</option>
+							<option value="Western Europe">Western Europe</option>
+							<option value="Eastern Europe">Eastern Europe</option>
+							<option value="Middle East">Middle East</option>
+							<option value="Africa">Africa</option>
+							<option value="South Asia">South Asia</option>
+							<option value="Southeast Asia">Southeast Asia</option>
+							<option value="East Asia">East Asia</option>
+						</select>
+					</div>
+					<div class="col-md-6">
+						<select class="form-select" id="modifierSelect" name="modifier">
+							<option selected>Select a modifier</option>
+							<option value="simple">Simple</option>
+							<option value="quick and easy">Quick and Easy</option>
+							<option value="inventive">Inventive</option>
+							<option value="complex">Complex</option>
+							<option value="haute cuisine">Haute Cuisine</option>
+							<option value="fusion">Fusion</option>
+							<option value="spicy">Spicy</option>
+							<option value="indulgent">Indulgent</option>
+						</select>
+					</div>
+					<div class="col-md-9">
+						<input type="text" class="form-control" id="specifications" name="specifications" placeholder="Specific dish or instructions" ">
+					</div>
+					<button type="button" class="col-md-3 btn btn-secondary" id="randomizeBtn" onclick="randomizeSelections()"><i class="bi bi-dice-5-fill me-2"></i>Randomize</button>
+				</div>
+				<!-- Prompt details -->
 				<div class="accordion my-3" id="currentPromptAccordion">
 					<div class="accordion-item">
 						<h2 class="accordion-header" id="headingCurrentPrompt">
@@ -688,9 +725,12 @@
 		$('#askGptForm').submit((event) => {
 			event.preventDefault();
 			const selectedItems = document.getElementById('selectedItems').value;
+			const region = document.getElementById('regionSelect').value;
+			const modifier = document.getElementById('modifierSelect').value;
+            const specifications = document.getElementById('specifications').value;
 			const selectedPrompt = document.querySelector('input[name="options"]:checked').value;
 
-			executeAjaxRequest('/ask-gpt4', 'POST', { selected_items: selectedItems, selected_prompt: selectedPrompt }, (response) => {
+			executeAjaxRequest('/ask-gpt4', 'POST', { selected_items: selectedItems, selected_prompt: selectedPrompt, region: region, modifier: modifier, specifications: specifications }, (response) => {
 				savePrompt(response.gpt_response, selectedItems, (promptId) => {
 					document.getElementById('promptModalContent').innerHTML = formatContent(response.gpt_response);
 					document.getElementById('deletePromptBtn').onclick = () => deletePrompt(promptId);
@@ -954,6 +994,16 @@
 
 	}
 
+    function randomizeSelections() {
+        const regionSelect = document.getElementById('regionSelect');
+        const modifierSelect = document.getElementById('modifierSelect');
+        const regions = regionSelect.options;
+        const modifiers = modifierSelect.options;
+
+        regionSelect.selectedIndex = Math.floor(Math.random() * regions.length);
+        modifierSelect.selectedIndex = Math.floor(Math.random() * modifiers.length);
+	}
+
 	window.onload = function() {
 		updatePromptAccordion();
 		document.getElementById("itemInput").focus();
@@ -967,6 +1017,14 @@
 	document.addEventListener('DOMContentLoaded', function() {
 		loadSavedPrompts();
 	});
+
+	function toggleAdvancedSettings() {
+        if (document.getElementById('advancedSettings').style.display === 'none' || document.getElementById('advancedSettings').style.display === '') {
+            document.getElementById('advancedSettings').style.display = 'flex';
+		} else {
+            document.getElementById('advancedSettings').style.display = 'none';
+		}
+	};
 	</script>
 </body>
 </html>
