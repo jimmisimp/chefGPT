@@ -75,6 +75,7 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    error = None
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -88,10 +89,9 @@ def login():
             login_user(user)
             return redirect(url_for('index'))
         else:
-            # Invalid credentials
-            pass  # Handle login failure
+            error = 'Invalid username or password'
 
-    return render_template('login.html')
+    return render_template('login.html', error=error)
 
 @app.route('/logout')
 @login_required
@@ -119,8 +119,7 @@ def index():
         raw_item = request.form['item_name'].strip()
         if not raw_item:
             return redirect(url_for('index'))
-        item = re.sub(r'[^a-zA-Z0-9 ]+', '', raw_item.lower())
-        item_singular = p.singular_noun(item) if p.singular_noun(item) else item
+        item_singular = processItems(raw_item)
 
         if item_singular:
             existing_item = conn.execute('SELECT * FROM items WHERE name = ? AND user_id = ?', (item_singular, current_user.id)).fetchone()
@@ -144,6 +143,25 @@ def index():
 
     conn.close()
     return render_template('index.html', items_by_category=items_by_category, gpt_response=gpt_response, prompts=prompts, username=current_user.username)
+
+def processItems(raw_item):
+    item = re.sub(r'[^a-zA-Z0-9 ]+', '', raw_item.lower())
+    item_singular = p.singular_noun(item) if p.singular_noun(item) else item
+    return item_singular
+
+@app.route('/update-item-name/<int:item_id>', methods=['POST'])
+@login_required
+def update_item_name(item_id):
+    new_name = request.json['new_name'].strip()
+    if not new_name:
+        return jsonify({'status': 'error', 'message': 'Item name cannot be empty'}), 400
+    new_name_singular = processItems(new_name)
+    conn = get_db_connection()
+    conn.execute('UPDATE items SET name = ? WHERE id = ? AND user_id = ?', (new_name_singular, item_id, current_user.id))
+    conn.commit()
+    conn.close()
+
+    return jsonify({'status': 'success', 'message': 'Item name updated successfully'})
 
 @app.route('/update-items', methods=['POST'])
 @login_required
@@ -266,16 +284,30 @@ def delete_item_from_prompt():
     conn.close()
     return jsonify({"status": "success"})
 
-@app.route('/update-item-tags/<int:item_id>', methods=['POST'])
+# @app.route('/update-item-tags/<int:item_id>', methods=['POST'])
+# @login_required
+# def update_item_tags(item_id):
+#     tags = request.json['tags']  # Expecting a list of tags
+#     tags_str = ','.join(tags)  # Convert list of tags to a comma-separated string
+#     conn = get_db_connection()
+#     conn.execute('UPDATE items SET tags = ? WHERE id = ?', (tags_str, item_id))
+#     conn.commit()
+#     conn.close()
+    
+#     return jsonify({'status': 'success', 'message': 'Item tags updated successfully'})
+
+@app.route('/update-item-tags-batch', methods=['POST'])
 @login_required
-def update_item_tags(item_id):
-    tags = request.json['tags']  # Expecting a list of tags
-    tags_str = ','.join(tags)  # Convert list of tags to a comma-separated string
+def update_item_tags_batch():
+    updates = request.json['updates']  # Expecting a dictionary of item_id: tags
+
     conn = get_db_connection()
-    conn.execute('UPDATE items SET tags = ? WHERE id = ?', (tags_str, item_id))
+    for item_id, tags in updates.items():
+        tags_str = ','.join(tags)  # Convert list of tags to a comma-separated string
+        conn.execute('UPDATE items SET tags = ? WHERE id = ?', (tags_str, item_id))
+    
     conn.commit()
     conn.close()
-    
     return jsonify({'status': 'success', 'message': 'Item tags updated successfully'})
 
 if __name__ == '__main__':
