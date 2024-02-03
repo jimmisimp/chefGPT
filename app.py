@@ -194,7 +194,7 @@ def ask_gpt4():
     selected_items = data['selected_items']
     selected_prompt = data['selected_prompt']
 
-    system_message = prompts.get(selected_prompt, prompts["Detailed recipe"])
+    system_message = prompts.get(selected_prompt, prompts["Single recipe"])
     openai.api_key = get_openai_api_key()
 
     if not selected_items:
