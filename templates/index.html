@@ -105,23 +105,30 @@
 
 	<div class="container-lg row my-1 px-3 mx-auto">
 
-		<form method="POST" class="row mb-3 g-3 align-items-center hstack" id="itemForm">
+		<form method="POST" class="row mx-auto g-2 align-items-center" id="itemForm">
 			<div class="col-sm-12 col-lg-6">
 				<input placeholder="Enter an item here" type="text" name="item_name" autocomplete="off" class="form-control" id="itemInput" maxlength="64" required>
 			</div>
 			<div class="col-lg-auto d-grid">
-				<button type="submit" class="btn btn-secondary "><i class="bi bi-plus-lg"></i> Add Item</button>
+				<button type="submit" class="btn btn-secondary" aria-label="Add item to list"><i class="bi bi-plus-lg"></i> Add Item</button>
+			</div>
+			<div class="col d-grid justify-content-end">
+				<div class="btn-group" role="group" aria-label="Collapse or expand accordions">
+					<button type="button" class="btn btn-outline-secondary btn-sm" id="accordionCollapseButton"><i class="bi bi-chevron-contract"></i> Collapse</button>
+					<button type="button" class="btn btn-outline-secondary btn-sm" id="accordionExpandButton"><i class="bi bi-chevron-expand"></i> Expand</button>
+				</div>
 			</div>
 		</form>
+		
 
 		<div class="accordion mt-3" id="bucketsAccordion">
 			<div class="accordion-item">
 				<h2 class="accordion-header" id="headingUngrouped">
-					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUngrouped" aria-expanded="true" aria-controls="collapseUngrouped">
-						Not grouped <span class="badge bg-secondary ms-2">{{ items_by_category['Ungrouped'] | length }}</span>
+					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUngrouped" aria-expanded="true" aria-controls="collapseUngrouped">
+						Not grouped <span class="badge text-body bg-secondary bg-opacity-25 ms-2">{{ items_by_category['Ungrouped'] | length }}</span>
 					</button>
 				</h2>
-				<div id="collapseUngrouped" class="accordion-collapse collapse show" aria-labelledby="headingUngrouped">
+				<div id="collapseUngrouped" class="accordion-collapse collapse" aria-labelledby="headingUngrouped">
 					<div class="accordion-body p-2">
 						<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
 							<button class="btn btn-outline-secondary" onclick="selectAll('Ungrouped')"><i class="bi bi-check-square"></i> Select All</button>
@@ -129,8 +136,8 @@
 						</div>
 						<ul class="list-group sortable-list mt-2" data-category="Ungrouped" id="Ungrouped">
 							{% for item in items_by_category['Ungrouped'] %}
-							<li class="list-group-item d-flex" data-id="item-{{ item.id }}">
-								<input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
+							<li class="list-group-item d-flex align-items-center" data-id="item-{{ item.id }}">
+								<input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
 								<label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 48 %}{{ item.name[:24] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
 								<div class="dropdown float-end mb-auto">
 									<button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -156,11 +163,11 @@
 
 			<div class="accordion-item">
 				<h2 class="accordion-header" id="headingStaples">
-					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseStaples" aria-expanded="true" aria-controls="collapseStaples">
-						🧀 Dairy and Stock <span class="badge bg-secondary ms-2">{{ items_by_category['Staples'] | length }}</span>
+					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseStaples" aria-expanded="true" aria-controls="collapseStaples">
+						🧀 Dairy and Stock <span class="badge text-body bg-secondary bg-opacity-25 ms-2">{{ items_by_category['Staples'] | length }}</span>
 					</button>
 				</h2>
-				<div id="collapseStaples" class="accordion-collapse collapse show" aria-labelledby="headingStaples">
+				<div id="collapseStaples" class="accordion-collapse collapse" aria-labelledby="headingStaples">
 					<div class="accordion-body p-2">
 						<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
 							<button class="btn btn-outline-secondary" onclick="selectAll('Staples')"><i class="bi bi-check-square"></i> Select All</button>
@@ -168,8 +175,8 @@
 						</div>
 						<ul class="list-group sortable-list mt-2" data-category="Staples" id="Staples">
 							{% for item in items_by_category['Staples'] %}
-							<li class="list-group-item d-flex" data-id="item-{{ item.id }}">
-								<input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
+							<li class="list-group-item d-flex align-items-center" data-id="item-{{ item.id }}">
+								<input class="form-check-input me-2 my-0 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
 								<label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
 								<div class="dropdown float-end mb-auto">
 									<button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -195,11 +202,11 @@
 
 			<div class="accordion-item">
 				<h2 class="accordion-header" id="headingOils">
-					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOils" aria-expanded="true" aria-controls="collapseOils">
-						🧂 Oils and Seasoning <span class="badge bg-secondary ms-2">{{ items_by_category['Oils'] | length }}</span>
+					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOils" aria-expanded="true" aria-controls="collapseOils">
+						🧂 Oils and Seasoning <span class="badge text-body bg-secondary bg-opacity-25 ms-2">{{ items_by_category['Oils'] | length }}</span>
 					</button>
 				</h2>
-				<div id="collapseOils" class="accordion-collapse collapse show" aria-labelledby="headingOils">
+				<div id="collapseOils" class="accordion-collapse collapse" aria-labelledby="headingOils">
 					<div class="accordion-body p-2">
 						<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
 							<button class="btn btn-outline-secondary" onclick="selectAll('Oils')"><i class="bi bi-check-square"></i> Select All</button>
@@ -207,8 +214,8 @@
 						</div>
 						<ul class="list-group sortable-list mt-2" data-category="Oils" id="Oils">
 							{% for item in items_by_category['Oils'] %}
-							<li class="list-group-item d-flex" data-id="item-{{ item.id }}">
-								<input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
+							<li class="list-group-item d-flex align-items-center" data-id="item-{{ item.id }}">
+								<input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
 								<label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
 								<div class="dropdown float-end mb-auto">
 									<button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -234,11 +241,11 @@
 
 			<div class="accordion-item">
 				<h2 class="accordion-header" id="headingPantry">
-					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePantry" aria-expanded="true" aria-controls="collapsePantry">
-						🥫 Canned and Bagged <span class="badge bg-secondary ms-2">{{ items_by_category['Pantry'] | length }}</span>
+					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePantry" aria-expanded="true" aria-controls="collapsePantry">
+						🥫 Canned and Bagged <span class="badge text-body bg-secondary bg-opacity-25 ms-2">{{ items_by_category['Pantry'] | length }}</span>
 					</button>
 				</h2>
-				<div id="collapsePantry" class="accordion-collapse collapse show" aria-labelledby="headingPantry">
+				<div id="collapsePantry" class="accordion-collapse collapse" aria-labelledby="headingPantry">
 					<div class="accordion-body p-2">
 						<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
 							<button class="btn btn-outline-secondary" onclick="selectAll('Pantry')"><i class="bi bi-check-square"></i> Select All</button>
@@ -246,8 +253,8 @@
 						</div>
 						<ul class="list-group sortable-list mt-2" data-category="Pantry" id="Pantry">
 							{% for item in items_by_category['Pantry'] %}
-							<li class="list-group-item d-flex" data-id="item-{{ item.id }}">
-								<input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
+							<li class="list-group-item d-flex align-items-center" data-id="item-{{ item.id }}">
+								<input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
 								<label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
 								<div class="dropdown float-end mb-auto">
 									<button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -273,11 +280,11 @@
 
 			<div class="accordion-item">
 				<h2 class="accordion-header" id="headingVegetables">
-					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVegetables" aria-expanded="true" aria-controls="collapseVegetables">
-						🥕 Vegetables <span class="badge bg-secondary ms-2">{{ items_by_category['Vegetables'] | length }}</span>
+					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVegetables" aria-expanded="true" aria-controls="collapseVegetables">
+						🥕 Vegetables <span class="badge text-body bg-secondary bg-opacity-25 ms-2">{{ items_by_category['Vegetables'] | length }}</span>
 					</button>
 				</h2>
-				<div id="collapseVegetables" class="accordion-collapse collapse show" aria-labelledby="headingVegetables">
+				<div id="collapseVegetables" class="accordion-collapse collapse" aria-labelledby="headingVegetables">
 					<div class="accordion-body p-2">
 						<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
 							<button class="btn btn-outline-secondary" onclick="selectAll('Vegetables')"><i class="bi bi-check-square"></i> Select All</button>
@@ -285,8 +292,8 @@
 						</div>
 						<ul class="list-group sortable-list mt-2" data-category="Vegetables" id="Vegetables">
 							{% for item in items_by_category['Vegetables'] %}
-							<li class="list-group-item d-flex" data-id="item-{{ item.id }}">
-								<input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
+							<li class="list-group-item d-flex align-items-center" data-id="item-{{ item.id }}">
+								<input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
 								<label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
 								<div class="dropdown float-end mb-auto">
 									<button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -312,11 +319,11 @@
 
 			<div class="accordion-item">
 				<h2 class="accordion-header" id="headingFruits">
-					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFruits" aria-expanded="true" aria-controls="collapseFruits">
-						🍒 Fruits <span class="badge bg-secondary ms-2">{{ items_by_category['Fruits'] | length }}</span>
+					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFruits" aria-expanded="true" aria-controls="collapseFruits">
+						🍒 Fruits <span class="badge text-body bg-secondary bg-opacity-25 ms-2">{{ items_by_category['Fruits'] | length }}</span>
 					</button>
 				</h2>
-				<div id="collapseFruits" class="accordion-collapse collapse show" aria-labelledby="headingFruits">
+				<div id="collapseFruits" class="accordion-collapse collapse" aria-labelledby="headingFruits">
 					<div class="accordion-body p-2">
 						<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
 							<button class="btn btn-outline-secondary" onclick="selectAll('Fruits')"><i class="bi bi-check-square"></i> Select All</button>
@@ -324,8 +331,8 @@
 						</div>
 						<ul class="list-group sortable-list mt-2" data-category="Fruits" id="Fruits">
 							{% for item in items_by_category['Fruits'] %}
-							<li class="list-group-item d-flex" data-id="item-{{ item.id }}">
-								<input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
+							<li class="list-group-item d-flex align-items-center" data-id="item-{{ item.id }}">
+								<input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
 								<label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
 								<div class="dropdown float-end mb-auto">
 									<button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -351,11 +358,11 @@
 
 			<div class="accordion-item">
 				<h2 class="accordion-header" id="headingMeats">
-					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMeats" aria-expanded="true" aria-controls="collapseMeats">
-						🍖 Meats <span class="badge bg-secondary ms-2">{{ items_by_category['Meats'] | length }}</span>
+					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMeats" aria-expanded="true" aria-controls="collapseMeats">
+						🍖 Meats <span class="badge text-body bg-secondary bg-opacity-25 ms-2">{{ items_by_category['Meats'] | length }}</span>
 					</button>
 				</h2>
-				<div id="collapseMeats" class="accordion-collapse collapse show" aria-labelledby="headingMeats">
+				<div id="collapseMeats" class="accordion-collapse collapse" aria-labelledby="headingMeats">
 					<div class="accordion-body p-2">
 						<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
 							<button class="btn btn-outline-secondary" onclick="selectAll('Meats')"><i class="bi bi-check-square"></i> Select All</button>
@@ -363,8 +370,8 @@
 						</div>
 						<ul class="list-group sortable-list mt-2" data-category="Meats" id="Meats">
 							{% for item in items_by_category['Meats'] %}
-							<li class="list-group-item d-flex" data-id="item-{{ item.id }}">
-								<input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
+							<li class="list-group-item d-flex align-items-center" data-id="item-{{ item.id }}">
+								<input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
 								<label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
 								<div class="dropdown float-end mb-auto">
 									<button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -390,11 +397,11 @@
 
 			<div class="accordion-item">
 				<h2 class="accordion-header" id="headingBaking">
-					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBaking" aria-expanded="true" aria-controls="collapseBaking">
-						🍞 Flours and Baking <span class="badge bg-secondary ms-2">{{ items_by_category['Baking'] | length }}</span>
+					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBaking" aria-expanded="true" aria-controls="collapseBaking">
+						🍞 Flours and Baking <span class="badge text-body bg-secondary bg-opacity-25 ms-2">{{ items_by_category['Baking'] | length }}</span>
 					</button>
 				</h2>
-				<div id="collapseBaking" class="accordion-collapse collapse show" aria-labelledby="headingBaking">
+				<div id="collapseBaking" class="accordion-collapse collapse" aria-labelledby="headingBaking">
 					<div class="accordion-body p-2">
 						<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
 							<button class="btn btn-outline-secondary" onclick="selectAll('Baking')"><i class="bi bi-check-square"></i> Select All</button>
@@ -402,8 +409,8 @@
 						</div>
 						<ul class="list-group sortable-list mt-2" data-category="Baking" id="Baking">
 							{% for item in items_by_category['Baking'] %}
-							<li class="list-group-item d-flex" data-id="item-{{ item.id }}">
-								<input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
+							<li class="list-group-item d-flex align-items-center" data-id="item-{{ item.id }}">
+								<input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
 								<label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
 								<div class="dropdown float-end mb-auto">
 									<button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -429,11 +436,11 @@
 
 			<div class="accordion-item">
 				<h2 class="accordion-header" id="headingAlcohol">
-					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAlcohol" aria-expanded="true" aria-controls="collapseAlcohol">
-						🍷 Alcohol <span class="badge bg-secondary ms-2">{{ items_by_category['Alcohol'] | length }}</span>
+					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAlcohol" aria-expanded="true" aria-controls="collapseAlcohol">
+						🍷 Alcohol <span class="badge text-body bg-secondary bg-opacity-25 ms-2">{{ items_by_category['Alcohol'] | length }}</span>
 					</button>
 				</h2>
-				<div id="collapseAlcohol" class="accordion-collapse collapse show" aria-labelledby="headingAlcohol">
+				<div id="collapseAlcohol" class="accordion-collapse collapse" aria-labelledby="headingAlcohol">
 					<div class="accordion-body p-2">
 						<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
 							<button class="btn btn-outline-secondary" onclick="selectAll('Alcohol')"><i class="bi bi-check-square"></i> Select All</button>
@@ -441,8 +448,8 @@
 						</div>
 						<ul class="list-group sortable-list mt-2" data-category="Alcohol" id="Alcohol">
 							{% for item in items_by_category['Alcohol'] %}
-							<li class="list-group-item d-flex" data-id="item-{{ item.id }}">
-								<input class="form-check-input me-1" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
+							<li class="list-group-item d-flex align-items-center" data-id="item-{{ item.id }}">
+								<input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
 								<label class="form-check-label flex-fill text-break text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
 								<div class="dropdown float-end mb-auto">
 									<button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -468,14 +475,14 @@
 
 
 		</div>
-		<div class="container mt-4 py-3 border border-secondary bg-secondary-subtle rounded">
+		<div class="container mt-4 py-4 border border-secondary bg-secondary-subtle rounded">
 			<div class="row m-auto">
-				<h4>Generate</h4>
-				<p>Select items above (or select nothing to use full list). Then, select a prompt.</p>
+				<h4>Make something</h4>
+				<p>Select items above (or select nothing to use full list). Then, select a prompt type.</p>
 			</div>
 			<form action="{{ url_for('ask_gpt4') }}" method="POST" class="mx-3 mt-1" id="askGptForm">
 				<!-- Prompt selection -->
-				<div name="selected_prompt" class="mb-3 mx-auto row gap-2" id="promptSelect" onchange="updatePromptAccordion()">
+				<div name="selected_prompt" class="mb-3 mx-auto row gap-2" id="promptSelect" <!--onchange="updatePromptAccordion()-->">
 					{% for key, prompt in prompts.items() %}
 					<input type="radio" class="btn-check" name="options" value="{{ key }}" id="option-{{ key }}" autocomplete="off" style="display: none;" {{ 'checked' if loop.first }}>
 					<label value="{{ key }}" class="col-sm btn btn-outline-secondary" for="option-{{ key }}">{{ key }}</label>
@@ -503,6 +510,7 @@
 							<option selected>Select a modifier</option>
 							<option value="simple">Simple</option>
 							<option value="quick and easy">Quick and Easy</option>
+							<option value="meal prep">Meal prep</option>
 							<option value="inventive">Inventive</option>
 							<option value="complex">Complex</option>
 							<option value="haute cuisine">Haute Cuisine</option>
@@ -514,14 +522,16 @@
 					<div class="col-md-9">
 						<input type="text" class="form-control" id="specifications" name="specifications" placeholder="Specific dish or instructions" ">
 					</div>
-					<button type="button" class="col-md-3 btn btn-secondary" id="randomizeBtn" onclick="randomizeSelections()"><i class="bi bi-dice-5-fill me-2"></i>Randomize</button>
+					<div class="col d-grid">
+						<button type="button" class="btn btn-secondary" id="randomizeBtn" onclick="randomizeSelections()"><i class="bi bi-dice-5-fill me-2"></i>Randomize</button>
+					</div>
 				</div>
 				<!-- Prompt details -->
-				<div class="accordion my-3" id="currentPromptAccordion">
+				<!--<div class="accordion my-3" id="currentPromptAccordion">
 					<div class="accordion-item">
 						<h2 class="accordion-header" id="headingCurrentPrompt">
-							<button class="accordion-button bg-body collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCurrentPrompt" aria-expanded="true" aria-controls="collapseCurrentPrompt">
-								View full prompt
+							<button class="accordion-button collapsed bg-secondary-subtle collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCurrentPrompt" aria-expanded="true" aria-controls="collapseCurrentPrompt">
+								View prompt details
 							</button>
 						</h2>
 						<div id="collapseCurrentPrompt" class="accordion-collapse collapse" aria-labelledby="headingCurrentPrompt">
@@ -534,9 +544,9 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>-->
 				<input type="hidden" name="selected_items" id="selectedItems">
-				<button id="askGptButton" type="submit" class="btn btn-primary btn-lg col-lg-auto col-sm-12">
+				<button id="askGptButton" type="submit" class="btn btn-primary btn-lg col-12">
 					<div id="buttonLoadingIndicator" class="spinner-border spinner-border-sm" role="status" style="display: none"></div>
 					<i id="buttonStars" class="bi bi-stars"></i> Ask ChefGPT
 				</button>
@@ -1085,7 +1095,7 @@
 	}
 
 	window.onload = function() {
-		updatePromptAccordion();
+		/*updatePromptAccordion();*/
 		document.getElementById("itemInput").focus();
 	};
 
@@ -1099,13 +1109,46 @@
 
 	document.addEventListener('DOMContentLoaded', function() {
 		loadSavedPrompts();
+		initializeAccordionButtons();
 	});
 
+    function initializeAccordionButtons() {
+        const collapseAllButton = document.getElementById('accordionCollapseButton');
+        const expandAllButton = document.getElementById('accordionExpandButton');
+        const accordions = document.querySelectorAll('.accordion-collapse');
+
+        collapseAllButton.addEventListener('click', () => {
+            accordions.forEach((accordion) => {
+                new bootstrap.Collapse(accordion, {
+                    toggle: false
+				}).hide();
+                const accordionId = '#' + accordion.id;
+                saveAccordionState(accordionId, 'false');
+            });
+        });
+
+        expandAllButton.addEventListener('click', () => {
+            accordions.forEach((accordion) => {
+                new bootstrap.Collapse(accordion, {
+                    toggle: false
+				}).show();
+                const accordionId = '#' + accordion.id;
+                saveAccordionState(accordionId, 'true');
+            });
+        });
+    };
+
 	function toggleAdvancedSettings() {
-        if (document.getElementById('advancedSettings').style.display === 'none' || document.getElementById('advancedSettings').style.display === '') {
-            document.getElementById('advancedSettings').style.display = 'flex';
-		} else {
-            document.getElementById('advancedSettings').style.display = 'none';
+		advancedSettings = document.getElementById('advancedSettings');
+        if (advancedSettings.style.display === 'none' || advancedSettings.style.display === '') {
+			advancedSettings.style.display = 'flex';
+			event.target.firstChild.classList.add('bi-gear-fill');
+            event.target.firstChild.classList.remove('bi-gear');
+
+        } else {
+            advancedSettings.style.display = 'none';
+            event.target.firstChild.classList.add('bi-gear');
+            event.target.firstChild.classList.remove('bi-gear-fill');
 		}
 	};
 	</script>
