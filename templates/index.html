@@ -625,17 +625,14 @@
             <div class="modal-dialog modal-lg modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="promptModalLabel">Full result</h5>
+                        <h5 class="modal-title" id="promptModalLabel">Recipe result</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" id="promptModalContent">
                         <!-- Full prompt content will go here -->
                     </div>
-                    <div class="modal-body" id="promptModalItems">
-                        <!-- Associated items will go here -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deletePromptBtn">Delete</button>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" id="deletePromptBtn">Delete recipe <i class="bi bi-x-lg"></i></button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -732,7 +729,7 @@
 
 		    if (itemsContainer.children.length > 0) {
 			    const itemHeader = document.createElement('h5');
-			    itemHeader.textContent = 'Items used';
+			    itemHeader.textContent = 'Remove used items?';
 			    itemHeader.className = 'col-12';
 			    itemsContainer.insertBefore(itemHeader, itemsContainer.firstChild);
 		    }
@@ -1154,7 +1151,7 @@
         function promptProgress() {
             const progressBar = document.getElementById('gptProgressBar');
             let width = 0;
-            const totalTime = 30000;
+            const totalTime = 35000;
             const intervalTime = 100;
 
             const interval = setInterval(() => {
