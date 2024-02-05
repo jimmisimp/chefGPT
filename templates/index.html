@@ -106,10 +106,10 @@
     <div class="container-lg row my-1 px-3 mx-auto">
 
         <form method="POST" class="row mx-auto g-2 align-items-center" id="itemForm">
-            <div class="col-sm-12 col-lg-6">
+            <div class="col-sm-12 col-md-6">
                 <input placeholder="Enter an item here" type="text" name="item_name" autocomplete="off" class="form-control" id="itemInput" maxlength="64" required>
             </div>
-            <div class="col-lg-auto d-grid">
+            <div class="col-md-auto d-grid">
                 <button type="submit" class="btn btn-secondary" aria-label="Add item to list"><i class="bi bi-plus-lg"></i> Add Item</button>
             </div>
             <div class="col d-grid justify-content-end">
@@ -135,7 +135,8 @@
                         </div>
                         <ul class="list-group sortable-list mt-2" data-category="Ungrouped" id="Ungrouped">
                             {% for item in items_by_category['Ungrouped'] %}
-                            <li class="list-group-item d-flex align-items-center" data-id="item-{{ item.id }}">
+                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="item-{{ item.id }}">
+                                <div class="px-2 py-1 me-1 opacity-75 dragHandle"><i class="bi bi-grip-vertical"></i></div>
                                 <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
                                 <label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 48 %}{{ item.name[:24] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto">
@@ -144,13 +145,13 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton-{{ item.id }}">
                                         <li><h6 class="dropdown-header">Tags</h6></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')" data-item-id="{{ item.id }}" data-tag="Fresh">Fresh</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')" data-item-id="{{ item.id }}" data-tag="Old">Old</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Frozen')" data-item-id="{{ item.id }}" data-tag="Frozen">Frozen</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')" data-item-id="{{ item.id }}" data-tag="Fresh">Fresh</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')" data-item-id="{{ item.id }}" data-tag="Old">Old</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Frozen')" data-item-id="{{ item.id }}" data-tag="Frozen">Frozen</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><button class="dropdown-item" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
-                                        <li><button class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
+                                        <li><button class="dropdown-item py-2" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
+                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
                                     </ul>
                                 </div>
                             </li>
@@ -174,7 +175,8 @@
                         </div>
                         <ul class="list-group sortable-list mt-2" data-category="Staples" id="Staples">
                             {% for item in items_by_category['Staples'] %}
-                            <li class="list-group-item d-flex align-items-center" data-id="item-{{ item.id }}">
+                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="item-{{ item.id }}">
+                                <div class="px-2 py-1 me-1 opacity-75 dragHandle"><i class="bi bi-grip-vertical"></i></div>
                                 <input class="form-check-input me-2 my-0 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
                                 <label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto">
@@ -183,13 +185,13 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton-{{ item.id }}">
                                         <li><h6 class="dropdown-header">Tags</h6></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')" data-item-id="{{ item.id }}" data-tag="Fresh">Fresh</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')" data-item-id="{{ item.id }}" data-tag="Old">Old</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Frozen')" data-item-id="{{ item.id }}" data-tag="Frozen">Frozen</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')" data-item-id="{{ item.id }}" data-tag="Fresh">Fresh</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')" data-item-id="{{ item.id }}" data-tag="Old">Old</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Frozen')" data-item-id="{{ item.id }}" data-tag="Frozen">Frozen</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><button class="dropdown-item" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
-                                        <li><button class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
+                                        <li><button class="dropdown-item py-2" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
+                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
                                     </ul>
                                 </div>
                             </li>
@@ -213,7 +215,8 @@
                         </div>
                         <ul class="list-group sortable-list mt-2" data-category="Oils" id="Oils">
                             {% for item in items_by_category['Oils'] %}
-                            <li class="list-group-item d-flex align-items-center" data-id="item-{{ item.id }}">
+                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="item-{{ item.id }}">
+                                <div class="px-2 py-1 me-1 opacity-75 dragHandle"><i class="bi bi-grip-vertical"></i></div>
                                 <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
                                 <label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto">
@@ -222,13 +225,13 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton-{{ item.id }}">
                                         <li><h6 class="dropdown-header">Tags</h6></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')" data-item-id="{{ item.id }}" data-tag="Fresh">Fresh</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')" data-item-id="{{ item.id }}" data-tag="Old">Old</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Frozen')" data-item-id="{{ item.id }}" data-tag="Frozen">Frozen</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')" data-item-id="{{ item.id }}" data-tag="Fresh">Fresh</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')" data-item-id="{{ item.id }}" data-tag="Old">Old</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Frozen')" data-item-id="{{ item.id }}" data-tag="Frozen">Frozen</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><button class="dropdown-item" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
-                                        <li><button class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
+                                        <li><button class="dropdown-item py-2" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
+                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
                                     </ul>
                                 </div>
                             </li>
@@ -252,7 +255,8 @@
                         </div>
                         <ul class="list-group sortable-list mt-2" data-category="Pantry" id="Pantry">
                             {% for item in items_by_category['Pantry'] %}
-                            <li class="list-group-item d-flex align-items-center" data-id="item-{{ item.id }}">
+                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="item-{{ item.id }}">
+                                <div class="px-2 py-1 me-1 opacity-75 dragHandle"><i class="bi bi-grip-vertical"></i></div>
                                 <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
                                 <label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto">
@@ -261,13 +265,13 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton-{{ item.id }}">
                                         <li><h6 class="dropdown-header">Tags</h6></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')" data-item-id="{{ item.id }}" data-tag="Fresh">Fresh</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')" data-item-id="{{ item.id }}" data-tag="Old">Old</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Frozen')" data-item-id="{{ item.id }}" data-tag="Frozen">Frozen</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')" data-item-id="{{ item.id }}" data-tag="Fresh">Fresh</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')" data-item-id="{{ item.id }}" data-tag="Old">Old</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Frozen')" data-item-id="{{ item.id }}" data-tag="Frozen">Frozen</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><button class="dropdown-item" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
-                                        <li><button class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
+                                        <li><button class="dropdown-item py-2" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
+                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
                                     </ul>
                                 </div>
                             </li>
@@ -291,7 +295,8 @@
                         </div>
                         <ul class="list-group sortable-list mt-2" data-category="Vegetables" id="Vegetables">
                             {% for item in items_by_category['Vegetables'] %}
-                            <li class="list-group-item d-flex align-items-center" data-id="item-{{ item.id }}">
+                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="item-{{ item.id }}">
+                                <div class="px-2 py-1 me-1 opacity-75 dragHandle"><i class="bi bi-grip-vertical"></i></div>
                                 <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
                                 <label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto">
@@ -300,13 +305,13 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton-{{ item.id }}">
                                         <li><h6 class="dropdown-header">Tags</h6></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')" data-item-id="{{ item.id }}" data-tag="Fresh">Fresh</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')" data-item-id="{{ item.id }}" data-tag="Old">Old</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Frozen')" data-item-id="{{ item.id }}" data-tag="Frozen">Frozen</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')" data-item-id="{{ item.id }}" data-tag="Fresh">Fresh</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')" data-item-id="{{ item.id }}" data-tag="Old">Old</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Frozen')" data-item-id="{{ item.id }}" data-tag="Frozen">Frozen</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><button class="dropdown-item" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
-                                        <li><button class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
+                                        <li><button class="dropdown-item py-2" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
+                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
                                     </ul>
                                 </div>
                             </li>
@@ -330,7 +335,8 @@
                         </div>
                         <ul class="list-group sortable-list mt-2" data-category="Fruits" id="Fruits">
                             {% for item in items_by_category['Fruits'] %}
-                            <li class="list-group-item d-flex align-items-center" data-id="item-{{ item.id }}">
+                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="item-{{ item.id }}">
+                                <div class="px-2 py-1 me-1 opacity-75 dragHandle"><i class="bi bi-grip-vertical"></i></div>
                                 <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
                                 <label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto">
@@ -339,13 +345,13 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton-{{ item.id }}">
                                         <li><h6 class="dropdown-header">Tags</h6></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')" data-item-id="{{ item.id }}" data-tag="Fresh">Fresh</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')" data-item-id="{{ item.id }}" data-tag="Old">Old</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Frozen')" data-item-id="{{ item.id }}" data-tag="Frozen">Frozen</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')" data-item-id="{{ item.id }}" data-tag="Fresh">Fresh</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')" data-item-id="{{ item.id }}" data-tag="Old">Old</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Frozen')" data-item-id="{{ item.id }}" data-tag="Frozen">Frozen</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><button class="dropdown-item" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
-                                        <li><button class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
+                                        <li><button class="dropdown-item py-2" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
+                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
                                     </ul>
                                 </div>
                             </li>
@@ -369,7 +375,8 @@
                         </div>
                         <ul class="list-group sortable-list mt-2" data-category="Meats" id="Meats">
                             {% for item in items_by_category['Meats'] %}
-                            <li class="list-group-item d-flex align-items-center" data-id="item-{{ item.id }}">
+                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="item-{{ item.id }}">
+                                <div class="px-2 py-1 me-1 opacity-75 dragHandle"><i class="bi bi-grip-vertical"></i></div>
                                 <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
                                 <label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto">
@@ -378,13 +385,13 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton-{{ item.id }}">
                                         <li><h6 class="dropdown-header">Tags</h6></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')" data-item-id="{{ item.id }}" data-tag="Fresh">Fresh</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')" data-item-id="{{ item.id }}" data-tag="Old">Old</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Frozen')" data-item-id="{{ item.id }}" data-tag="Frozen">Frozen</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')" data-item-id="{{ item.id }}" data-tag="Fresh">Fresh</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')" data-item-id="{{ item.id }}" data-tag="Old">Old</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Frozen')" data-item-id="{{ item.id }}" data-tag="Frozen">Frozen</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><button class="dropdown-item" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
-                                        <li><button class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
+                                        <li><button class="dropdown-item py-2" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
+                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
                                     </ul>
                                 </div>
                             </li>
@@ -408,7 +415,8 @@
                         </div>
                         <ul class="list-group sortable-list mt-2" data-category="Baking" id="Baking">
                             {% for item in items_by_category['Baking'] %}
-                            <li class="list-group-item d-flex align-items-center" data-id="item-{{ item.id }}">
+                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="item-{{ item.id }}">
+                                <div class="px-2 py-1 me-1 opacity-75 dragHandle"><i class="bi bi-grip-vertical"></i></div>
                                 <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
                                 <label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto">
@@ -417,13 +425,13 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton-{{ item.id }}">
                                         <li><h6 class="dropdown-header">Tags</h6></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')" data-item-id="{{ item.id }}" data-tag="Fresh">Fresh</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')" data-item-id="{{ item.id }}" data-tag="Old">Old</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Frozen')" data-item-id="{{ item.id }}" data-tag="Frozen">Frozen</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')" data-item-id="{{ item.id }}" data-tag="Fresh">Fresh</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')" data-item-id="{{ item.id }}" data-tag="Old">Old</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Frozen')" data-item-id="{{ item.id }}" data-tag="Frozen">Frozen</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><button class="dropdown-item" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
-                                        <li><button class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
+                                        <li><button class="dropdown-item py-2" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
+                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
                                     </ul>
                                 </div>
                             </li>
@@ -447,7 +455,8 @@
                         </div>
                         <ul class="list-group sortable-list mt-2" data-category="Alcohol" id="Alcohol">
                             {% for item in items_by_category['Alcohol'] %}
-                            <li class="list-group-item d-flex align-items-center" data-id="item-{{ item.id }}">
+                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="item-{{ item.id }}">
+                                <div class="px-2 py-1 me-1 opacity-75 dragHandle"><i class="bi bi-grip-vertical"></i></div>
                                 <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
                                 <label class="form-check-label flex-fill text-break text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto">
@@ -456,13 +465,13 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton-{{ item.id }}">
                                         <li><h6 class="dropdown-header">Tags</h6></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')" data-item-id="{{ item.id }}" data-tag="Fresh">Fresh</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')" data-item-id="{{ item.id }}" data-tag="Old">Old</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Frozen')" data-item-id="{{ item.id }}" data-tag="Frozen">Frozen</a></li>
-                                        <li><a class="dropdown-item toggle-tag" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Fresh')" data-item-id="{{ item.id }}" data-tag="Fresh">Fresh</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Old')" data-item-id="{{ item.id }}" data-tag="Old">Old</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Frozen')" data-item-id="{{ item.id }}" data-tag="Frozen">Frozen</a></li>
+                                        <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><button class="dropdown-item" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
-                                        <li><button class="dropdown-item text-danger" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
+                                        <li><button class="dropdown-item py-2" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
+                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
                                     </ul>
                                 </div>
                             </li>
@@ -479,7 +488,7 @@
             </div>
             <form action="{{ url_for('ask_gpt4') }}" method="POST" class="mx-3 mt-1" id="askGptForm">
                 <!-- Prompt selection -->
-                <div name="selected_prompt" class="mb-3 mx-auto row gap-2" id="promptSelect" <!--onchange="updatePromptAccordion()-->">
+                <div name="selected_prompt" class="mb-3 mx-auto row gap-2" id="promptSelect">
 					{% for key, prompt in prompts.items() %}
 					<input type="radio" class="btn-check" name="options" value="{{ key }}" id="option-{{ key }}" autocomplete="off" style="display: none;" {{ 'checked' if loop.first }}>
 					<label value="{{ key }}" class="col-sm btn btn-outline-secondary" for="option-{{ key }}">{{ key }}</label>
@@ -824,10 +833,11 @@
 	    function initializeSortable(element) {
 		    new Sortable(element, {
 			    group: 'shared',
-			    delay: 96,
-			    delayOnTouchOnly: false,
+			    delay: 50,
+			    delayOnTouchOnly: true,
 			    animation: 150,
-			    filter: ".btn",
+                filter: ".btn",
+                handle: ".dragHandle",
 			    ghostClass: "list-group-item-dark",
 			    dragClass: "list-group-item-primary",
 			    chosenClass: "list-group-item-primary",
