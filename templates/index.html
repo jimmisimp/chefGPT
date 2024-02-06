@@ -91,14 +91,22 @@
     <header class="navbar bd-gutter navbar-expand-md bg-primary-subtle">
         <nav class="container-lg bd-gutter flex-wrap flex-lg-nowrap">
             <div class="row my-1"><img style="max-width: 56px;" src="static/chef_gpt.png"><h4 class="m-auto col-auto">ChefGPT</h4></div>
-            <div class="dropdown">
-                <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="user-menu"><i class="bi bi-person-circle"></i> {{ username }}</button>
-                <ul class="dropdown-menu align-items-center dropdown-menu-end" aria-labelledby="user-menu">
-                    <li><button class="dropdown-item align-items-center" aria-pressed="false" data-bs-theme-value="light"><i class="bi me-2 opacity-50 bi-sun-fill"></i>Light mode <i class="bi bi-check ms-auto d-none"></i></button></li>
-                    <li><button class="dropdown-item align-items-center" aria-pressed="false" data-bs-theme-value="dark"><i class="bi me-2 opacity-50 bi-moon-stars-fill"></i>Dark mode <i class="bi bi-check ms-auto d-none"></i></button></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item " href="/logout">Log out</a></li>
-                </ul>
+            <div class="btn-group">
+                <div class="dropdown me-2">
+                    <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="user-menu"><i class="bi bi-person-circle"></i> {{ username }}</button>
+                    <ul class="dropdown-menu align-items-center dropdown-menu-end" aria-labelledby="user-menu">
+                        <li><button class="dropdown-item"><i class="bi me-2 opacity-50 bi-gear"></i>Preferences</button></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item " href="/logout">Log out</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="mode-menu"><i class="bi bi-circle-half"></i></button>
+                    <ul class="dropdown-menu align-items-center dropdown-menu-end" aria-labelledby="mode-menu">
+                        <li><button class="dropdown-item align-items-center" aria-pressed="false" data-bs-theme-value="light"><i class="bi me-2 opacity-50 bi-sun-fill"></i>Light mode <i class="bi bi-check ms-auto d-none"></i></button></li>
+                        <li><button class="dropdown-item align-items-center" aria-pressed="false" data-bs-theme-value="dark"><i class="bi me-2 opacity-50 bi-moon-stars-fill"></i>Dark mode <i class="bi bi-check ms-auto d-none"></i></button></li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
@@ -650,7 +658,7 @@
 
         <div aria-live="polite" aria-atomic="true" class="position-relative">
             <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                <div id="itemMovedToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+                <div id="pageToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
                     <div class="d-flex">
                         <div class="toast-body">
                             <!-- Text will be set dynamically -->
@@ -689,7 +697,7 @@
 		    savedResultsList.innerHTML = '';
 		    receivedPrompts.forEach((prompt) => {
 			    const listItem = document.createElement('li');
-			    listItem.className = 'list-group-item list-group-item-action';
+			    listItem.className = 'list-group-item list-group-item-action text-truncate';
 			    listItem.id = 'saved-'+prompt.id
 			    listItem.setAttribute('data-bs-toggle', 'modal');
 			    listItem.setAttribute('data-bs-target', '#promptModal');
@@ -781,13 +789,14 @@
 		    });
 	    }
 
-	    function findFirstHeadingOrBold(content) {
+        function findFirstHeadingOrBold(content) {
+            content = content.replace(/^1\. /, '').replace(/^Recipe 1: /, '');
 		    const headingRegex = /^(#+)\s*(.*)/m;
 		    const boldRegex = /\*\*(.*?)(?::|\*\*)/;
 		    const headingMatch = content.match(headingRegex);
 		    const boldMatch = content.match(boldRegex);
 		    let previewText = headingMatch ? headingMatch[2] : (boldMatch ? boldMatch[1] : content.split('\n', 1)[0]);
-		    return previewText.length > 50 ? `${previewText.substring(0, 50)}...` : previewText;
+		    return previewText;
 	    }
 
 	    function deletePrompt(promptId) {
@@ -856,7 +865,7 @@
 					    return { id: el.getAttribute('data-id'), order: index, category: newCategory };
 				    });
 				    updateCategoryAndOrder(itemOrders);
-				    showToast(`${lastMovedItem.name} moved from ${lastMovedItem.from} to ${newCategory}`);
+				    showToast(`${lastMovedItem.name} moved from ${lastMovedItem.from} to ${newCategory}`, true);
 				    lastMovedItem.to = newCategory;
 			    }
 		    });
@@ -864,9 +873,10 @@
 
 	    let lastMovedItem = null;
 
-	    function showToast(message) {
-		    const toastEl = document.getElementById('itemMovedToast');
-		    toastEl.querySelector('.toast-body').textContent = message;
+        function showToast(message, undoButton) {
+		    const toastEl = document.getElementById('pageToast');
+            toastEl.querySelector('.toast-body').textContent = message;
+            undoButton ? toastEl.querySelector('.btn-link').style.display = "inline-block" : toastEl.querySelector('.btn-link').style.display = "none";
 		    new bootstrap.Toast(toastEl).show();
 	    }
 
@@ -1056,7 +1066,6 @@
         function startEditItem(itemId) {
             const itemElement = document.querySelector(`li[data-id='item-${itemId}']`);
             const itemNameElement = itemElement.querySelector('.form-check-label');
-            const tagsContainer = itemNameElement.querySelector('.tags-container');
             const originalName = itemNameElement.firstChild.textContent.trim()
 
             const inputElement = document.createElement('input');
@@ -1064,6 +1073,11 @@
             inputElement.value = originalName;
             inputElement.className = 'form-control edit-item-input';
             inputElement.onblur = () => submitEditItem(itemId, inputElement.value, originalName);
+            inputElement.addEventListener("keypress", function() {
+                if (event.key === "Enter") {
+                    submitEditItem(itemId, inputElement.value, originalName);
+                }
+            });
 
             itemNameElement.replaceChild(inputElement, itemNameElement.firstChild);
             inputElement.focus();
@@ -1082,9 +1096,9 @@
             executeAjaxRequest(`/update-item-name/${itemId}`, 'POST', { new_name: newName }, (response) => {
                 itemNameElement.textContent = newName.length > 64 ? `${newName.substring(0, 32)}...` : newName;
                 itemNameElement.appendChild(tagsContainer);
-                showToast('Item name updated successfully');
+                showToast('Item name updated successfully', false);
             }, (error) => {
-                showToast('Error updating item name');
+                showToast('Error updating item name', false);
                 itemNameElement.textContent = originalName.length > 64 ? `${originalName.substring(0, 32)}...` : originalName;
                 itemNameElement.appendChild(tagsContainer);
             });
@@ -1161,7 +1175,7 @@
         function promptProgress() {
             const progressBar = document.getElementById('gptProgressBar');
             let width = 0;
-            const totalTime = 35000;
+            const totalTime = 40000;
             const intervalTime = 100;
 
             const interval = setInterval(() => {
