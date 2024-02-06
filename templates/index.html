@@ -812,7 +812,7 @@
 		    const headingMatch = content.match(headingRegex);
 		    const boldMatch = content.match(boldRegex);
             let previewText = headingMatch ? headingMatch[2] : (boldMatch ? boldMatch[1] : content.split('\n', 1)[0]);
-            previewText = content.replace(/1\. /, '').replace(/Recipe 1: /, '');
+            previewText = previewText.replace(/1\. /, '').replace(/Recipe 1: /, '');
 		    return previewText;
 	    }
 
