@@ -95,9 +95,7 @@
                 <div class="dropdown me-2">
                     <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="user-menu"><i class="bi bi-person-circle"></i> {{ username }}</button>
                     <ul class="dropdown-menu align-items-center dropdown-menu-end" aria-labelledby="user-menu">
-                        <li><button class="dropdown-item"><i class="bi me-2 opacity-50 bi-gear"></i>Preferences</button></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item " href="/logout">Log out</a></li>
+                        <li><button data-bs-toggle="modal" data-bs-target="#propertiesModal" class="dropdown-item"><i class="bi me-2 opacity-50 bi-gear"></i>Preferences</button></li>
                     </ul>
                 </div>
                 <div class="dropdown">
@@ -110,6 +108,25 @@
             </div>
         </nav>
     </header>
+
+    <!-- Properties modal -->
+    <div class="modal fade" id="propertiesModal" tabindex="-1" aria-labelledby="propertiesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="propertiesModalLabel">Properties</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="propertiesModalContent">
+                    <p>Coming soon!</p>
+                    <a class="btn btn-outline-danger" href="/logout">Log out</a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="container-lg row my-1 px-3 mx-auto">
 
@@ -497,11 +514,11 @@
             <form action="{{ url_for('ask_gpt4') }}" method="POST" class="mx-3 mt-1" id="askGptForm">
                 <!-- Prompt selection -->
                 <div name="selected_prompt" class="mb-3 mx-auto row gap-2" id="promptSelect">
-					{% for key, prompt in prompts.items() %}
-					<input type="radio" class="btn-check" name="options" value="{{ key }}" id="option-{{ key }}" autocomplete="off" style="display: none;" {{ 'checked' if loop.first }}>
-					<label value="{{ key }}" class="col-sm btn btn-outline-secondary" for="option-{{ key }}">{{ key }}</label>
-					{% endfor %}
-				</div>
+                    {% for key, prompt in prompts.items() %}
+                    <input type="radio" class="btn-check" name="options" value="{{ key }}" id="option-{{ key }}" autocomplete="off" style="display: none;" {{ 'checked' if loop.first }}>
+                    <label value="{{ key }}" class="col-sm btn btn-outline-secondary" for="option-{{ key }}">{{ key }}</label>
+                    {% endfor %}
+                </div>
                 <!-- Advanced settings -->
                 <a class="mb-2 btn btn-link align-items-center col-12" onclick="toggleAdvancedSettings()"><i class="bi bi-gear me-2"></i>Advanced settings</a>
                 <div class="row g-3 mb-3" style="display: none" id="advancedSettings">
@@ -790,12 +807,12 @@
 	    }
 
         function findFirstHeadingOrBold(content) {
-            content = content.replace(/^1\. /, '').replace(/^Recipe 1: /, '');
 		    const headingRegex = /^(#+)\s*(.*)/m;
 		    const boldRegex = /\*\*(.*?)(?::|\*\*)/;
 		    const headingMatch = content.match(headingRegex);
 		    const boldMatch = content.match(boldRegex);
-		    let previewText = headingMatch ? headingMatch[2] : (boldMatch ? boldMatch[1] : content.split('\n', 1)[0]);
+            let previewText = headingMatch ? headingMatch[2] : (boldMatch ? boldMatch[1] : content.split('\n', 1)[0]);
+            previewText = previewText.replace(/1\. /, '').replace(/Recipe 1: /, '');
 		    return previewText;
 	    }
 
