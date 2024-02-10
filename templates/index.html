@@ -155,15 +155,15 @@
                 <div id="collapseUngrouped" class="accordion-collapse collapse" aria-labelledby="headingUngrouped">
                     <div class="accordion-body p-2">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                            <button class="btn btn-outline-secondary" onclick="selectAll('Ungrouped')"><i class="bi bi-check-square"></i> Select All</button>
-                            <button class="btn btn-outline-secondary" onclick="selectNone('Ungrouped')"><i class="bi bi-square"></i> Select None</button>
+                            <button class="btn btn-outline-secondary" onclick="selectAll('Ungrouped')"><i class="bi bi-check-square me-1"></i>Select all</button>
+                            <button class="btn btn-outline-secondary" onclick="selectNone('Ungrouped')"><i class="bi bi-square me-1"></i>Select none</button>
                         </div>
                         <ul class="list-group sortable-list mt-2" data-category="Ungrouped" id="Ungrouped">
                             {% for item in items_by_category['Ungrouped'] %}
-                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="item-{{ item.id }}">
+                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="{{ item.id }}">
                                 <div class="px-2 py-1 me-1 opacity-75 dragHandle"><i class="bi bi-grip-vertical"></i></div>
-                                <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-                                <label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 48 %}{{ item.name[:24] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+                                <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="{{ item.id }}">
+                                <label class="form-check-label flex-fill text-break" for="{{ item.id }}">{% if item.name|length > 48 %}{{ item.name[:24] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto">
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
@@ -176,7 +176,7 @@
                                         <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><button class="dropdown-item py-2" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
-                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
+                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-trash3"></i></button></li>
                                     </ul>
                                 </div>
                             </li>
@@ -195,15 +195,15 @@
                 <div id="collapseStaples" class="accordion-collapse collapse" aria-labelledby="headingStaples">
                     <div class="accordion-body p-2">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                            <button class="btn btn-outline-secondary" onclick="selectAll('Staples')"><i class="bi bi-check-square"></i> Select All</button>
-                            <button class="btn btn-outline-secondary" onclick="selectNone('Staples')"><i class="bi bi-square"></i> Select None</button>
+                            <button class="btn btn-outline-secondary" onclick="selectAll('Staples')"><i class="bi bi-check-square me-1"></i>Select all</button>
+                            <button class="btn btn-outline-secondary" onclick="selectNone('Staples')"><i class="bi bi-square me-1"></i>Select none</button>
                         </div>
                         <ul class="list-group sortable-list mt-2" data-category="Staples" id="Staples">
                             {% for item in items_by_category['Staples'] %}
-                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="item-{{ item.id }}">
+                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="{{ item.id }}">
                                 <div class="px-2 py-1 me-1 opacity-75 dragHandle"><i class="bi bi-grip-vertical"></i></div>
-                                <input class="form-check-input me-2 my-0 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-                                <label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+                                <input class="form-check-input me-2 my-0 my-0" type="checkbox" value="{{ item.name }}" id="{{ item.id }}">
+                                <label class="form-check-label flex-fill text-break" for="{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto">
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
@@ -216,7 +216,7 @@
                                         <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><button class="dropdown-item py-2" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
-                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
+                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-trash3"></i></button></li>
                                     </ul>
                                 </div>
                             </li>
@@ -235,15 +235,15 @@
                 <div id="collapseOils" class="accordion-collapse collapse" aria-labelledby="headingOils">
                     <div class="accordion-body p-2">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                            <button class="btn btn-outline-secondary" onclick="selectAll('Oils')"><i class="bi bi-check-square"></i> Select All</button>
-                            <button class="btn btn-outline-secondary" onclick="selectNone('Oils')"><i class="bi bi-square"></i> Select None</button>
+                            <button class="btn btn-outline-secondary" onclick="selectAll('Oils')"><i class="bi bi-check-square me-1"></i>Select all</button>
+                            <button class="btn btn-outline-secondary" onclick="selectNone('Oils')"><i class="bi bi-square me-1"></i>Select none</button>
                         </div>
                         <ul class="list-group sortable-list mt-2" data-category="Oils" id="Oils">
                             {% for item in items_by_category['Oils'] %}
-                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="item-{{ item.id }}">
+                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="{{ item.id }}">
                                 <div class="px-2 py-1 me-1 opacity-75 dragHandle"><i class="bi bi-grip-vertical"></i></div>
-                                <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-                                <label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+                                <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="{{ item.id }}">
+                                <label class="form-check-label flex-fill text-break" for="{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto">
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
@@ -256,7 +256,7 @@
                                         <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><button class="dropdown-item py-2" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
-                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
+                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-trash3"></i></button></li>
                                     </ul>
                                 </div>
                             </li>
@@ -275,15 +275,15 @@
                 <div id="collapsePantry" class="accordion-collapse collapse" aria-labelledby="headingPantry">
                     <div class="accordion-body p-2">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                            <button class="btn btn-outline-secondary" onclick="selectAll('Pantry')"><i class="bi bi-check-square"></i> Select All</button>
-                            <button class="btn btn-outline-secondary" onclick="selectNone('Pantry')"><i class="bi bi-square"></i> Select None</button>
+                            <button class="btn btn-outline-secondary" onclick="selectAll('Pantry')"><i class="bi bi-check-square me-1"></i>Select all</button>
+                            <button class="btn btn-outline-secondary" onclick="selectNone('Pantry')"><i class="bi bi-square me-1"></i>Select none</button>
                         </div>
                         <ul class="list-group sortable-list mt-2" data-category="Pantry" id="Pantry">
                             {% for item in items_by_category['Pantry'] %}
-                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="item-{{ item.id }}">
+                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="{{ item.id }}">
                                 <div class="px-2 py-1 me-1 opacity-75 dragHandle"><i class="bi bi-grip-vertical"></i></div>
-                                <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-                                <label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+                                <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="{{ item.id }}">
+                                <label class="form-check-label flex-fill text-break" for="{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto">
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
@@ -296,7 +296,7 @@
                                         <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><button class="dropdown-item py-2" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
-                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
+                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-trash3"></i></button></li>
                                     </ul>
                                 </div>
                             </li>
@@ -315,15 +315,15 @@
                 <div id="collapseVegetables" class="accordion-collapse collapse" aria-labelledby="headingVegetables">
                     <div class="accordion-body p-2">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                            <button class="btn btn-outline-secondary" onclick="selectAll('Vegetables')"><i class="bi bi-check-square"></i> Select All</button>
-                            <button class="btn btn-outline-secondary" onclick="selectNone('Vegetables')"><i class="bi bi-square"></i> Select None</button>
+                            <button class="btn btn-outline-secondary" onclick="selectAll('Vegetables')"><i class="bi bi-check-square me-1"></i>Select all</button>
+                            <button class="btn btn-outline-secondary" onclick="selectNone('Vegetables')"><i class="bi bi-square me-1"></i>Select none</button>
                         </div>
                         <ul class="list-group sortable-list mt-2" data-category="Vegetables" id="Vegetables">
                             {% for item in items_by_category['Vegetables'] %}
-                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="item-{{ item.id }}">
+                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="{{ item.id }}">
                                 <div class="px-2 py-1 me-1 opacity-75 dragHandle"><i class="bi bi-grip-vertical"></i></div>
-                                <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-                                <label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+                                <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="{{ item.id }}">
+                                <label class="form-check-label flex-fill text-break" for="{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto">
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
@@ -336,7 +336,7 @@
                                         <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><button class="dropdown-item py-2" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
-                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
+                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-trash3"></i></button></li>
                                     </ul>
                                 </div>
                             </li>
@@ -355,15 +355,15 @@
                 <div id="collapseFruits" class="accordion-collapse collapse" aria-labelledby="headingFruits">
                     <div class="accordion-body p-2">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                            <button class="btn btn-outline-secondary" onclick="selectAll('Fruits')"><i class="bi bi-check-square"></i> Select All</button>
-                            <button class="btn btn-outline-secondary" onclick="selectNone('Fruits')"><i class="bi bi-square"></i> Select None</button>
+                            <button class="btn btn-outline-secondary" onclick="selectAll('Fruits')"><i class="bi bi-check-square me-1"></i>Select all</button>
+                            <button class="btn btn-outline-secondary" onclick="selectNone('Fruits')"><i class="bi bi-square me-1"></i>Select none</button>
                         </div>
                         <ul class="list-group sortable-list mt-2" data-category="Fruits" id="Fruits">
                             {% for item in items_by_category['Fruits'] %}
-                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="item-{{ item.id }}">
+                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="{{ item.id }}">
                                 <div class="px-2 py-1 me-1 opacity-75 dragHandle"><i class="bi bi-grip-vertical"></i></div>
-                                <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-                                <label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+                                <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="{{ item.id }}">
+                                <label class="form-check-label flex-fill text-break" for="{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto">
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
@@ -376,7 +376,7 @@
                                         <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><button class="dropdown-item py-2" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
-                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
+                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-trash3"></i></button></li>
                                     </ul>
                                 </div>
                             </li>
@@ -395,15 +395,15 @@
                 <div id="collapseMeats" class="accordion-collapse collapse" aria-labelledby="headingMeats">
                     <div class="accordion-body p-2">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                            <button class="btn btn-outline-secondary" onclick="selectAll('Meats')"><i class="bi bi-check-square"></i> Select All</button>
-                            <button class="btn btn-outline-secondary" onclick="selectNone('Meats')"><i class="bi bi-square"></i> Select None</button>
+                            <button class="btn btn-outline-secondary" onclick="selectAll('Meats')"><i class="bi bi-check-square me-1"></i>Select all</button>
+                            <button class="btn btn-outline-secondary" onclick="selectNone('Meats')"><i class="bi bi-square me-1"></i>Select none</button>
                         </div>
                         <ul class="list-group sortable-list mt-2" data-category="Meats" id="Meats">
                             {% for item in items_by_category['Meats'] %}
-                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="item-{{ item.id }}">
+                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="{{ item.id }}">
                                 <div class="px-2 py-1 me-1 opacity-75 dragHandle"><i class="bi bi-grip-vertical"></i></div>
-                                <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-                                <label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+                                <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="{{ item.id }}">
+                                <label class="form-check-label flex-fill text-break" for="{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto">
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
@@ -416,7 +416,7 @@
                                         <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><button class="dropdown-item py-2" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
-                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
+                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-trash3"></i></button></li>
                                     </ul>
                                 </div>
                             </li>
@@ -435,15 +435,15 @@
                 <div id="collapseBaking" class="accordion-collapse collapse" aria-labelledby="headingBaking">
                     <div class="accordion-body p-2">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                            <button class="btn btn-outline-secondary" onclick="selectAll('Baking')"><i class="bi bi-check-square"></i> Select All</button>
-                            <button class="btn btn-outline-secondary" onclick="selectNone('Baking')"><i class="bi bi-square"></i> Select None</button>
+                            <button class="btn btn-outline-secondary" onclick="selectAll('Baking')"><i class="bi bi-check-square me-1"></i>Select all</button>
+                            <button class="btn btn-outline-secondary" onclick="selectNone('Baking')"><i class="bi bi-square me-1"></i>Select none</button>
                         </div>
                         <ul class="list-group sortable-list mt-2" data-category="Baking" id="Baking">
                             {% for item in items_by_category['Baking'] %}
-                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="item-{{ item.id }}">
+                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="{{ item.id }}">
                                 <div class="px-2 py-1 me-1 opacity-75 dragHandle"><i class="bi bi-grip-vertical"></i></div>
-                                <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-                                <label class="form-check-label flex-fill text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+                                <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="{{ item.id }}">
+                                <label class="form-check-label flex-fill text-break" for="{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto">
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
@@ -456,7 +456,7 @@
                                         <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><button class="dropdown-item py-2" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
-                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
+                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-trash3"></i></button></li>
                                     </ul>
                                 </div>
                             </li>
@@ -475,15 +475,15 @@
                 <div id="collapseAlcohol" class="accordion-collapse collapse" aria-labelledby="headingAlcohol">
                     <div class="accordion-body p-2">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                            <button class="btn btn-outline-secondary" onclick="selectAll('Alcohol')"><i class="bi bi-check-square"></i> Select All</button>
-                            <button class="btn btn-outline-secondary" onclick="selectNone('Alcohol')"><i class="bi bi-square"></i> Select None</button>
+                            <button class="btn btn-outline-secondary" onclick="selectAll('Alcohol')"><i class="bi bi-check-square me-1"></i>Select all</button>
+                            <button class="btn btn-outline-secondary" onclick="selectNone('Alcohol')"><i class="bi bi-square me-1"></i>Select none</button>
                         </div>
                         <ul class="list-group sortable-list mt-2" data-category="Alcohol" id="Alcohol">
                             {% for item in items_by_category['Alcohol'] %}
-                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="item-{{ item.id }}">
+                            <li class="list-group-item ps-1 d-flex align-items-center" data-id="{{ item.id }}">
                                 <div class="px-2 py-1 me-1 opacity-75 dragHandle"><i class="bi bi-grip-vertical"></i></div>
-                                <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="item-{{ item.id }}">
-                                <label class="form-check-label flex-fill text-break text-break" for="item-{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
+                                <input class="form-check-input me-2 my-0" type="checkbox" value="{{ item.name }}" id="{{ item.id }}">
+                                <label class="form-check-label flex-fill text-break text-break" for="{{ item.id }}">{% if item.name|length > 64 %}{{ item.name[:64] }}...{% else %}{{ item.name }}{% endif %}<span class="tags-container mx-1" id="tags-{{ item.id }}"></span></label>
                                 <div class="dropdown float-end mb-auto">
                                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton-{{ item.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
@@ -496,7 +496,7 @@
                                         <li><a class="dropdown-item toggle-tag py-2" href="#" onclick="toggleTag(event, '{{ item.id }}', 'Low')" data-item-id="{{ item.id }}" data-tag="Low">Low</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><button class="dropdown-item py-2" onclick="startEditItem('{{ item.id }}', event)">Edit <i class="bi bi-pencil"></i></button></li>
-                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-x-lg"></i></button></li>
+                                        <li><button class="dropdown-item text-danger py-2" onclick="deleteItem('{{ item.id }}', event)" href="{{ url_for('delete', item_id=item.id) }}">Delete <i class="bi bi-trash3"></i></button></li>
                                     </ul>
                                 </div>
                             </li>
@@ -557,25 +557,6 @@
                         <button type="button" class="btn btn-secondary" id="randomizeBtn" onclick="randomizeSelections()"><i class="bi bi-dice-5-fill me-2"></i>Randomize</button>
                     </div>
                 </div>
-                <!-- Prompt details -->
-                <!--<div class="accordion my-3" id="currentPromptAccordion">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingCurrentPrompt">
-                            <button class="accordion-button collapsed bg-secondary-subtle collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCurrentPrompt" aria-expanded="true" aria-controls="collapseCurrentPrompt">
-                                View prompt details
-                            </button>
-                        </h2>
-                        <div id="collapseCurrentPrompt" class="accordion-collapse collapse" aria-labelledby="headingCurrentPrompt">
-                            <div class="accordion-body" id="promptDetails">
-                                {% if gpt_response %}
-                                <p>{{ prompts[selected_prompt] }}</p>
-                                {% else %}
-                                <p>Select a prompt and ask ChefGPT to see details here.</p>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
                 <input type="hidden" name="selected_items" id="selectedItems">
                 <button id="askGptButton" type="submit" class="btn btn-primary btn-lg col-12">
                     <div id="buttonLoadingIndicator" class="spinner-border spinner-border-sm" role="status" style="display: none"></div>
@@ -666,7 +647,7 @@
                         <!-- Full prompt content will go here -->
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" id="deletePromptBtn">Delete recipe <i class="bi bi-x-lg"></i></button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" id="deletePromptBtn">Delete recipe <i class="bi bi-trash3"></i></button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -686,6 +667,89 @@
             </div>
         </div>
     </div>
+
+    <!-- Floating Action Bar -->
+    <div id="floatingActionBar" class="fixed-bottom mb-4 bg-text-primary" style="display: none; z-index: 99;">
+        <div class="d-flex gap-2 justify-content-center">
+
+            <button id="deleteAllBtn" type="button" class="btn btn-danger"><i class="bi bi-trash3"></i></button>
+            <button id="tagAllBtn" type="button" class="btn btn-secondary"><i class="bi bi-tags"></i></button>
+            <button id="moveAllBtn" type="button" class="btn btn-secondary"><i class="bi bi-arrow-down-up"></i></button>
+            <button id="deselectAllBtn" type="button" class="btn btn-secondary"><span id="selectedCountBadge" class="my-auto">0 items</span><i class="bi bi-x-lg ms-2"></i></button>
+        </div>
+    </div>
+
+    <!-- Tag Selection Modal -->
+    <div class="modal fade" id="tagSelectionModal" tabindex="-1" aria-labelledby="tagSelectionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="tagSelectionModalLabel">Tag selected items</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="list-group list-group-flush" role="group" aria-label="Tag selection">
+                        <button type="button" class="list-group-item list-group-item-action" onclick="tagAllSelectedItems('Fresh')">Fresh</button>
+                        <button type="button" class="list-group-item list-group-item-action" onclick="tagAllSelectedItems('Old')">Old</button>
+                        <button type="button" class="list-group-item list-group-item-action" onclick="tagAllSelectedItems('Frozen')">Frozen</button>
+                        <button type="button" class="list-group-item list-group-item-action" onclick="tagAllSelectedItems('Low')">Low</button>
+                        <button class="list-group-item text-danger list-group-item-action" onclick="removeAllTagsForSelected()">Remove tags<i class="bi bi-file-x ms-2"></i></button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Selection Modal -->
+    <div class="modal fade" id="categorySelectionModal" tabindex="-1" aria-labelledby="categorySelectionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="categorySelectionModalLabel">Move items to category</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="list-group list-group-flush" role="group" id="newCategorySelect">
+                        <button type="button" class="list-group-item list-group-item-action" value="Ungrouped">Not grouped</button>
+                        <button type="button" class="list-group-item list-group-item-action" value="Staples">🧀 Dairy and stock</button>
+                        <button type="button" class="list-group-item list-group-item-action" value="Oils">🧂 Oils and seasoning</button>
+                        <button type="button" class="list-group-item list-group-item-action" value="Pantry">🥫 Canned and bagged</button>
+                        <button type="button" class="list-group-item list-group-item-action" value="Vegetables">🥕 Vegetables</button>
+                        <button type="button" class="list-group-item list-group-item-action" value="Fruits">🍒 Fruits</button>
+                        <button type="button" class="list-group-item list-group-item-action" value="Meats">🍖 Meats</button>
+                        <button type="button" class="list-group-item list-group-item-action" value="Baking">🍞 Flours and baking</button>
+                        <button type="button" class="list-group-item list-group-item-action" value="Alcohol">🍷 Alcohol</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Delete items?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete all selected items?
+                    <div class="mt-3 d-flex justify-content-end">
+                        <button type="button" class="btn btn-danger me-2" id="confirmDeleteAll">Delete all<i class="bi bi-trash3 ms-2"></i></button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script>
 	    function executeAjaxRequest(url, type, data, onSuccess, onError) {
@@ -751,7 +815,7 @@
 				    itemSpan.textContent = itemName;
 
 				    const deleteButton = document.createElement('button');
-				    deleteButton.innerHTML = '<i class="bi bi-x-lg"></i>';
+				    deleteButton.innerHTML = '<i class="bi bi-trash3"></i>';
 				    deleteButton.className = 'btn btn-outline-danger btn-sm ms-2';
 				    deleteButton.setAttribute('data-item-name', itemName);
 				    deleteButton.onclick = (event) => deleteItemFromPrompt(promptId, itemName, event);
@@ -922,7 +986,35 @@
 			    console.log('Items updated successfully');
 			    updateBadgeNumbers();
 		    });
-	    }
+        }
+
+        function moveAllSelectedItemsToCategory(newCategory) {
+            const selectedCheckboxes = document.querySelectorAll('.form-check-input:checked');
+            const itemOrders = Array.from(selectedCheckboxes).map((checkbox, index) => {
+                const itemId = checkbox.closest('li').getAttribute('data-id');
+                return {
+                    id: itemId,
+                    order: index, // Update this to instead index items starting from 0
+                    category: newCategory
+                };
+            });
+
+            moveItemsToNewCategoryUI(itemOrders, newCategory);
+        }
+
+        function moveItemsToNewCategoryUI(itemOrders, newCategory) {
+            itemOrders.forEach(itemOrder => {
+                const itemElement = document.querySelector(`li[data-id='${itemOrder.id}']`);
+                if (itemElement) {
+                    const newCategoryUl = document.getElementById(newCategory);
+                    if (newCategoryUl) {
+                        newCategoryUl.insertBefore(itemElement, newCategoryUl.firstChild) ? newCategoryUl.firstChild : newCategoryUl.appendChild(itemElement);
+                    }
+                }
+                updateCategoryAndOrder(itemOrders);
+            });
+        }
+
 
 	    function updatePromptAccordion() {
 		    const selectedPromptKey = document.querySelector('input[name="options"]:checked').value;
@@ -936,12 +1028,16 @@
 
 	    function selectAll(listId) {
 		    const listItems = document.getElementById(listId).getElementsByTagName('input');
-		    Array.from(listItems).forEach(item => item.checked = true);
+            Array.from(listItems).forEach(item => item.checked = true);
+            updateFloatingActionBar();
+            updateSelectedCount();
 	    }
 
 	    function selectNone(listId) {
 		    const listItems = document.getElementById(listId).getElementsByTagName('input');
-		    Array.from(listItems).forEach(item => item.checked = false);
+            Array.from(listItems).forEach(item => item.checked = false);
+            updateFloatingActionBar();
+            updateSelectedCount();
 	    }
 
 	    function setSelectedItems() {
@@ -952,7 +1048,7 @@
 	    function deleteItem(itemId, event) {
 		    event.preventDefault();
 		    executeAjaxRequest(`/delete/${itemId}`, 'POST', {}, (response) => {
-			    document.querySelector(`li[data-id='item-${itemId}']`)?.remove();
+			    document.querySelector(`li[data-id='${itemId}']`)?.remove();
 			    document.querySelector(`button[data-item-id='${itemId}']`)?.closest('span').remove();
 			    updateBadgeNumbers();
 		    });
@@ -1081,7 +1177,7 @@
         }
 
         function startEditItem(itemId) {
-            const itemElement = document.querySelector(`li[data-id='item-${itemId}']`);
+            const itemElement = document.querySelector(`li[data-id='${itemId}']`);
             const itemNameElement = itemElement.querySelector('.form-check-label');
             const originalName = itemNameElement.firstChild.textContent.trim()
 
@@ -1101,7 +1197,7 @@
         }
 
         function submitEditItem(itemId, newName, originalName) {
-            const itemNameElement = document.querySelector(`li[data-id='item-${itemId}'] .form-check-label`);
+            const itemNameElement = document.querySelector(`li[data-id='${itemId}'] .form-check-label`);
             const tagsContainer = itemNameElement.querySelector('.tags-container');
 
             if (newName === originalName) {
@@ -1142,7 +1238,127 @@
             for (const itemId of Object.keys(itemTags)) {
                 updateDropdownActiveClass(itemId);
             }
-	    });
+        });
+
+        $(document).ready(function () {
+            // Check for checkbox changes to toggle the floating action bar
+            $('.form-check-input').change(function () {
+                updateFloatingActionBar();
+            });
+
+            // Delete All Items
+            $('#deleteAllBtn').click(function () {
+                // Open the modal instead of showing a confirmation dialog
+                $('#deleteConfirmationModal').modal('show');
+            });
+
+            // Action for the "Delete" button in the modal
+            $('#confirmDeleteAll').click(function () {
+                // Perform the deletion of checked items
+                $('.form-check-input:checked').each(function () {
+                    deleteItem($(this).closest('li').data('id'), event);
+                });
+
+                // You might want to call updateFloatingActionBar() or any other necessary updates here
+                updateFloatingActionBar();
+
+                // Close the modal after action
+                $('#deleteConfirmationModal').modal('hide');
+            });
+
+            // Tag All Items
+            $('#tagAllBtn').click(function () {
+                $('#tagSelectionModal').modal('show');
+            });
+
+            // Move all
+            $('#moveAllBtn').click( function () {
+                const selectedItems = document.querySelectorAll('.form-check-input:checked');
+                const itemIds = Array.from(selectedItems).map(item => item.getAttribute('data-item-id'));
+                // Store itemIds in a global variable or use a data attribute on the Move button
+                $('#categorySelectionModal').modal('show');
+            });
+
+            // Deselect All Items
+            $('#deselectAllBtn').click(function () {
+                $('.form-check-input:checked').prop('checked', false);
+                updateFloatingActionBar();
+            });
+
+            document.querySelectorAll('#newCategorySelect .list-group-item').forEach(button => {
+                button.addEventListener('click', function () {
+                    const newCategory = this.getAttribute('value');
+                    moveAllSelectedItemsToCategory(newCategory);
+                    $('#categorySelectionModal').modal('hide');
+                });
+            });
+
+
+            // Function to update the visibility of the floating action bar
+        });
+
+        function updateFloatingActionBar() {
+            if ($('.form-check-input:checked').length > 0) {
+                $('#floatingActionBar').fadeIn(200);
+            } else {
+                $('#floatingActionBar').fadeOut(200);
+            }
+        }
+
+        function updateSelectedCount() {
+            const selectedItems = document.querySelectorAll('.form-check-input:checked').length;
+            document.getElementById('selectedCountBadge').textContent = String(selectedItems + " items");
+        }
+
+        // Call this function whenever an item's checkbox is clicked
+        document.querySelectorAll('.form-check-input').forEach(item => {
+            item.addEventListener('change', updateSelectedCount);
+        });
+
+
+        function tagAllSelectedItems(tag) {
+            $('.form-check-input:checked').each(function () {
+                const itemId = $(this).closest('li').attr('data-id');
+                toggleTagForAll(itemId, tag);
+            });
+            $('#tagSelectionModal').modal('hide');
+        }
+
+
+        function toggleTagForAll(itemId, newTag) {
+            if (!itemTags[itemId]) {
+                itemTags[itemId] = new Set();
+            }
+
+            // Enforce exclusivity rules
+            const exclusivityRules = {
+                'Fresh': ['Old', 'Frozen'],
+                'Old': ['Fresh'],
+                'Frozen': ['Fresh'],
+            };
+
+            // Remove tags based on the exclusivity rules
+            if (exclusivityRules[newTag]) {
+                exclusivityRules[newTag].forEach(tagToRemove => {
+                    itemTags[itemId].delete(tagToRemove);
+                });
+            }
+
+            // Now, add the new tag after removing conflicting tags
+            itemTags[itemId].add(newTag);
+
+            // Reflect changes in the UI
+            updateTags(itemId);
+        }
+
+        function removeAllTagsForSelected() {
+            $('.form-check-input:checked').each(function () {
+                const itemId = $(this).closest('li').attr('data-id');
+                itemTags[itemId].clear();
+                updateTags(itemId);
+            });
+            $('#tagSelectionModal').modal('hide');
+        }
 
 	    document.addEventListener('DOMContentLoaded', function() {
 		    loadSavedPrompts();
