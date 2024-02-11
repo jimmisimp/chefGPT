@@ -135,13 +135,13 @@
                 <input placeholder="Enter an item here" type="text" name="item_name" autocomplete="off" class="form-control" id="itemInput" maxlength="64" required>
             </div>
             <div class="col-md-auto d-flex gap-2">
-                <button type="submit" class="btn btn-secondary flex-fill" aria-label="Add item to list"><i class="bi bi-plus-lg"></i> Add Item</button>
-                <a data-bs-toggle="modal" data-bs-target="#deletedItemsModal" id="recentItemsBtn" class="btn btn-tertiary" aria-label="Add previously deleted items"><i class="bi bi-arrow-counterclockwise"></i></a>
+                <button type="submit" class="btn btn-secondary flex-fill" aria-label="Add item to list"><i class="bi bi-plus-lg me-2"></i>Add item</button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#deletedItemsModal" id="recentItemsBtn" class="btn btn-tertiary" aria-label="Add previously deleted items"><i class="bi bi-arrow-counterclockwise"></i></button>
             </div>
             <div class="col d-grid justify-content-end">
                 <div class="btn-group" role="group" aria-label="Collapse or expand accordions">
-                    <button type="button" class="btn btn-outline-secondary btn-sm" id="accordionCollapseButton"><i class="bi bi-chevron-contract"></i> Collapse</button>
-                    <button type="button" class="btn btn-outline-secondary btn-sm" id="accordionExpandButton"><i class="bi bi-chevron-expand"></i> Expand</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" id="accordionCollapseButton"><i class="bi bi-chevron-contract me-1"></i>Collapse</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" id="accordionExpandButton"><i class="bi bi-chevron-expand me-1"></i>Expand</button>
                 </div>
             </div>
         </form>
@@ -693,6 +693,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-0">
+                    
                     {% if deleted_items|length > 0 %}
                     <div class="list-group list-group-flush" role="group" aria-label="Deleted items selection">
                         {% for previousItem in deleted_items %}
@@ -700,8 +701,9 @@
                         {% endfor %}
                     </div>
                     {% else %}
-                    <p>Previously deleted items will appear here. <a href=".">Reload</a> to see items you just deleted.</p>
+                    <p class="m-3 text-body-secondary">Nothing here.</p>
                     {% endif %}
+                    <p class="mx-3 text-body-secondary"><small>You will need to <a href=".">Reload</a> to see items you just deleted.</small></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-tertiary" data-bs-dismiss="modal">Cancel</button>
