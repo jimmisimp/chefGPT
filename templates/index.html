@@ -128,7 +128,7 @@
         </div>
     </div>
 
-    <div class="container-lg row my-1 px-3 mx-auto">
+    <div class="container-lg row my-1 pb-5 px-3 mx-auto">
 
         <form method="POST" class="row mx-auto g-2 align-items-center" id="itemForm">
             <div class="col-sm-12 col-md-6">
@@ -506,7 +506,7 @@
                 </div>
             </div>
         </div>
-        <div class="container mt-4 py-4 border border-secondary bg-secondary-subtle rounded">
+        <div class="container mt-4 py-4 bg-secondary-subtle rounded">
             <div class="row m-auto">
                 <h4>Make something</h4>
                 <p>Select items above (or select nothing to use full list). Then, select a prompt type.</p>
@@ -558,14 +558,16 @@
                     </div>
                 </div>
                 <input type="hidden" name="selected_items" id="selectedItems">
-                <button id="askGptButton" type="submit" class="btn btn-primary btn-lg col-12">
-                    <div id="buttonLoadingIndicator" class="spinner-border spinner-border-sm" role="status" style="display: none"></div>
-                    <i id="buttonStars" class="bi bi-stars"></i> Ask ChefGPT
-                </button>
+                <div class="d-flex justify-content-center py-3">
+                    <button id="askGptButton" type="submit" class="btn btn-primary btn-lg col-md-4 col-12">
+                        <div id="buttonLoadingIndicator" class="spinner-border spinner-border-sm" role="status" style="display: none"></div>
+                        <i id="buttonStars" class="bi bi-stars"></i> Ask ChefGPT
+                    </button>
+                </div>
             </form>
 
-            <div id="gptLoader" class="card mt-3 bg-secondary-subtle col-12" style="display: none;">
-                <div class="gpt-response-container card-body d-grid justify-content-center">
+            <div id="gptLoader" class="mt-3 bg-secondary-subtle col-12" style="display: none;">
+                <div class="gpt-response-container d-grid justify-content-center">
                     <div id="loadingIndicator" class="d-grid justify-content-center">
                         <svg-animate trigger="loop" role="status">
                             <svg viewBox="0 0 140 130" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:anim="http://www.w3.org/2000/anim" anim="" anim:transform-origin="50% 50%" anim:duration="7" anim:ease="ease-in-out">
@@ -630,9 +632,12 @@
 
         <div class="container mt-4">
             <h4><i class="bi bi-clock-history"></i> Results history</h4>
-            <ul id="savedResults" class="list-group my-3">
+            <ul id="savedResults" class="list-group mt-3 mb-1">
                 <!-- Saved prompts will be populated here -->
             </ul>
+            <div class="d-flex justify-content-center">
+                <button id="loadMoreBtn" class="btn btn-tertiary" style="">Load more</button>
+            </div>
         </div>
 
         <!-- Modal for viewing the full prompt or the newly generated GPT-4 response -->
@@ -776,8 +781,8 @@
 		    const savedResultsList = document.getElementById('savedResults');
 		    savedResultsList.innerHTML = '';
 		    receivedPrompts.forEach((prompt) => {
-			    const listItem = document.createElement('li');
-			    listItem.className = 'list-group-item list-group-item-action text-truncate';
+			    const listItem = document.createElement('button');
+			    listItem.className = 'py-2 list-group-item list-group-item-action text-truncate';
 			    listItem.id = 'saved-'+prompt.id
 			    listItem.setAttribute('data-bs-toggle', 'modal');
 			    listItem.setAttribute('data-bs-target', '#promptModal');
@@ -793,14 +798,26 @@
 		    });
 	    }
 
-	    function loadSavedPrompts(callback) {
-		    executeAjaxRequest('/get-prompts', 'GET', {}, (receivedPrompts) => {
-			    renderPrompts(receivedPrompts);
-			    if (typeof callback === "function" && receivedPrompts.length > 0) {
-				    callback(receivedPrompts[receivedPrompts.length - 1]);
-			    }
-		    });
-	    }
+        let currentOffset = 0;
+
+        function loadSavedPrompts(offset = 0, limit = 10, append = false) {
+            executeAjaxRequest(`/get-prompts?offset=${offset}&limit=${limit}`, 'GET', {}, (receivedPrompts) => {
+                if (!append) {
+                    document.getElementById('savedResults').innerHTML = '';
+                }
+                renderPrompts(receivedPrompts);
+                currentOffset += receivedPrompts.length;
+                if (receivedPrompts.length < limit) {
+                    document.getElementById('loadMoreBtn').style.display = 'none';
+                } else {
+                    document.getElementById('loadMoreBtn').style.display = 'inline-block';
+                }
+            });
+        }
+
+        document.getElementById('loadMoreBtn').addEventListener('click', function () {
+            loadSavedPrompts(currentOffset, 10, true);
+        });
 
 	    function populateItemsList(itemsString, promptId) {
 		    const itemsContainer = document.createElement('div');
@@ -904,7 +921,8 @@
 	    }
 
 	    document.addEventListener('DOMContentLoaded', function () {
-		    restoreAccordionStates();
+            restoreAccordionStates();
+            loadSavedPrompts(0, 10);
 		    document.querySelectorAll('.accordion-button').forEach(button => {
 			    button.addEventListener('click', function() {
 				    const accordionId = this.dataset.bsTarget;
