@@ -125,6 +125,7 @@ def index():
             existing_item = conn.execute('SELECT * FROM items WHERE name = ? AND user_id = ?', (item_singular, current_user.id)).fetchone()
             if not existing_item:
                 conn.execute('INSERT INTO items (name, user_id) VALUES (?, ?)', (item_singular, current_user.id))
+                conn.execute('DELETE FROM deleted WHERE name = ? AND user_id = ?', (item_singular, current_user.id))
                 conn.commit()
             conn.close()
         return redirect(url_for('index'))
@@ -141,8 +142,25 @@ def index():
             processed_items.append(item_dict)
         items_by_category[category_name] = processed_items
 
+    deleted_items = conn.execute('SELECT * FROM deleted WHERE user_id = ? ORDER BY delete_id DESC', (current_user.id,)).fetchall()
+
     conn.close()
-    return render_template('index.html', items_by_category=items_by_category, gpt_response=gpt_response, prompts=prompts, username=current_user.username)
+    return render_template('index.html', items_by_category=items_by_category, gpt_response=gpt_response, prompts=prompts, username=current_user.username, deleted_items=deleted_items)
+
+@app.route('/restore-item', methods=['POST'])
+@login_required
+def restore_item():
+    data = request.get_json()
+    item_name = data.get('item_name').strip()
+    if item_name:
+        conn = get_db_connection()
+        existing_item = conn.execute('SELECT * FROM items WHERE name = ? AND user_id = ?', (item_name, current_user.id)).fetchone()
+        if not existing_item:
+            conn.execute('INSERT INTO items (name, user_id) VALUES (?, ?)', (item_name, current_user.id))
+            conn.execute('DELETE FROM deleted WHERE name = ? AND user_id = ?', (item_name, current_user.id))
+            conn.commit()
+        conn.close()
+    return redirect(url_for('index'))
 
 def processItems(raw_item):
     item = re.sub(r'[^a-zA-Z0-9 ]+', '', raw_item.lower())
@@ -182,6 +200,18 @@ def update_items():
 @login_required
 def delete(item_id):
     conn = get_db_connection()
+    item_name = conn.execute('SELECT name FROM items WHERE id = ? AND user_id = ?', (item_id, current_user.id)).fetchone()
+    existing_item = conn.execute('SELECT * FROM deleted WHERE name = ? AND user_id = ?', (item_name[0], current_user.id)).fetchone()
+    if not existing_item:
+        conn.execute('INSERT INTO deleted (name, user_id) VALUES (?, ?)', (item_name[0], current_user.id))
+        
+        cursor = conn.execute('SELECT COUNT(*) FROM deleted WHERE user_id = ?', (current_user.id,))
+        count = cursor.fetchone()[0]
+        if count > 15:
+            cursor = conn.execute('SELECT MIN(delete_id) FROM deleted WHERE user_id = ?', (current_user.id,))
+            min_delete_id = cursor.fetchone()[0]
+            conn.execute('DELETE FROM deleted WHERE delete_id = ? AND user_id = ?', (min_delete_id, current_user.id))
+            
     conn.execute('DELETE FROM items WHERE id = ? AND user_id = ?', (item_id, current_user.id))
     conn.commit()
     conn.close()
@@ -236,14 +266,14 @@ def ask_gpt4():
     return jsonify({"gpt_response": gpt_response})
 
 @app.route('/save-prompt', methods=['POST'])
-@login_required  # Ensure that the user is logged in
+@login_required
 def save_prompt():
     content = request.json['content']
     items = request.json['items']
     conn = get_db_connection()
     cursor = conn.execute('INSERT INTO prompts (content, items, user_id) VALUES (?, ?, ?)', (content, items, current_user.id))
     conn.commit()
-    prompt_id = cursor.lastrowid  # Get the last inserted id
+    prompt_id = cursor.lastrowid
     conn.close()
     return jsonify({'status': 'success', 'message': 'Prompt saved successfully', 'prompt_id': prompt_id})
 
@@ -278,7 +308,6 @@ def delete_item_from_prompt():
 
     conn = get_db_connection()
 
-    # Update prompt's item list
     current_items = conn.execute('SELECT items FROM prompts WHERE id = ?', (prompt_id,)).fetchone()
     if current_items:
         updated_items = [item for item in current_items['items'].split(',') if item.strip() != item_name]
@@ -288,18 +317,6 @@ def delete_item_from_prompt():
     conn.commit()
     conn.close()
     return jsonify({"status": "success"})
-
-# @app.route('/update-item-tags/<int:item_id>', methods=['POST'])
-# @login_required
-# def update_item_tags(item_id):
-#     tags = request.json['tags']  # Expecting a list of tags
-#     tags_str = ','.join(tags)  # Convert list of tags to a comma-separated string
-#     conn = get_db_connection()
-#     conn.execute('UPDATE items SET tags = ? WHERE id = ?', (tags_str, item_id))
-#     conn.commit()
-#     conn.close()
-    
-#     return jsonify({'status': 'success', 'message': 'Item tags updated successfully'})
 
 @app.route('/update-item-tags-batch', methods=['POST'])
 @login_required

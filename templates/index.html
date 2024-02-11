@@ -134,8 +134,9 @@
             <div class="col-sm-12 col-md-6">
                 <input placeholder="Enter an item here" type="text" name="item_name" autocomplete="off" class="form-control" id="itemInput" maxlength="64" required>
             </div>
-            <div class="col-md-auto d-grid">
-                <button type="submit" class="btn btn-secondary" aria-label="Add item to list"><i class="bi bi-plus-lg"></i> Add Item</button>
+            <div class="col-md-auto d-flex gap-2">
+                <button type="submit" class="btn btn-secondary flex-fill" aria-label="Add item to list"><i class="bi bi-plus-lg"></i> Add Item</button>
+                <a data-bs-toggle="modal" data-bs-target="#deletedItemsModal" id="recentItemsBtn" class="btn btn-tertiary" aria-label="Add previously deleted items"><i class="bi bi-arrow-counterclockwise"></i></a>
             </div>
             <div class="col d-grid justify-content-end">
                 <div class="btn-group" role="group" aria-label="Collapse or expand accordions">
@@ -683,6 +684,32 @@
         </div>
     </div>
 
+    <!-- Previous Item Modal -->
+    <div class="modal fade" id="deletedItemsModal" tabindex="-1" aria-labelledby="deletedItemsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="deletedItemsModalLabel">Restore a previous item</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    {% if deleted_items|length > 0 %}
+                    <div class="list-group list-group-flush" role="group" aria-label="Deleted items selection">
+                        {% for previousItem in deleted_items %}
+                        <button type="button" class="list-group-item list-group-item-action" onclick="restoreItem('{{ previousItem.name }}')">{{ previousItem.name }}</button>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p>Previously deleted items will appear here. <a href=".">Reload</a> to see items you just deleted.</p>
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-tertiary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Tag Selection Modal -->
     <div class="modal fade" id="tagSelectionModal" tabindex="-1" aria-labelledby="tagSelectionModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -766,7 +793,14 @@
 			    success: onSuccess,
 			    error: (xhr, status, error) => console.error(`Error: ${error}`)
 		    });
-	    }
+        }
+
+        function restoreItem(item_name) {
+            executeAjaxRequest(`/restore-item`, 'POST', { item_name,}, () => {
+                console.log(item_name + ' restored.');
+                location.reload(true)
+            });
+        }
 
 	    function savePrompt(content, items, callback) {
 		    executeAjaxRequest('/save-prompt', 'POST', { content, items }, (response) => {

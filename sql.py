@@ -3,6 +3,22 @@ import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 print("Starting db update")
 
+conn = sqlite3.connect('items.db')
+
+create_table_sql = """
+CREATE TABLE IF NOT EXISTS deleted (
+    delete_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    user_id INTEGER NOT NULL
+);
+"""
+
+# Execute the SQL command
+conn.execute(create_table_sql)
+conn.commit()
+conn.close()
+
+
 # encryption_key = b'5gP6PJiet87ZyOYda17lzFemrpK3bGk3f5zLm5nZsBU='
 # cipher_suite = Fernet(encryption_key)
 # openai_api_key = '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'
