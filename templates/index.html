@@ -878,7 +878,6 @@
 			    event.target.closest('.item-span').remove();
 			    document.querySelectorAll(`input[type='checkbox'][value='${itemName}']`).forEach((checkbox) => checkbox.closest('li').remove());
 			    updateBadgeNumbers();
-			    loadSavedPrompts();
 		    });
 	    }
 
@@ -896,7 +895,6 @@
 		    executeAjaxRequest(`/delete-prompt/${promptId}`, 'POST', {}, (response) => {
 			    console.log('Prompt deleted successfully');
 			    location.reload(true)
-
 		    });
 	    }
 
@@ -918,7 +916,6 @@
 
 	    document.addEventListener('DOMContentLoaded', function () {
             restoreAccordionStates();
-            loadSavedPrompts(0, 10);
 		    document.querySelectorAll('.accordion-button').forEach(button => {
 			    button.addEventListener('click', function() {
 				    const accordionId = this.dataset.bsTarget;
