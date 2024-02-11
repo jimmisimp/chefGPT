@@ -781,7 +781,7 @@
 		    const savedResultsList = document.getElementById('savedResults');
 		    receivedPrompts.forEach((prompt) => {
 			    const listItem = document.createElement('button');
-			    listItem.className = 'py-2 list-group-item list-group-item-action text-truncate';
+			    listItem.className = 'py-3 list-group-item list-group-item-action text-truncate';
 			    listItem.id = 'saved-'+prompt.id
 			    listItem.setAttribute('data-bs-toggle', 'modal');
 			    listItem.setAttribute('data-bs-target', '#promptModal');
