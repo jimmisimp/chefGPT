@@ -661,7 +661,7 @@
                         <div class="toast-body">
                             <!-- Text will be set dynamically -->
                         </div>
-                        <button type="button" class="btn me-2 m-auto btn-link" data-bs-dismiss="toast" onclick="undoLastMove()">Undo</button>
+                        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                     </div>
                 </div>
             </div>
@@ -671,7 +671,6 @@
     <!-- Floating Action Bar -->
     <div id="floatingActionBar" class="fixed-bottom mb-4 bg-text-primary" style="display: none; z-index: 99;">
         <div class="d-flex gap-2 justify-content-center">
-
             <button id="deleteAllBtn" type="button" class="btn btn-danger"><i class="bi bi-trash3"></i></button>
             <button id="tagAllBtn" type="button" class="btn btn-secondary"><i class="bi bi-tags"></i></button>
             <button id="moveAllBtn" type="button" class="btn btn-secondary"><i class="bi bi-arrow-down-up"></i></button>
@@ -884,6 +883,7 @@
 		    executeAjaxRequest(`/delete-prompt/${promptId}`, 'POST', {}, (response) => {
 			    console.log('Prompt deleted successfully');
 			    location.reload(true)
+
 		    });
 	    }
 
@@ -946,7 +946,7 @@
 					    return { id: el.getAttribute('data-id'), order: index, category: newCategory };
 				    });
 				    updateCategoryAndOrder(itemOrders);
-				    showToast(`${lastMovedItem.name} moved from ${lastMovedItem.from} to ${newCategory}`, true);
+				    showToast(`${lastMovedItem.name} moved to ${newCategory}`);
 				    lastMovedItem.to = newCategory;
 			    }
 		    });
@@ -954,22 +954,10 @@
 
 	    let lastMovedItem = null;
 
-        function showToast(message, undoButton) {
+        function showToast(message) {
 		    const toastEl = document.getElementById('pageToast');
             toastEl.querySelector('.toast-body').textContent = message;
-            undoButton ? toastEl.querySelector('.btn-link').style.display = "inline-block" : toastEl.querySelector('.btn-link').style.display = "none";
 		    new bootstrap.Toast(toastEl).show();
-	    }
-
-	    function undoLastMove() {
-		    if (lastMovedItem && lastMovedItem.from !== lastMovedItem.to) {
-			    const fromList = document.getElementById(lastMovedItem.from);
-			    fromList.appendChild(lastMovedItem.element);
-			    const itemOrders = Array.from(fromList.children).map((el, index) => {
-				    return { id: el.getAttribute('data-id'), order: index, category: lastMovedItem.from };
-			    });
-			    updateCategoryAndOrder(itemOrders);
-		    }
 	    }
 
 	    document.getElementById('askGptForm').onsubmit = function() {
@@ -1000,6 +988,7 @@
             });
 
             moveItemsToNewCategoryUI(itemOrders, newCategory);
+            showToast('Items moved');
         }
 
         function moveItemsToNewCategoryUI(itemOrders, newCategory) {
@@ -1209,9 +1198,8 @@
             executeAjaxRequest(`/update-item-name/${itemId}`, 'POST', { new_name: newName }, (response) => {
                 itemNameElement.textContent = newName.length > 64 ? `${newName.substring(0, 32)}...` : newName;
                 itemNameElement.appendChild(tagsContainer);
-                showToast('Item name updated successfully', false);
+                showToast('Item name updated successfully');
             }, (error) => {
-                showToast('Error updating item name', false);
                 itemNameElement.textContent = originalName.length > 64 ? `${originalName.substring(0, 32)}...` : originalName;
                 itemNameElement.appendChild(tagsContainer);
             });
@@ -1228,7 +1216,6 @@
 	    }
 
 	    window.onload = function() {
-		    /*updatePromptAccordion();*/
 		    document.getElementById("itemInput").focus();
 	    };
 
@@ -1261,6 +1248,7 @@
                 });
                 updateFloatingActionBar();
                 $('#deleteConfirmationModal').modal('hide');
+                showToast('Items deleted');
             });
 
             // Tag All Items
@@ -1319,6 +1307,7 @@
                 toggleTagForAll(itemId, tag);
             });
             $('#tagSelectionModal').modal('hide');
+            showToast("Items tagged")
         }
 
 

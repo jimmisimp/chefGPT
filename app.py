@@ -86,7 +86,7 @@ def login():
 
         if user_data and check_password_hash(user_data['password_hash'], password):
             user = User(user_data['id'], user_data['username'])
-            login_user(user)
+            login_user(user, True)
             return redirect(url_for('index'))
         else:
             error = 'Invalid username or password'
