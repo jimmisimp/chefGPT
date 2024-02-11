@@ -779,7 +779,6 @@
 
 	    function renderPrompts(receivedPrompts) {
 		    const savedResultsList = document.getElementById('savedResults');
-		    savedResultsList.innerHTML = '';
 		    receivedPrompts.forEach((prompt) => {
 			    const listItem = document.createElement('button');
 			    listItem.className = 'py-2 list-group-item list-group-item-action text-truncate';
@@ -800,11 +799,8 @@
 
         let currentOffset = 0;
 
-        function loadSavedPrompts(offset = 0, limit = 10, append = false) {
+        function loadSavedPrompts(offset = 0, limit = 10) {
             executeAjaxRequest(`/get-prompts?offset=${offset}&limit=${limit}`, 'GET', {}, (receivedPrompts) => {
-                if (!append) {
-                    document.getElementById('savedResults').innerHTML = '';
-                }
                 renderPrompts(receivedPrompts);
                 currentOffset += receivedPrompts.length;
                 if (receivedPrompts.length < limit) {
@@ -816,7 +812,7 @@
         }
 
         document.getElementById('loadMoreBtn').addEventListener('click', function () {
-            loadSavedPrompts(currentOffset, 10, true);
+            loadSavedPrompts(currentOffset, 10);
         });
 
 	    function populateItemsList(itemsString, promptId) {
