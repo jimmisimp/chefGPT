@@ -250,9 +250,14 @@ def save_prompt():
 @app.route('/get-prompts', methods=['GET'])
 @login_required
 def get_prompts():
+    offset = request.args.get('offset', default=0, type=int)
+    limit = request.args.get('limit', default=10, type=int)
+
     conn = get_db_connection()
-    prompts = conn.execute('SELECT * FROM prompts WHERE user_id = ? ORDER BY created_at DESC', (current_user.id,)).fetchall()
+    query = 'SELECT * FROM prompts WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?'
+    prompts = conn.execute(query, (current_user.id, limit, offset)).fetchall()
     conn.close()
+    
     return jsonify([dict(prompt) for prompt in prompts])
 
 @app.route('/delete-prompt/<int:prompt_id>', methods=['POST'])
