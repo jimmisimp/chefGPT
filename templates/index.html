@@ -912,9 +912,12 @@
                             populateItemsList(selectedItems, promptId);
                         };
 
+
                         const savedResultsList = document.getElementById('savedResults');
                         savedResultsList.insertBefore(newItem, savedResultsList.firstChild);
 
+                        document.getElementById('promptModalContent').innerHTML = formatContent(response.gpt_response);
+                        document.getElementById('deletePromptBtn').onclick = () => deletePrompt(promptId);
                         const myModal = new bootstrap.Modal(document.getElementById('promptModal'));
                         myModal.show();
 
