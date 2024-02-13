@@ -882,31 +882,51 @@
 		    document.getElementById('promptModalContent').appendChild(itemsContainer);
 	    }
 
-	    function initializeForm() {
-		    $('#askGptForm').submit((event) => {
-			    event.preventDefault();
-			    const selectedItems = document.getElementById('selectedItems').value;
-			    const region = document.getElementById('regionSelect').value;
-			    const modifier = document.getElementById('modifierSelect').value;
+        function initializeForm() {
+            $('#askGptForm').submit((event) => {
+                event.preventDefault();
+                const selectedItems = document.getElementById('selectedItems').value;
+                const region = document.getElementById('regionSelect').value;
+                const modifier = document.getElementById('modifierSelect').value;
                 const specifications = document.getElementById('specifications').value;
-			    const selectedPrompt = document.querySelector('input[name="options"]:checked').value;
+                const selectedPrompt = document.querySelector('input[name="options"]:checked').value;
 
-			    executeAjaxRequest('/ask-gpt4', 'POST', { selected_items: selectedItems, selected_prompt: selectedPrompt, region: region, modifier: modifier, specifications: specifications }, (response) => {
-				    savePrompt(response.gpt_response, selectedItems, (promptId) => {
-					    document.getElementById('promptModalContent').innerHTML = formatContent(response.gpt_response);
-					    document.getElementById('deletePromptBtn').onclick = () => deletePrompt(promptId);
-					    populateItemsList(selectedItems, promptId);
-					    const myModal = new bootstrap.Modal(document.getElementById('promptModal'));
-					    myModal.show();
-					    loadSavedPrompts();
-					    ['gptLoader', 'buttonLoadingIndicator', 'buttonStars'].forEach(id => {
-						    document.getElementById(id).style.display = (id === 'buttonStars') ? 'inline-block' : 'none';
-					    });
-					    document.getElementById('askGptButton').disabled = false;
-				    });
-			    });
-		    });
-	    }
+                executeAjaxRequest('/ask-gpt4', 'POST', {
+                    selected_items: selectedItems,
+                    selected_prompt: selectedPrompt,
+                    region: region,
+                    modifier: modifier,
+                    specifications: specifications
+                }, (response) => {
+                    savePrompt(response.gpt_response, selectedItems, (promptId) => {
+                        const newItem = document.createElement('li');
+                        newItem.className = 'py-3 list-group-item list-group-item-action text-truncate';
+                        newItem.id = 'saved-' + promptId;
+                        newItem.setAttribute('data-bs-toggle', 'modal');
+                        newItem.setAttribute('data-bs-target', '#promptModal');
+                        const previewText = findFirstHeadingOrBold(response.gpt_response);
+                        newItem.textContent = previewText;
+                        newItem.onclick = () => {
+                            document.getElementById('promptModalContent').innerHTML = formatContent(response.gpt_response);
+                            document.getElementById('deletePromptBtn').onclick = () => deletePrompt(promptId);
+                            populateItemsList(selectedItems, promptId);
+                        };
+
+                        const savedResultsList = document.getElementById('savedResults');
+                        savedResultsList.insertBefore(newItem, savedResultsList.firstChild);
+
+                        const myModal = new bootstrap.Modal(document.getElementById('promptModal'));
+                        myModal.show();
+
+                        ['gptLoader', 'buttonLoadingIndicator', 'buttonStars'].forEach(id => {
+                            document.getElementById(id).style.display = (id === 'buttonStars') ? 'inline-block' : 'none';
+                        });
+                        document.getElementById('askGptButton').disabled = false;
+                    });
+                });
+            });
+        }
+
 
 	    function deleteItemFromPrompt(promptId, itemName, event) {
 		    event.preventDefault();
