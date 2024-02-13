@@ -918,6 +918,7 @@
 
                         document.getElementById('promptModalContent').innerHTML = formatContent(response.gpt_response);
                         document.getElementById('deletePromptBtn').onclick = () => deletePrompt(promptId);
+                        populateItemsList(selectedItems, promptId);
                         const myModal = new bootstrap.Modal(document.getElementById('promptModal'));
                         myModal.show();
 
