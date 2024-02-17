@@ -93,13 +93,13 @@
             <div class="row my-1"><img style="max-width: 56px;" src="static/chef_gpt.png"><h4 class="m-auto col-auto">ChefGPT</h4></div>
             <div class="btn-group">
                 <div class="dropdown me-2">
-                    <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="user-menu"><i class="bi bi-person-circle"></i> {{ username }}</button>
+                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="user-menu"><i class="bi bi-person-circle"></i> {{ username }}</button>
                     <ul class="dropdown-menu align-items-center dropdown-menu-end" aria-labelledby="user-menu">
                         <li><button data-bs-toggle="modal" data-bs-target="#propertiesModal" class="dropdown-item"><i class="bi me-2 opacity-50 bi-gear"></i>Preferences</button></li>
                     </ul>
                 </div>
                 <div class="dropdown">
-                    <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="mode-menu"><i class="bi bi-circle-half"></i></button>
+                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="mode-menu"><i class="bi bi-circle-half"></i></button>
                     <ul class="dropdown-menu align-items-center dropdown-menu-end" aria-labelledby="mode-menu">
                         <li><button class="dropdown-item align-items-center" aria-pressed="false" data-bs-theme-value="light"><i class="bi me-2 opacity-50 bi-sun-fill"></i>Light mode <i class="bi bi-check ms-auto d-none"></i></button></li>
                         <li><button class="dropdown-item align-items-center" aria-pressed="false" data-bs-theme-value="dark"><i class="bi me-2 opacity-50 bi-moon-stars-fill"></i>Dark mode <i class="bi bi-check ms-auto d-none"></i></button></li>
@@ -517,7 +517,7 @@
                 <div name="selected_prompt" class="mb-3 mx-auto row gap-2" id="promptSelect">
                     {% for key, prompt in prompts.items() %}
                     <input type="radio" class="btn-check" name="options" value="{{ key }}" id="option-{{ key }}" autocomplete="off" style="display: none;" {{ 'checked' if loop.first }}>
-                    <label value="{{ key }}" class="col-sm btn btn-outline-secondary" for="option-{{ key }}">{{ key }}</label>
+                    <label value="{{ key }}" class="col-lg btn btn-outline-secondary" for="option-{{ key }}">{{ key }}</label>
                     {% endfor %}
                 </div>
                 <!-- Advanced settings -->

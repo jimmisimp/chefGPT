@@ -11,3 +11,4 @@ venv/
 *.pyproj
 *.scss
 static/custom.css
+/chef-gpt-app
