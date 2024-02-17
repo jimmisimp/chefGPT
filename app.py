@@ -238,11 +238,11 @@ def ask_gpt4():
     specifications = data['specifications']
     
     if region and region.strip():
-        additional_instructions.append(f"Create something appropriate to {region}")
+        additional_instructions.append(f"Each recipe should be from this region: {region}")
     if modifier and modifier.strip():
-        additional_instructions.append(f"Create something that is {modifier}")
+        additional_instructions.append(f"Each recipe should satisfy this modifier: {modifier}")
     if specifications and specifications.strip():
-        additional_instructions.append(f"I very specifically want you to create {specifications}")
+        additional_instructions.append(f"Each recipe should meet these parameters or instructions: {specifications}")
 
     additional_instructions_str = ", ".join(additional_instructions)
 
@@ -321,11 +321,11 @@ def delete_item_from_prompt():
 @app.route('/update-item-tags-batch', methods=['POST'])
 @login_required
 def update_item_tags_batch():
-    updates = request.json['updates']  # Expecting a dictionary of item_id: tags
+    updates = request.json['updates']
 
     conn = get_db_connection()
     for item_id, tags in updates.items():
-        tags_str = ','.join(tags)  # Convert list of tags to a comma-separated string
+        tags_str = ','.join(tags)
         conn.execute('UPDATE items SET tags = ? WHERE id = ?', (tags_str, item_id))
     
     conn.commit()
