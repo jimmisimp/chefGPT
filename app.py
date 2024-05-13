@@ -253,7 +253,7 @@ def ask_gpt4():
     combined_prompt = prompt_instruct + items_string
     print(system_message, combined_prompt)
     response = openai.chat.completions.create(
-      model="gpt-4-turbo-preview",
+      model="gpt-4o",
       messages= [
         {"role":"system", "content": system_message},
         {"role": "user", "content": combined_prompt}
